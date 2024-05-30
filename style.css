@@ -1,0 +1,27 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    
+    cursor: none; /* Hide the default cursor */
+}
+
+.large-image {
+    width: 100%;
+    height: 200%;
+    user-select: none; /* Prevent image from being selected */
+    -webkit-user-drag: none; /* Prevent image from being dragged in webkit browsers */
+}
+
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* So the cursor doesn't interfere with other elements */
+    display: none; /* Initially hidden */
+}
