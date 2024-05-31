@@ -40,9 +40,10 @@ body, html {
     flex: 1;
     border-bottom: 2px solid #dedede;
     position: relative;
-    -webkit-user-drag: none;
     user-select: none;
+    -webkit-user-drag: none;
     -moz-user-select: none;
+    -moz-window-dragging: no-drag;
     text-decoration: none;
     cursor: none;
 }
@@ -51,10 +52,9 @@ body, html {
     width: 75px;
     height: auto;
     margin-bottom: 20px;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
+    pointer-events: none; /* Disables pointer events on the image */
 }
+
 
 /* Move text down */
 .sidebar-item span {
