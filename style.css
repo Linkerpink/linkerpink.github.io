@@ -36,44 +36,43 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
     justify-content: center;
     flex: 1;
     border-bottom: 2px solid #dedede;
     position: relative;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
 }
 
-/* Placeholder Icon */
 .sidebar-item img {
     width: 75px;
     height: auto;
-    margin-bottom: 25px;
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, .5));
+    margin-bottom: 20px;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
 }
 
 /* Move text down */
 .sidebar-item span {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
-
-/* First Item (Top) */
 .sidebar-item:first-child {
-    border-radius: 0px 35% 0 0; /* Rounded top edges */
+    border-radius: 0px 35% 0 0;
     color: #F57C00;
 }
 
-/* Last Item (Bottom) */
 .sidebar-item:last-child {
-    border-radius: 0 0 35% 0px; /* Rounded bottom edges */
+    border-radius: 0 0 35% 0px;
     background-image: linear-gradient(to right, #545454, #323232); /* Darker grey for bottom button */
     color: #fafafa;
-    border-bottom: none; /* Remove bottom border from the last item */
+    border-bottom: none;
 }
 
-/* Optional: Active item styling */
 .sidebar-item.active {
-    background-color: #F57C00; /* Darker orange for active item */
+    background-color: #F57C00;
 }
 
 /* Content styles */
