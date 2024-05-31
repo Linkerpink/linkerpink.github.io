@@ -43,6 +43,8 @@ body, html {
     -webkit-user-drag: none;
     user-select: none;
     -moz-user-select: none;
+    text-decoration: none;
+    cursor: none;
 }
 
 .sidebar-item img {
@@ -59,26 +61,42 @@ body, html {
     margin-top: 15px;
 }
 
+.sidebar-item:hover {
+    background-color: #CBF8FE;
+}
+
+.sidebar-item.selected {
+    color: #F57C00;
+}
+
 .sidebar-item:first-child {
     border-radius: 0px 35% 0 0;
-    color: #F57C00;
+    
 }
 
 .sidebar-item:last-child {
     border-radius: 0 0 35% 0px;
-    background-image: linear-gradient(to right, #545454, #323232); /* Darker grey for bottom button */
+    background-image: linear-gradient(to right, #545454, #323232);
     color: #fafafa;
     border-bottom: none;
+}
+
+.sidebar-item:last-child:hover {
+    background-image: linear-gradient(to right, #325c63, #323232);
 }
 
 .sidebar-item.active {
     background-color: #F57C00;
 }
 
-/* Content styles */
 .content {
     flex-grow: 1;
     padding: 20px;
+    margin-left: 235px;
+    width: calc(100% - 235px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* CSS for the custom cursor */
