@@ -10,7 +10,7 @@ body, html {
 
 /* Sidebar styles */
 .sidebar {
-    width: 235px;
+    width: 10.5%; /* Adjust based on your design */
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -25,11 +25,11 @@ body, html {
 /* Sidebar Items */
 .sidebar-item {
     width: 100%;
-    padding: 15px;
+    padding: 3%; /* Adjust based on your design */
     margin: 0;
     background-color: #fafafa;
     text-align: center;
-    font-size: 250%;
+    font-size: 2em; /* Adjust based on your design */
     transition: background-color 0.3s, transform 0.3s;
     color: #3f3f3f;
     box-shadow: 5px 0px 5px rgba(0, 0, 0, .3);
@@ -49,16 +49,15 @@ body, html {
 }
 
 .sidebar-item img {
-    width: 75px;
+    width: 25%; /* Adjust based on your design */
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 12%; /* Adjust based on your design */
     pointer-events: none; /* Disables pointer events on the image */
 }
 
-
 /* Move text down */
 .sidebar-item span {
-    margin-top: 15px;
+    margin-top: 3%; /* Adjust based on your design */
 }
 
 .sidebar-item:hover {
@@ -71,7 +70,6 @@ body, html {
 
 .sidebar-item:first-child {
     border-radius: 0px 35% 0 0;
-    
 }
 
 .sidebar-item:last-child {
@@ -89,43 +87,64 @@ body, html {
     background-color: #F57C00;
 }
 
-
 .content {
+    background-color: white;
     flex-grow: 1;
-    padding: 20px;
-    margin-left: 235px;
-    width: calc(100% - 235px);
+    padding: 2%; /* Adjust based on your design */
+    margin-left: 16%; /* Adjust based on your design */
+    width: calc(100% - 16%); /* Adjust based on your design */
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #767676;
+}
+
+.header {
+    /* Styles for the header section, including title, search bar, icons */
+}
+
+.nav-bar {
+    /* Styles for the navigation bar */
 }
 
 .games {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 2%; /* Add margin top for spacing after the header */
 }
 
 .game {
-    width: 40%; /* Increase the width of each game */
-    height: 65%; /* Increase the height of each game */
-    margin: 20px; /* Adjust spacing between games */
+    width: 30%; /* Adjust width as needed */
+    height: 60%; /* Adjust height as needed */
+    margin: 2%; /* Adjust spacing between games */
     text-align: center;
+    background-color: #f0f0f0; /* Light gray background for each game tile */
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
 }
 
 .game img {
     width: 100%;
-    height: 80%; /* Adjust image height to fit within game container */
-    object-fit: cover; /* Maintain aspect ratio while covering the container */
-    border-radius: 10px; /* Add border radius for rounded corners */
+    height: 80%;
+    object-fit: cover;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
 }
 
 .game h2 {
     margin-top: 10px;
-    font-size: 24px; /* Increase font size */
+    font-size: 1.5em; /* Adjust font size */
 }
 
+.game-details {
+    /* Styles for additional game information like price and DLC */
+}
 
 /* CSS for the custom cursor */
 .custom-cursor {
