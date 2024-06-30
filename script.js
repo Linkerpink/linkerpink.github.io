@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         adjustCursorSize(20); // Reset cursor size to default
         cursorTimer = setTimeout(function() {
             adjustCursorSize(0); // Shrink cursor to 0 size if there's no movement for half a second
-        }, 500); // Half a second delay
+        }, 1000); // Half a second delay
     });
 
     // Clear trails on mouse leave

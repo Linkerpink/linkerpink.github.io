@@ -10,7 +10,7 @@ body, html {
 
 /* Sidebar styles */
 .sidebar {
-    width: 10.5%; /* Adjust based on your design */
+    width: 10.5%;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -25,11 +25,11 @@ body, html {
 /* Sidebar Items */
 .sidebar-item {
     width: 100%;
-    padding: 3%; /* Adjust based on your design */
+    padding: 3%;
     margin: 0;
     background-color: #fafafa;
     text-align: center;
-    font-size: 2em; /* Adjust based on your design */
+    font-size: 2em;
     transition: background-color 0.3s, transform 0.3s;
     color: #3f3f3f;
     box-shadow: 5px 0px 5px rgba(0, 0, 0, .3);
@@ -49,15 +49,15 @@ body, html {
 }
 
 .sidebar-item img {
-    width: 25%; /* Adjust based on your design */
+    width: 25%;
     height: auto;
-    margin-bottom: 12%; /* Adjust based on your design */
-    pointer-events: none; /* Disables pointer events on the image */
+    margin-bottom: 12%;
+    pointer-events: none;
 }
 
 /* Move text down */
 .sidebar-item span {
-    margin-top: 3%; /* Adjust based on your design */
+    margin-top: 3%;
 }
 
 .sidebar-item:hover {
@@ -90,9 +90,9 @@ body, html {
 .content {
     background-color: white;
     flex-grow: 1;
-    padding: 2%; /* Adjust based on your design */
-    margin-left: 16%; /* Adjust based on your design */
-    width: calc(100% - 16%); /* Adjust based on your design */
+    padding: 2%;
+    margin-left: 16%;
+    width: calc(100% - 16%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,16 +114,22 @@ body, html {
 }
 
 .game {
-    width: 30%; /* Adjust width as needed */
-    height: 60%; /* Adjust height as needed */
-    margin: 2%; /* Adjust spacing between games */
+    width: 30%;
+    height: 60%;
+    margin: 2%;
     text-align: center;
-    background-color: #f0f0f0; /* Light gray background for each game tile */
+    background-color: #f0f0f0;
     border-radius: 10px;
     user-select: none;
     -webkit-user-drag: none;
     -moz-user-select: none;
     -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
+}
+
+.game:hover {
+    background-color: #CBF8FE;
 }
 
 .game img {
@@ -135,11 +141,19 @@ body, html {
     -webkit-user-drag: none;
     -moz-user-select: none;
     -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
 }
 
 .game h2 {
     margin-top: 10px;
-    font-size: 1.5em; /* Adjust font size */
+    font-size: 1.5em;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
 }
 
 .game-details {
@@ -151,15 +165,15 @@ body, html {
     position: fixed;
     top: 0;
     left: 0;
-    pointer-events: none; /* Prevent the cursor from interfering with mouse events */
-    z-index: 9999; /* Place the cursor above other elements */
+    pointer-events: none;
+    z-index: 9999;
 }
 
 /* Style the cursor shape */
 .cursor-inner {
     width: 20px;
     height: 20px;
-    background-color: orange; /* Set cursor color to orange */
+    background-color: orange;
     border-radius: 50%;
 }
 
@@ -168,9 +182,9 @@ body, html {
     position: fixed;
     width: 20px;
     height: 20px;
-    background-color: orange; /* Set trail color to orange */
+    background-color: orange;
     border-radius: 50%;
-    opacity: 0.5; /* Adjust trail opacity */
-    pointer-events: none; /* Prevent trail from interfering with mouse events */
-    transition: opacity 0.5s ease; /* Add transition effect for opacity */
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
