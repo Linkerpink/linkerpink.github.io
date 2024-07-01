@@ -8,6 +8,32 @@ body, html {
     cursor: none;
 }
 
+/* Top bar styles */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: calc(10.5% + 2.5%);
+    width: calc(100% - 15%);
+    background-color: #f0f0f0;
+    padding: 1% 0;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+.top-bar-item {
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.top-bar-item:hover {
+    color: #F57C00;
+}
+
 /* Sidebar styles */
 .sidebar {
     width: 10.5%;
@@ -91,8 +117,9 @@ body, html {
     background-color: white;
     flex-grow: 1;
     padding: 2%;
-    margin-left: 16%;
-    width: calc(100% - 16%);
+    margin-left: 12.5%;
+    margin-top: 5%; /* Adjusted to accommodate the top bar */
+    width: calc(100% - 12.5%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,11 +133,12 @@ body, html {
     /* Styles for the navigation bar */
 }
 
+/*Games*/
 .games {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 2%; /* Add margin top for spacing after the header */
+    margin-top: 2%;
 }
 
 .game {
@@ -160,7 +188,12 @@ body, html {
     /* Styles for additional game information like price and DLC */
 }
 
-/* CSS for the custom cursor */
+.game a {
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
+
+/*Cursor*/
 .custom-cursor {
     position: fixed;
     top: 0;
@@ -169,7 +202,7 @@ body, html {
     z-index: 9999;
 }
 
-/* Style the cursor shape */
+/*Cursor shape*/
 .cursor-inner {
     width: 20px;
     height: 20px;
@@ -177,7 +210,7 @@ body, html {
     border-radius: 50%;
 }
 
-/* Style the cursor trail */
+/*Cursor trail*/
 .cursor-trail {
     position: fixed;
     width: 20px;
@@ -187,4 +220,5 @@ body, html {
     opacity: 0.5;
     pointer-events: none;
     transition: opacity 0.5s ease;
+    z-index: 9998;
 }
