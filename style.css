@@ -8,30 +8,85 @@ body, html {
     cursor: none;
 }
 
-/* Top bar styles */
-.top-bar {
+/* Top Bar styles */
+.topbar {
+    width: 84%; /* Reduce width to leave more margin on the right */
+    height: 10%; /* Increase height of the top bar for more space */
+    display: flex;
+    flex-direction: row;
+    padding: 0;
     position: fixed;
     top: 0;
-    left: calc(10.5% + 2.5%);
-    width: calc(100% - 15%);
-    background-color: #f0f0f0;
-    padding: 1% 0;
+    left: 0;
+    align-items: flex-start; /* Align items at the top */
+    background: transparent;
+    z-index: 1000; /* Ensure it stays above other content */
+    margin-left: 13%; /* Increase left margin to push top bar away from the sidebar */
+}
+
+/* Top Bar Items */
+.topbar-item {
+    flex: 1;
+    padding: 2% 4%; /* Increase padding to move items down slightly */
+    margin: 0;
+    background-color: #fafafa;
+    text-align: center;
+    font-size: 1.5em; /* Adjust font size to fit in increased height */
+    transition: background-color 0.3s, transform 0.3s;
+    color: #3f3f3f;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .3);
     display: flex;
-    justify-content: space-around;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border-radius: 10px;
-}
-
-.top-bar-item {
-    font-size: 1.2em;
+    align-items: center;
+    justify-content: center; /* Center text horizontally */
+    border-right: 2px solid #dedede;
+    position: relative;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
     text-decoration: none;
-    color: #333;
-    transition: color 0.3s, transform 0.3s;
+    cursor: pointer; /* Changed from none to pointer for interaction */
 }
 
-.top-bar-item:hover {
+.topbar-item img {
+    width: 20%; /* Slightly smaller to fit in increased height */
+    height: auto;
+    margin-right: 12px; /* Increase space between image and text */
+    pointer-events: none;
+}
+
+.topbar-item .text {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center text horizontally */
+}
+
+.topbar-item:hover {
+    background-color: #CBF8FE;
+}
+
+.topbar-item.selected {
     color: #F57C00;
+}
+
+.topbar-item:first-child {
+    border-radius: 0 0 0 10%;
+}
+
+.topbar-item:last-child {
+    border-radius: 0 0 10% 0;
+}
+
+/* Adjust content to accommodate the top bar and sidebar */
+.content {
+    margin-left: 20%; /* Adjust for increased sidebar margin */
+    margin-top: 12%; /* Increase to match the increased height of the top bar */
+    padding: 2%;
+    width: calc(100% - 25%); /* Adjust width to account for both sidebar and margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Sidebar styles */
