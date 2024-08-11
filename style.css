@@ -49,9 +49,8 @@ body, html {
 }
 
 .topbar-item img {
-    width: 20%; /* Slightly smaller to fit in increased height */
-    height: auto;
-    margin-right: 12px; /* Increase space between image and text */
+    width: 30%; /* Slightly smaller to fit in increased height */
+    margin-right: 1px;
     pointer-events: none;
 }
 
