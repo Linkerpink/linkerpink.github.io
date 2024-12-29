@@ -27,7 +27,7 @@ body, html {
 /* Top Bar Items */
 .topbar-item {
     flex: 1;
-    padding: 2% 4%; /* Increase padding to move items down slightly */
+    padding: 1% 4%; /* Increase padding to move items down slightly */
     margin: 0;
     background-color: #fafafa;
     text-align: center;
@@ -45,12 +45,12 @@ body, html {
     -moz-user-select: none;
     -moz-window-dragging: no-drag;
     text-decoration: none;
-    cursor: pointer; /* Changed from none to pointer for interaction */
+    cursor: none;
 }
 
 .topbar-item img {
-    width: 30%; /* Slightly smaller to fit in increased height */
-    margin-right: 1px;
+    width: 40%; /* Slightly smaller to fit in increased height */
+    margin-left: -60px;
     pointer-events: none;
 }
 
@@ -74,7 +74,7 @@ body, html {
 }
 
 .topbar-item:last-child {
-    border-radius: 0 0 10% 0;
+    border-radius: 0% 0% 10% 0%;
 }
 
 /* Adjust content to accommodate the top bar and sidebar */
@@ -179,14 +179,6 @@ body, html {
     align-items: center;
 }
 
-.header {
-    /* Styles for the header section, including title, search bar, icons */
-}
-
-.nav-bar {
-    /* Styles for the navigation bar */
-}
-
 /*Games*/
 .games {
     display: flex;
@@ -195,12 +187,23 @@ body, html {
     margin-top: 2%;
 }
 
-.game {
-    width: 30%;
-    height: 60%;
-    margin: 2%;
+.game-row{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: -5%;
+}
+
+.game-details {
+    /* Styles for additional game information like price and DLC */
+}
+
+/* Horizontal games */
+.horizontal-game {
+    width: 40%;
+    height: 75%;
+    margin: 1%;
     text-align: center;
-    background-color: #f0f0f0;
     border-radius: 10px;
     user-select: none;
     -webkit-user-drag: none;
@@ -210,11 +213,7 @@ body, html {
     cursor: none;
 }
 
-.game:hover {
-    background-color: #CBF8FE;
-}
-
-.game img {
+.horizontal-game img {
     width: 100%;
     height: 80%;
     object-fit: cover;
@@ -225,9 +224,11 @@ body, html {
     -moz-window-dragging: no-drag;
     text-decoration: none;
     cursor: none;
+
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .3);
 }
 
-.game h2 {
+.horizontal-game h2 {
     margin-top: 10px;
     font-size: 1.5em;
     user-select: none;
@@ -238,14 +239,58 @@ body, html {
     cursor: none;
 }
 
-.game-details {
-    /* Styles for additional game information like price and DLC */
-}
-
-.game a {
+.horizontal-game a {
     text-decoration: none;
     color: rgb(134, 134, 134);
 }
+
+/* Vertical games */
+.vertical-game {
+    width: 20%;
+    height: 200%;
+    margin: 1%;
+    text-align: center;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
+}
+
+.vertical-game img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
+
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .3);
+}
+
+.vertical-game h2 {
+    margin-top: 10px;
+    font-size: 1.5em;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -moz-window-dragging: no-drag;
+    text-decoration: none;
+    cursor: none;
+}
+
+.vertical-game a {
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
+
+
 
 /*Cursor*/
 .custom-cursor {
