@@ -318,8 +318,6 @@ body, html {
     color: rgb(134, 134, 134);
 }
 
-
-
 /*Cursor*/
 .custom-cursor {
     position: fixed;
@@ -348,4 +346,117 @@ body, html {
     pointer-events: none;
     transition: opacity 0.5s ease;
     z-index: 9998;
+}
+
+/* Big about me */
+.big-about-me{
+    text-decoration:wavy;
+    cursor: none;
+}
+
+/* About me */ 
+.about-me {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 1%;
+    border-radius: 10px;
+    user-select: none;
+    gap: 2rem; /* space between image and text */
+    cursor: none;
+}
+
+/* Image styles */
+.about-me img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .3);
+    transition: all 0.25s ease;
+    outline: 0px solid #5ef6f600;
+}
+
+.about-me:hover img {
+    outline: 8px solid #5EF5F6;
+    animation: pulse-outline 0.75s infinite alternate linear;
+}
+
+/* Text container */
+.about-me-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    width: 75%;
+}
+
+/* Text styles */
+.about-me h2 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.about-me h2 a {
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
+
+
+
+/*Responsive*/
+@media (max-width: 768px) {
+    .topbar {
+        width: 100%;
+        margin-left: 0;
+        height: 8%;
+    }
+
+    .topbar-item {
+        font-size: 1em;
+        padding: 1% 2%;
+    }
+
+    .sidebar {
+        width: 15%;
+    }
+
+    .sidebar-item {
+        font-size: 1.2em;
+        padding: 5%;
+    }
+
+    .content {
+        margin-left: 15%;
+        margin-top: 10%;
+        width: 85%;
+    }
+
+    .horizontal-game {
+        width: 90%;
+    }
+
+    .vertical-game {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar-item {
+        font-size: 0.8em;
+        padding: 1% 1%;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin: 12% 2% 0 2%;
+        width: 96%;
+    }
+
+    .horizontal-game, .vertical-game {
+        width: 100%;
+    }
 }

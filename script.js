@@ -1,3 +1,6 @@
+//Portfolio text
+
+//Cursor
 document.addEventListener('DOMContentLoaded', function () {
     var cursorTrails = [];
     var cursorTimer; // Timer for cursor size adjustment
