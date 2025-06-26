@@ -12,15 +12,28 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: white;
-    --foreground: rgb(134, 134, 134);;
-  }
+:root {
+  --background: #ffffff;
+  --foreground: #3f3f3f;
+}
+
+.dark {
+  --background: #3f3f3f;
+  --foreground: #fafafa;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.interactable-object {
+  @apply w-full h-auto object-cover rounded-[16px] shadow-[0px_5px_5px_rgba(0,0,0,0.3)] transition-all duration-200 outline-[0px] outline-[#5ef6f600];
+  outline-style: solid;
+}
+
+.group:hover .interactable-object {
+  @apply outline-[8px] outline-[#5EF5F6];
+  animation: pulse-outline 0.75s infinite alternate linear;
 }
