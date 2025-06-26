@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -100,9 +100,9 @@ export default function Home() {
         <div className="text-center md:text-left">
           <h1 className="text-5xl font-bold mb-4">Hello there, my name is Noah van Uunen</h1>
           <p className="text-lg">
-            I am an 18-year-old game developer from the Netherlands. I’ve been making games for 2
+            I am an 18-year-old game developer from the Netherlands. I&apos;ve been making games for 2
             years (primarily in Unity using C#). I enjoy programming and bringing ideas to life.
-            I'm currently studying game development at Grafisch Lyceum Utrecht. Outside of game dev,
+            I&apos;m currently studying game development at Grafisch Lyceum Utrecht. Outside of game dev,
             I enjoy writing, editing videos, and playing games.
           </p>
         </div>
