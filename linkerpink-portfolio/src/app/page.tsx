@@ -4,6 +4,44 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+import GameCard from './gamecard';
+
+const firstRowGames = [
+  {
+    href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
+    imgSrc: "/images/robo rebellion.png",
+    title: "Robo Rebellion: Dawn of the Machine",
+  },
+  {
+    href: "https://linkerpink.itch.io/not-suepr-maria-63",
+    imgSrc: "/images/Not Suepr Maria 63.png",
+    title: "Not Suepr Maria 63",
+  },
+];
+
+const games = [
+  {
+    href: "",
+    imgSrc: "/images/open pixel art temp logo.png",
+    title: "Open Pixel Art",
+  },
+  {
+    href: "",
+    imgSrc: "/images/not grow a garden temp logo.png",
+    title: "Not Grow A Garden",
+  },
+  {
+    href: "",
+    imgSrc: "/images/gribby grab's toy store logo temp.png",
+    title: "Gribby Grab's Toy Store",
+  },
+  {
+    href: "https://linkerpink.itch.io/shy",
+    imgSrc: "/images/SHYGame.jpg",
+    title: "Shy",
+  },
+];
+
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [thumbRect, setThumbRect] = useState<DOMRect | null>(null);
@@ -62,13 +100,14 @@ export default function Home() {
                 filter: 'blur(0%)',
                 backgroundColor: 'transparent',
               }}
+
               transition={{ duration: 0.25, type: "spring", stiffness: 300, damping: 30 }}
             >
               <Image
                 id="expanded-image"
-                src="/images/eng.png"
+                src="/images/vandringjorne side.jpg"
                 alt="Expanded"
-                className="w-full h-auto rounded-xl shadow-2xl"
+                className="w-full h-auto shadow-2xl"
                 width={512}
                 height={512}
               />
@@ -78,8 +117,28 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Main content */}
+
+      {/*<div className="content px-4 py-10 ${isExpanded ? 'blur-sm' : ''"></div>*/}
+
+      <div className={`transition-all duration-300 ${
+          isExpanded ? 'blur-sm' : ''
+        }`}>
+          <div className="games">
+            <div className="content-row flex flex-nowrap -m-2 mb-4 justify-center">
+              {firstRowGames.map((game, i) => (
+                <GameCard key={i} {...game} size="large" />
+              ))}
+            </div>
+            <div className="content-row flex flex-nowrap -m-2 justify-center">
+              {games.map((game, i) => (
+                <GameCard key={i} {...game} size="small" />
+              ))}
+            </div>
+          </div>
+      </div>
+
       <div
-        className={`flex flex-col md:flex-row items-center gap-8 max-w-6xl mx-auto px-4 pt-20 transition-all duration-300 ${
+        className={`flex flex-col md:flex-row items-center gap-8 mx-auto px-4 pt-20 transition-all duration-300 ${
           isExpanded ? 'blur-sm' : ''
         }`}
       >
@@ -89,7 +148,7 @@ export default function Home() {
           onClick={openOverlay}
         >
           <Image
-            src="/images/eng.png"
+            src="/images/vandringjorne side.jpg"
             alt="Thumbnail"
             fill
             className="interactable-object"

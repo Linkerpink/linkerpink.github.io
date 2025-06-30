@@ -45,7 +45,7 @@ export default function Sidebar() {
 		<nav className="fixed top-0 left-0 h-full flex flex-col items-center w-[10.5%] bg-transparent z-50">
 			{sidebarItems.map((item, idx) => {
 				const base =
-					'sidebar-item w-full py-4 px-0 bg-[#fafafa] text-center text-2xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-2 border-[#dedede] select-none no-underline cursor-default';
+					'sidebar-item w-full py-4 px-0 bg-[#fafafa] text-center text-3xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-0 border-[#dedede] select-none no-underline cursor-default';
 				const selected = item.selected ? 'text-[#F57C00]' : '';
 				const first = idx === 0 ? 'rounded-tr-[35%]' : '';
 				const last = item.last
