@@ -4,43 +4,11 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-import GameCard from './gamecard';
+import GameCard from './game-card';
+import { firstRowGames, games } from './games';
 
-const firstRowGames = [
-  {
-    href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
-    imgSrc: "/images/robo rebellion.png",
-    title: "Robo Rebellion: Dawn of the Machine",
-  },
-  {
-    href: "https://linkerpink.itch.io/not-suepr-maria-63",
-    imgSrc: "/images/Not Suepr Maria 63.png",
-    title: "Not Suepr Maria 63",
-  },
-];
-
-const games = [
-  {
-    href: "",
-    imgSrc: "/images/open pixel art temp logo.png",
-    title: "Open Pixel Art",
-  },
-  {
-    href: "",
-    imgSrc: "/images/not grow a garden temp logo.png",
-    title: "Not Grow A Garden",
-  },
-  {
-    href: "",
-    imgSrc: "/images/gribby grab's toy store logo temp.png",
-    title: "Gribby Grab's Toy Store",
-  },
-  {
-    href: "https://linkerpink.itch.io/shy",
-    imgSrc: "/images/SHYGame.jpg",
-    title: "Shy",
-  },
-];
+import SkillCard from './skill-card';
+import Skills from './skills';
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -105,11 +73,11 @@ export default function Home() {
             >
               <Image
                 id="expanded-image"
-                src="/images/vandringjorne side.jpg"
-                alt="Expanded"
-                className="w-full h-auto shadow-2xl"
-                width={512}
-                height={512}
+                src="/images/about me p1.jpg"
+                alt="/images/about me p1 low res.jpg"
+                className="w-full h-full shadow-2xl"
+                width={2560}
+                height={2560}
               />
             </motion.div>
           </motion.div>
@@ -148,8 +116,8 @@ export default function Home() {
           onClick={openOverlay}
         >
           <Image
-            src="/images/vandringjorne side.jpg"
-            alt="Thumbnail"
+            src="/images/about me p1.jpg"
+            alt="/images/about me p1 low res.jpg"
             fill
             className="interactable-object"
             style={{ outlineStyle: 'solid' }}
@@ -166,6 +134,16 @@ export default function Home() {
           </p>
         </div>
       </div>
+
+      <div className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? 'blur-sm' : ''}`}>
+        <h2 className="text-4xl font-bold mb-8 text-center">My Skills</h2>
+        <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
+          {Skills.map((skill, i) => (
+            <SkillCard key={i} {...skill} />
+          ))}
+        </div>
+      </div>
+
     </main>
   );
 }

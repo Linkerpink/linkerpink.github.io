@@ -34,10 +34,11 @@ body {
   outline-style: solid;
 }
 
-.group:hover .interactable-object {
+.interactable-object:hover {
   @apply outline-[8px] animate-[pulse-outline_0.75s_infinite_alternate_linear];
   animation: pulse-outline 0.75s infinite alternate linear;
 }
+
 
 @keyframes pulse-outline {
     0% {
