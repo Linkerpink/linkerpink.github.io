@@ -91,7 +91,7 @@ export default function Home() {
       <div className={`transition-all duration-300 ${
           isExpanded ? 'blur-sm' : ''
         }`}>
-          <div className="games">
+          <div id="home" className="games">
             <div className="content-row flex flex-nowrap -m-2 mb-4 justify-center">
               {firstRowGames.map((game, i) => (
                 <GameCard key={i} {...game} size="large" />
@@ -124,7 +124,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="text-center md:text-left">
+        <div id="about-me" className="text-center md:text-left">
           <h1 className="text-5xl font-bold mb-4">Hello there, my name is Noah van Uunen</h1>
           <p className="text-lg">
             I am an 18-year-old game developer from the Netherlands. I&apos;ve been making games for 2
@@ -135,7 +135,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? 'blur-sm' : ''}`}>
+      <div id="skills" className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? 'blur-sm' : ''}`}>
         <h2 className="text-4xl font-bold mb-8 text-center">My Skills</h2>
         <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
           {Skills.map((skill, i) => (

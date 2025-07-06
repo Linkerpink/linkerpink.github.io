@@ -29,6 +29,11 @@ body {
   align-items: center
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 .interactable-object {
   @apply object-cover rounded-[10px] shadow-[0px_5px_5px_rgba(0,0,0,0.3)] transition-all duration-200 outline-[0px] outline-[#5ef6f600];
   outline-style: solid;
