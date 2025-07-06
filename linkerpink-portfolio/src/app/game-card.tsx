@@ -19,6 +19,7 @@ export default function GameCard({ href, imgSrc, title, size = "small" }: GameCa
     >
       <Link
         href={href}
+        target="_blank"
         draggable={false}
         className="no-underline text-[#868686] group block"
       >

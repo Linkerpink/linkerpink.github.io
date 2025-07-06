@@ -13,7 +13,7 @@ export const firstRowGames = [
 
 export const games = [
   {
-    href: "",
+    href: "https://github.com/Linkerpink/Open-Pixel-Art",
     imgSrc: "/images/open pixel art temp logo.png",
     title: "Open Pixel Art",
   },

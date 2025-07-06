@@ -8,11 +8,11 @@ type SkillCardProps = {
 
 export default function SkillCard({ name, description, logo }: SkillCardProps) {
   return (
-    <div className="w-full md:w-1/2 p-2">
+    <div className="w-full md:w-1/2 p-3">
       <div className="group interactable-object">
         <div className="flex items-center rounded-2xl bg-gradient-to-t from-[#d8d8d8] to-[#ffffff] p-4 shadow-lg cursor-pointer">
           {/* Icon */}
-          <div className="w-16 h-16 flex items-center justify-center overflow-hidden">
+          <div className="w-16 h-16 flex items-center justify-center rounded-2xl overflow-hidden">
             <Image 
               src={logo} 
               alt={name} 
@@ -24,7 +24,7 @@ export default function SkillCard({ name, description, logo }: SkillCardProps) {
           </div>
 
           {/* Text */}
-          <div className="ml-6 flex flex-col justify-center select-none">
+          <div className="ml-6 flex flex-col justify-center">
             <h3 className="text-[#868686] text-lg font-semibold">{name}</h3>
             <p className="text-sm text-[#868686]">{description}</p>
           </div>

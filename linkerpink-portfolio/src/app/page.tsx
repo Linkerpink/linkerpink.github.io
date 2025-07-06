@@ -10,6 +10,9 @@ import { firstRowGames, games } from './games';
 import SkillCard from './skill-card';
 import Skills from './skills';
 
+import LinkCard from './link-card';
+import Links from './links';
+
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [thumbRect, setThumbRect] = useState<DOMRect | null>(null);
@@ -140,6 +143,15 @@ export default function Home() {
         <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
           {Skills.map((skill, i) => (
             <SkillCard key={i} {...skill} />
+          ))}
+        </div>
+      </div>
+
+      <div id="links" className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? 'blur-sm' : ''}`}>
+        <h2 className="text-4xl font-bold mb-3 text-center">My links</h2>
+        <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
+          {Links.map((link, i) => (
+            <LinkCard key={i} logo={link.logo} href={link.href} />
           ))}
         </div>
       </div>

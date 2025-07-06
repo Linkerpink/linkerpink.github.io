@@ -4,18 +4,17 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const sidebarItems = [
-  { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: 0 },
+  { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
   { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250 },
   { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Projects', offset: 50 },
-  { href: 'https://www.google.com', img: '/images/eng.png', alt: 'Contact Icon', label: 'Contact', external: true },
-  { href: 'https://www.nintendo.com/us/', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true },
+  { href: '#links', img: '/images/eng.png', alt: 'Contact Icon', label: 'Links', offset: 50},
+  { href: 'close', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true },
 ];
 
 
 export default function Sidebar() {
   const [selectedLabel, setSelectedLabel] = useState('Home');
 
-  // Scroll handler: Update selectedLabel based on visible section
   useEffect(() => {
   const handleScroll = () => {
     const scrollY = window.scrollY;
@@ -29,7 +28,7 @@ export default function Sidebar() {
       const offset = item.offset ?? -80;
 
       if (section) {
-        const offsetTop = section.getBoundingClientRect().top + window.scrollY + offset -50;
+        const offsetTop = section.getBoundingClientRect().top + window.scrollY + offset +50;
         if (scrollY >= offsetTop) {
           currentLabel = item.label;
         }
