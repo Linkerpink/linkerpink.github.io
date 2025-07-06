@@ -13,6 +13,11 @@ export const firstRowGames = [
 
 export const games = [
   {
+    href: "https://linkerpink.itch.io/the-royal-spin",
+    imgSrc: "/images/the royal spin logo.png",
+    title: "The Royal Spin",
+  },
+  {
     href: "https://github.com/Linkerpink/Open-Pixel-Art",
     imgSrc: "/images/open pixel art temp logo.png",
     title: "Open Pixel Art",
@@ -21,11 +26,6 @@ export const games = [
     href: "",
     imgSrc: "/images/not grow a garden temp logo.png",
     title: "Not Grow A Garden",
-  },
-  {
-    href: "",
-    imgSrc: "/images/gribby grab's toy store logo temp.png",
-    title: "Gribby Grab's Toy Store",
   },
   {
     href: "https://linkerpink.itch.io/shy",
