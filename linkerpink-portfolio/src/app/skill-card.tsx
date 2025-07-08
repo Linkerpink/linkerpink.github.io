@@ -10,9 +10,9 @@ export default function SkillCard({ name, description, logo }: SkillCardProps) {
   return (
     <div className="w-full md:w-1/2 p-3">
       <div className="group interactable-object">
-        <div className="flex items-center rounded-2xl bg-gradient-to-t from-[#d8d8d8] to-[#ffffff] p-4 shadow-lg cursor-pointer">
+        <div className="flex items-center rounded-[10px] bg-gradient-to-t from-[#d8d8d8] to-[#ffffff] p-4 shadow-lg cursor-pointer">
           {/* Icon */}
-          <div className="w-16 h-16 flex items-center justify-center rounded-2xl overflow-hidden">
+          <div className="w-16 h-16 flex items-center justify-center overflow-hidden">
             <Image 
               src={logo} 
               alt={name} 

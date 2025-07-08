@@ -6,7 +6,7 @@ const Skills = [
     },
     {
         name: "C#",
-        logo: "/images/c sharp logo.png",
+        logo: "/images/c sharp logo.webp",
         description: "experience: 2 years",
     },
     {
@@ -23,6 +23,16 @@ const Skills = [
         name: "Unreal Engine",
         logo: "/images/unreal engine logo.svg",
         description: "experience: 1 month",
+    },
+    {
+        name: "Scratch",
+        logo: "/images/scratch logo.png",
+        description: "experience: 8 years",
+    },
+    {   
+        name: "Roblox Studio",
+        logo: "/images/roblox studio logo.png",
+        description: "experience: 4 months",
     },
     {
         name: "Git & GitHub",

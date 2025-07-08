@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from "next/link";
 
 import GameCard from './game-card';
 import { firstRowGames, games } from './games';
@@ -89,8 +90,6 @@ export default function Home() {
 
       {/* Main content */}
 
-      {/*<div className="content px-4 py-10 ${isExpanded ? 'blur-sm' : ''"></div>*/}
-
       <div className={`transition-all duration-300 ${
           isExpanded ? 'blur-sm' : ''
         }`}>
@@ -107,6 +106,23 @@ export default function Home() {
             </div>
           </div>
       </div>
+      
+      {/* View all projects button */}
+      <div className="w-full p-4">
+            <Link
+              href="/all-projects"
+              className="block group interactable-object"
+              prefetch={false}
+              draggable={false}
+            >
+              <div className="flex items-center rounded-[10px] bg-gradient-to-t from-[#d8d8d8] to-[#ffffff] p-4 shadow-lg cursor-pointer select-none" draggable={false}>
+                <div className="w-full h-full flex items-center justify-center overflow-hidden select-none">
+                  <h1 className="text-4xl font-bold text-center text-[#5F5F5F] " >See all</h1>
+                </div>
+              </div>
+            </Link>
+            <h1 className="text-2xl font-medium text-center text-[#5F5F5F] p-2 cursor-default" >Browse all projects</h1>
+          </div>
 
       <div
         className={`flex flex-col md:flex-row items-center gap-8 mx-auto px-4 pt-20 transition-all duration-300 ${

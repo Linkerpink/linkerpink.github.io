@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const sidebarItems = [
-  { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
+  { href: '/', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
   { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250 },
-  { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Projects', offset: 50 },
+  { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Projects', offset: 0 },
   { href: '#links', img: '/images/eng.png', alt: 'Contact Icon', label: 'Links', offset: 50},
   { href: 'close', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true },
 ];
@@ -65,7 +65,7 @@ const handleClick = (e: React.MouseEvent, href: string, label: string) => {
       {sidebarItems.map((item, idx) => {
         const isSelected = item.label === selectedLabel;
         const base =
-          'sidebar-item w-full py-4 px-0 bg-[#fafafa] text-center text-3xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-0 border-[#dedede] select-none no-underline cursor-default';
+          'sidebar-item w-full py-4 px-0 bg-[#E4E4E4] text-center text-3xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-0 border-[#dedede] select-none no-underline cursor-default';
         const selected = isSelected ? 'text-[#F57C00]' : '';
         const first = idx === 0 ? 'rounded-tr-[35%]' : '';
         const last = item.last
