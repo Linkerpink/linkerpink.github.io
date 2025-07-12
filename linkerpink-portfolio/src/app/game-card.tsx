@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "./theme-context";
 
 interface GameCardProps {
   href: string;
@@ -17,18 +18,28 @@ export default function GameCard({
   technologies = [],
 }: GameCardProps) {
   const isLarge = size === "large";
+  const { theme } = useTheme();
+  const isSecretTheme = theme === "secret";
 
   return (
     <div
       className={`horizontal-game ${
         isLarge ? "w-full md:w-1/2" : "w-full sm:w-1/2 md:w-1/4"
       } m-[1%] text-center select-none cursor-none`}
+      style={isSecretTheme ? {
+        background: '#ff16ea',
+        color: '#faecb7',
+        borderRadius: '75%',
+        border: '4px solid #faecb7',
+        fontFamily: 'Smooch, cursive, Arial, sans-serif',
+      } : {}}
     >
       <Link
         href={href}
         target="_blank"
         draggable={false}
-        className="no-underline text-[#868686] group block interactable-object"
+        className="no-underline group block interactable-object"
+        style={isSecretTheme ? { color: '#faecb7', fontFamily: 'Smooch, cursive, Arial, sans-serif' } : {}}
       >
         {/* Image container */}
         <div className="relative w-full h-[80%]">
@@ -37,8 +48,9 @@ export default function GameCard({
             alt={title}
             width={600}
             height={400}
-            className="rounded-[10px] w-full h-full object-cover select-none cursor-pointer"
+            className="w-full h-full object-cover select-none cursor-pointer"
             draggable={false}
+            style={isSecretTheme ? { borderRadius: '75%' } : { borderRadius: '10px' }}
           />
 
           {/* Technologies badge */}
@@ -52,6 +64,7 @@ export default function GameCard({
                   width={30}
                   height={30}
                   className="w-8.5 h-8.5 object-contain"
+                  style={isSecretTheme ? { borderRadius: '75%' } : {}}
                 />
               ))}
             </div>
@@ -59,9 +72,12 @@ export default function GameCard({
         </div>
       </Link>
 
-      <h2 className="mt-[10px] text-[1.5em] text-[#868686] select-none cursor-text">
-          {title}
-        </h2>
+      <h2
+        className="mt-[10px] text-[1.5em] select-none cursor-text"
+        style={isSecretTheme ? { color: '#faecb7', fontFamily: 'Smooch, cursive, Arial, sans-serif' } : {}}
+      >
+        {title}
+      </h2>
     </div>
   );
 }

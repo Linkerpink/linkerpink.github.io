@@ -12,9 +12,20 @@
   --foreground: #3f3f3f;
 }
 
-.dark {
+html.dark {
   --background: #3f3f3f;
   --foreground: #fafafa;
+}
+
+html.secret {
+  --background: #ff16ea;
+  --foreground: #faecb7;
+  --font-family: 'Smooch', cursive;
+  --border-radius: 75%;
+  --game-skill-bg: #ff16ea;
+  --game-skill-text: #faecb7;
+  --game-skill-border: 4px solid #faecb7;
+  --secret-bg-image: url('/images/peak.jpg');
 }
 
 body {
@@ -39,6 +50,10 @@ html {
   outline-style: solid;
 }
 
+html.secret .interactable-object {
+  border-radius: 75% !important;
+}
+
 .interactable-object:hover {
   @apply outline-[8px] animate-[pulse-outline_0.75s_infinite_alternate_linear];
   animation: pulse-outline 0.75s infinite alternate linear;
@@ -52,4 +67,71 @@ html {
     100% {
         outline-color: #09C6DB;
     }
+}
+
+.secret body {
+  background: var(--secret-bg-image) repeat fixed, var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family), Arial, sans-serif;
+}
+
+
+/* Strongest possible override for secret theme cards, including Tailwind and inline styles */
+.secret :where(.game-card),
+.secret :where(.skill-card),
+.secret :where(.link-card),
+.secret :where(.game-card *),
+.secret :where(.skill-card *),
+.secret :where(.link-card *),
+.secret :where(.game-card),
+.secret :where(.skill-card),
+.secret :where(.link-card),
+.secret :where(.game-card :is(*)),
+.secret :where(.skill-card :is(*)),
+.secret :where(.link-card :is(*)) {
+  background: var(--game-skill-bg) !important;
+  color: var(--game-skill-text) !important;
+  border-radius: 75% !important;
+  border: 4px solid #faecb7 !important;
+  font-family: 'Smooch', cursive, Arial, sans-serif !important;
+  box-shadow: none !important;
+}
+
+/* Override Tailwind's rounded classes directly */
+.secret .game-card.rounded-none,
+.secret .game-card.rounded,
+.secret .game-card.rounded-sm,
+.secret .game-card.rounded-md,
+.secret .game-card.rounded-lg,
+.secret .game-card.rounded-xl,
+.secret .game-card.rounded-2xl,
+.secret .game-card.rounded-3xl,
+.secret .game-card.rounded-full,
+.secret .skill-card.rounded-none,
+.secret .skill-card.rounded,
+.secret .skill-card.rounded-sm,
+.secret .skill-card.rounded-md,
+.secret .skill-card.rounded-lg,
+.secret .skill-card.rounded-xl,
+.secret .skill-card.rounded-2xl,
+.secret .skill-card.rounded-3xl,
+.secret .skill-card.rounded-full,
+.secret .link-card.rounded-none,
+.secret .link-card.rounded,
+.secret .link-card.rounded-sm,
+.secret .link-card.rounded-md,
+.secret .link-card.rounded-lg,
+.secret .link-card.rounded-xl,
+.secret .link-card.rounded-2xl,
+.secret .link-card.rounded-3xl,
+.secret .link-card.rounded-full {
+  border-radius: 75% !important;
+}
+
+.card-gradient-light {
+  @apply bg-gradient-to-t from-[#d8d8d8] to-[#ffffff];
+}
+
+.card-gradient-dark {
+  @apply bg-gradient-to-t from-[#23272e] to-[#3f3f3f];
 }

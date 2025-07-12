@@ -13,11 +13,20 @@ import Skills from './skills';
 
 import LinkCard from './link-card';
 import Links from './links';
+import { useTheme } from './theme-context';
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [thumbRect, setThumbRect] = useState<DOMRect | null>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
+
+  const { theme } = useTheme();
+  const isSecretTheme = theme === 'secret';
+  const isDarkTheme = theme === 'dark';
+  let gradientClass = '';
+  if (!isSecretTheme) {
+    gradientClass = isDarkTheme ? 'card-gradient-dark' : 'card-gradient-light';
+  }
 
   const openOverlay = () => {
     if (thumbRef.current) {
@@ -108,16 +117,16 @@ export default function Home() {
       </div>
       
       {/* View all projects button */}
-      <div className="w-full p-4">
+      <div className="w-full pt-16">
             <Link
               href="/all-projects"
               className="block group interactable-object"
               prefetch={false}
               draggable={false}
             >
-              <div className="flex items-center rounded-[10px] bg-gradient-to-t from-[#d8d8d8] to-[#ffffff] p-4 shadow-lg cursor-pointer select-none" draggable={false}>
+              <div className={`flex items-center rounded-[10px] p-4 shadow-lg cursor-pointer select-none ${gradientClass}`} draggable={false}>
                 <div className="w-full h-full flex items-center justify-center overflow-hidden select-none">
-                  <h1 className="text-4xl font-bold text-center text-[#5F5F5F] " >See all</h1>
+                  <h1 className="text-4xl font-bold text-center" >See all</h1>
                 </div>
               </div>
             </Link>
