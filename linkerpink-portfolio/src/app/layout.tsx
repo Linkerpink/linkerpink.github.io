@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Smokum&family=Smooch&display=swap" rel="stylesheet" />
+        {/* Custom fonts should be added in _document.js for best practice. See Next.js docs. */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

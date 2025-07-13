@@ -25,7 +25,7 @@ export default function KonamiUnlocker() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [secretUnlocked, setSecretUnlocked]);
+  }, [konamiCode, secretUnlocked, setSecretUnlocked]);
 
 
   // Remove auto-close logic; popup will only close on button click

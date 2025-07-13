@@ -49,7 +49,7 @@ export default function SettingsMenu() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [secretUnlocked, setSecretUnlocked]);
+  }, [konamiCode, secretUnlocked, setSecretUnlocked]);
 
   const isSecretTheme = theme === 'secret';
   const isDarkTheme = theme === 'dark';
@@ -116,7 +116,7 @@ export default function SettingsMenu() {
         )}
       </div>
       {secretUnlocked && (
-        <div className="mt-2 text-xs text-gray-500">To reset for testing: <b>localStorage.removeItem('secretUnlocked')</b> in your browser console.</div>
+        <div className="mt-2 text-xs text-gray-500">To reset for testing: <b>localStorage.removeItem(&apos;secretUnlocked&apos;)</b> in your browser console.</div>
       )}
     </div>
   );

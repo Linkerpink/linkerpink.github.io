@@ -33,7 +33,7 @@ export default function EasterEggUnlocker() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [secretUnlocked, setSecretUnlocked]);
+  }, [konamiCode, secretUnlocked, setSecretUnlocked]);
 
   if (!showPopup) return null;
 
