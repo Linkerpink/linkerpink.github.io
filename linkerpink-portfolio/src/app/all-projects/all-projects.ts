@@ -14,8 +14,14 @@ export function sortProjects(projects: typeof allProjects, notReleasedNewest = t
     if (aNotReleased && bNotReleased) return 0;
     if (aNotReleased) return notReleasedNewest ? -1 : 1;
     if (bNotReleased) return notReleasedNewest ? 1 : -1;
-    // Compare actual dates
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
+    // Both are released, compare dates
+    if (notReleasedNewest) {
+      // Newest first
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    } else {
+      // Oldest first
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }
   });
 }
 
