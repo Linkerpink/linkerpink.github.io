@@ -6,7 +6,7 @@ const Skills = [
     },
     {
         name: "C#",
-        logo: "/images/c sharp logo.webp",
+        logo: "/images/c sharp logo.svg",
         description: "experience: 2 years",
     },
     {

@@ -5,7 +5,7 @@ export const firstRowGames = [
     title: "Robo Rebellion: Dawn of the Machine",
     technologies: [
       "/images/unity logo.png",
-      "/images/c sharp logo.webp",
+      "/images/c sharp logo.svg",
     ],
   },
   {
@@ -14,7 +14,7 @@ export const firstRowGames = [
     title: "Not Suepr Maria 63",
     technologies: [
       "/images/unity logo.png",
-      "/images/c sharp logo.webp",
+      "/images/c sharp logo.svg",
     ],
   },
 ];
@@ -26,7 +26,25 @@ export const games = [
     title: "The Royal Spin",
     technologies: [
       "/images/unity logo.png",
-      "/images/c sharp logo.webp",
+      "/images/c sharp logo.svg",
+    ],
+  },
+  {
+    href: "https://gx.games/games/ef2jjg/when-time-collides/",
+    imgSrc: "/images/when time collides.webp",
+    title: "When Time Collides",
+    date: "2022-03-18",
+    technologies: [
+      "/images/gamemaker studio logo.svg",
+    ],
+  },
+  {
+    href: "https://linkerpink.itch.io/shy",
+    imgSrc: "/images/SHYGame.jpg",
+    title: "Shy",
+    technologies: [
+      "/images/unity logo.png",
+      "/images/c sharp logo.svg",
     ],
   },
   {
@@ -36,24 +54,6 @@ export const games = [
     technologies: [
       "/images/godot logo.svg",
       "/images/gdscript logo.webp",
-    ],
-  },
-  {
-    href: "",
-    imgSrc: "/images/not grow a garden temp logo.png",
-    title: "Not Grow A Garden",
-    technologies: [
-      "/images/unity logo.png",
-      "/images/c sharp logo.webp",
-    ],
-  },
-  {
-    href: "https://linkerpink.itch.io/shy",
-    imgSrc: "/images/SHYGame.jpg",
-    title: "Shy",
-    technologies: [
-      "/images/unity logo.png",
-      "/images/c sharp logo.webp",
     ],
   },
 ];

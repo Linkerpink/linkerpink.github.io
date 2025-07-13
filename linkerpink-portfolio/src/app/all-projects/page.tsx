@@ -1,18 +1,18 @@
 "use client";
 import GameCard from "../game-card";
-import { allProjects } from "./all-projects";
+import { allProjects, sortProjects } from "./all-projects";
 import { useState } from "react";
 
 export default function AllProjectsPage() {
   const [sortType, setSortType] = useState<'original' | 'alphabetical' | 'oldest' | 'newest'>('original');
 
-  const sortedProjects = [...allProjects];
+  let sortedProjects = [...allProjects];
   if (sortType === 'alphabetical') {
     sortedProjects.sort((a, b) => a.title.localeCompare(b.title));
   } else if (sortType === 'oldest') {
-    sortedProjects.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    sortedProjects = sortProjects(allProjects, false);
   } else if (sortType === 'newest') {
-    sortedProjects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    sortedProjects = sortProjects(allProjects, true);
   }
 
   return (

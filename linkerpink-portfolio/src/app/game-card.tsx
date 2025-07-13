@@ -8,15 +8,17 @@ interface GameCardProps {
   title: string;
   size?: "large" | "medium" | "small";
   technologies?: string[];
+  displayDate?: string;
 }
 
-export default function GameCard({
+const GameCard: React.FC<GameCardProps> = ({
   href,
   imgSrc,
   title,
   size = "small",
   technologies = [],
-}: GameCardProps) {
+  displayDate,
+}) => {
   const isLarge = size === "large";
   const isMedium = size === "medium";
   const { theme } = useTheme();
@@ -82,7 +84,13 @@ export default function GameCard({
         style={isSecretTheme ? { color: '#faecb7', fontFamily: 'Smooch, cursive, Arial, sans-serif' } : {}}
       >
         {title}
+        {displayDate && (
+          <div>
+            <small className="block text-xs text-gray-500 mt-1">{displayDate}</small>
+          </div>
+        )}
       </h2>
     </div>
   );
-}
+};
+export default GameCard;
