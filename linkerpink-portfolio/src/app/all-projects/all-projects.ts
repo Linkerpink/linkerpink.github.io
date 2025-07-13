@@ -90,7 +90,7 @@ export const allProjects = [
   },
   {
     href: "",
-    imgSrc: "/images/not grow a garden temp logo.png",
+    imgSrc: "/images/asteroids 3d.webp",
     title: "Asteroids 3D",
     date: "2024-03-01",
     technologies: [
@@ -100,7 +100,7 @@ export const allProjects = [
   },
   {
     href: "",
-    imgSrc: "/images/not grow a garden temp logo.png",
+    imgSrc: "/images/disco dungeon temp.webp",
     title: "Disco Dungeon",
     date: "2024-04-26",
     technologies: [

@@ -6,7 +6,7 @@ interface GameCardProps {
   href: string;
   imgSrc: string;
   title: string;
-  size?: "large" | "small";
+  size?: "large" | "medium" | "small";
   technologies?: string[];
 }
 
@@ -18,13 +18,18 @@ export default function GameCard({
   technologies = [],
 }: GameCardProps) {
   const isLarge = size === "large";
+  const isMedium = size === "medium";
   const { theme } = useTheme();
   const isSecretTheme = theme === "secret";
 
   return (
     <div
       className={`horizontal-game ${
-        isLarge ? "w-full md:w-1/2" : "w-full sm:w-1/2 md:w-1/4"
+        isLarge
+          ? "w-full md:w-1/2"
+          : isMedium
+            ? "w-full sm:w-1/2 md:w-1/3"
+            : "w-full sm:w-1/2 md:w-1/4"
       } m-[1%] text-center select-none cursor-none`}
       style={isSecretTheme ? {
         background: '#ff16ea',

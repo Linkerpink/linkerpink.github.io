@@ -8,7 +8,7 @@ interface ThemeContextType {
   setSecretUnlocked: (unlocked: boolean) => void;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
+export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
   setTheme: () => {},
   secretUnlocked: false,

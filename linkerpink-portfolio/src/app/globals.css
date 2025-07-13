@@ -9,12 +9,12 @@
 
 :root {
   --background: #DADADA;
-  --foreground: #3f3f3f;
+  --foreground: #767676;
 }
 
 html.dark {
   --background: #3f3f3f;
-  --foreground: #fafafa;
+  --foreground: #DADADA;
 }
 
 html.secret {
