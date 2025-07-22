@@ -44,6 +44,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.bg-global {
+  background: var(--background);
+  color: var(--foreground);
+}
 
 .interactable-object {
   @apply object-cover rounded-[10px] shadow-[0px_5px_5px_rgba(0,0,0,0.3)] transition-all duration-200 outline-[0px] outline-[#5ef6f600];
@@ -134,4 +138,8 @@ html.secret .interactable-object {
 
 .card-gradient-dark {
   @apply bg-gradient-to-t from-[#23272e] to-[#3f3f3f];
+}
+
+.card-gradient-secret {
+  @apply bg-gradient-to-t from-[#ff16ea] to-[#faecb7];
 }

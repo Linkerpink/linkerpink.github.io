@@ -5,25 +5,26 @@ function formatDisplayDate(date: string): string {
   if (isNaN(d.getTime())) return date;
   return d.toLocaleString('default', { month: 'long', year: 'numeric' });
 }
-
-// Sort projects, putting 'not released' at top (newest) or bottom (oldest)
-export function sortProjects(projects: typeof allProjects, notReleasedNewest = true) {
+// Sort projects, always putting 'not released' at the bottom
+export function sortProjects(projects: typeof allProjects, newestFirst = true) {
   return [...projects].sort((a, b) => {
     const aNotReleased = a.date.toLowerCase() === 'not released';
     const bNotReleased = b.date.toLowerCase() === 'not released';
+
+    // Put unreleased at the bottom
     if (aNotReleased && bNotReleased) return 0;
-    if (aNotReleased) return notReleasedNewest ? -1 : 1;
-    if (bNotReleased) return notReleasedNewest ? 1 : -1;
+    if (aNotReleased) return 1;
+    if (bNotReleased) return -1;
+
     // Both are released, compare dates
-    if (notReleasedNewest) {
-      // Newest first
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (newestFirst) {
+      return new Date(b.date).getTime() - new Date(a.date).getTime(); // Newest first
     } else {
-      // Oldest first
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
+      return new Date(a.date).getTime() - new Date(b.date).getTime(); // Oldest first
     }
   });
 }
+
 
 export const allProjects = [
   {

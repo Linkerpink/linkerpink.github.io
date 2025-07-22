@@ -15,6 +15,9 @@ export default function SkillCard({ name, description, logo }: SkillCardProps) {
   if (!isSecretTheme) {
     gradientClass = isDarkTheme ? 'card-gradient-dark' : 'card-gradient-light';
   }
+  else {
+    gradientClass = 'card-gradient-secret';
+  }
   return (
     <div className="w-full md:w-1/2 p-3"> 
       <div className="group interactable-object">
@@ -22,8 +25,6 @@ export default function SkillCard({ name, description, logo }: SkillCardProps) {
           className={`flex items-center p-4 shadow-lg cursor-pointer ${gradientClass}`}
           style={isSecretTheme ? {
             borderRadius: '75%',
-            background: '#ff16ea',
-            color: '#faecb7',
             fontFamily: 'Smooch, cursive, Arial, sans-serif',
             border: '4px solid #faecb7',
           } : { borderRadius: '10px' }}

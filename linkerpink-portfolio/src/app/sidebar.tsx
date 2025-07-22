@@ -3,14 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-
-const homepageSidebarItems: SidebarItem[] = [
-  { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80, anchor: undefined },
-  { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250, anchor: undefined },
-  { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', offset: 75, anchor: undefined },
-  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings', offset: 0, anchor: undefined },
-  { href: 'close', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true, anchor: undefined },
-];
+import { motion, AnimatePresence } from 'framer-motion';
 
 type SidebarItem = {
   href: string;
@@ -23,12 +16,20 @@ type SidebarItem = {
   anchor?: string;
 };
 
+const homepageSidebarItems: SidebarItem[] = [
+  { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
+  { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250 },
+  { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', offset: 75 },
+  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings' },
+  { href: 'close', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true },
+];
+
 const nonHomepageSidebarItems: SidebarItem[] = [
   { href: '/#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', anchor: 'home' },
   { href: '/#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', anchor: 'about-me' },
   { href: '/#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', anchor: 'skills' },
-  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings', anchor: undefined },
-  { href: 'back', img: '/images/wii u close icon.png', alt: 'Back Icon', label: 'Back', last: true, anchor: undefined },
+  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings' },
+  { href: 'back', img: '/images/wii u close icon.png', alt: 'Back Icon', label: 'Back', last: true },
 ];
 
 export default function Sidebar() {
@@ -36,12 +37,53 @@ export default function Sidebar() {
   const [selectedLabel, setSelectedLabel] = useState('Home');
   const [lastPage, setLastPage] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [circleScale, setCircleScale] = useState(1);
+
+  // Calculate scale for circle expanding from button top-left corner (4px padding + half button size)
+  useEffect(() => {
+    const updateScale = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      // Button center position approx (top-4 left-4 padding + 32px button width / 2)
+      const buttonX = 4 + 32; 
+      const buttonY = 4 + 32;
+
+      // Calculate max distance from button center to any corner
+      const distances = [
+        Math.hypot(buttonX, buttonY), // top-left corner (button itself)
+        Math.hypot(vw - buttonX, buttonY), // top-right
+        Math.hypot(buttonX, vh - buttonY), // bottom-left
+        Math.hypot(vw - buttonX, vh - buttonY), // bottom-right
+      ];
+      const maxDistance = Math.max(...distances);
+
+      // Base circle radius = half button width (32), scale needed to fill maxDistance
+      setCircleScale(maxDistance / 32);
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
+  useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth >= 768 && isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  window.addEventListener('resize', handleResize);
+  handleResize();
+
+  return () => window.removeEventListener('resize', handleResize);
+}, [isMobileMenuOpen]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Track last page for "Back" button
   useEffect(() => {
     if (!mounted) return;
     if (pathname !== '/') {
@@ -49,21 +91,9 @@ export default function Sidebar() {
     }
   }, [pathname, mounted]);
 
-  // Homepage scroll/anchor logic
   useEffect(() => {
-    if (!mounted) return;
-    if (typeof window === 'undefined') return;
-    if (pathname !== '/') {
-      // Select tab by pathname for non-homepage
-      const match = nonHomepageSidebarItems.find(item => item.href === pathname);
-      if (match) {
-        setSelectedLabel(match.label);
-      } else {
-        setSelectedLabel('Home');
-      }
-      return;
-    }
-    // Scroll logic for homepage/anchor links
+    if (!mounted || pathname !== '/' || typeof window === 'undefined') return;
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       let currentLabel = 'Home';
@@ -81,17 +111,15 @@ export default function Sidebar() {
       }
       setSelectedLabel(currentLabel);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // initialize on load
 
-    // Scroll to anchor if set in sessionStorage
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
     const anchor = sessionStorage.getItem('scrollToAnchor');
     if (anchor) {
       const el = document.getElementById(anchor);
       if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
       }
       sessionStorage.removeItem('scrollToAnchor');
     }
@@ -99,7 +127,6 @@ export default function Sidebar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname, mounted]);
 
-  // Handle anchor click for homepage
   const handleClick = (e: React.MouseEvent, href: string, label: string) => {
     if (href.startsWith('#')) {
       e.preventDefault();
@@ -107,81 +134,117 @@ export default function Sidebar() {
       const el = document.getElementById(targetId);
       if (el) {
         const item = homepageSidebarItems.find(i => i.label === label);
-        const yOffset = item?.offset ?? -80; // fallback offset
+        const yOffset = item?.offset ?? -80;
         const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }
     setSelectedLabel(label);
+    setIsMobileMenuOpen(false); // close menu after navigation
   };
 
-  // Handle back button click
   const handleBack = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (lastPage && lastPage !== window.location.href) {
-      window.location.href = lastPage;
-    } else {
-      window.location.href = '/';
-    }
+    window.location.href = lastPage && lastPage !== window.location.href ? lastPage : '/';
   };
 
-  // Choose sidebar items based on page
   const sidebarItems = pathname === '/' ? homepageSidebarItems : nonHomepageSidebarItems;
 
   if (!mounted) return null;
 
   return (
-    <nav className="fixed top-0 left-0 h-full flex flex-col items-center w-[10.5%] bg-transparent z-50">
-      {sidebarItems.map((item, idx) => {
-        const isSelected = item.label === selectedLabel;
-        const base =
-          'sidebar-item w-full py-4 px-0 bg-[#E4E4E4] text-center text-3xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-0 border-[#dedede] select-none no-underline cursor-default';
-        const selected = isSelected ? 'text-[#F57C00]' : '';
-        const first = idx === 0 ? 'rounded-tr-[35%]' : '';
-        const last = item.last
-          ? 'rounded-br-[35%] bg-gradient-to-r from-[#545454] to-[#323232] text-[#fafafa] border-b-0'
-          : '';
-        const hover = item.last
-          ? 'hover:from-[#325c63] hover:to-[#323232]'
-          : 'hover:bg-[#CBF8FE]';
-        const className = [base, selected, first, last, hover].join(' ');
+    <>
+      {/* Desktop Sidebar */}
+      <nav className="hidden md:flex fixed top-0 left-0 h-full flex-col items-center w-[10.5%] bg-transparent z-1000">
+        {sidebarItems.map((item, idx) => {
+          const isSelected = item.label === selectedLabel;
+          const base =
+            'sidebar-item w-full py-4 px-0 bg-[#E4E4E4] text-center text-3xl transition-colors duration-300 text-[#3f3f3f] shadow-[5px_0px_5px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center flex-1 border-b-0 border-[#dedede] select-none no-underline cursor-default';
+          const selected = isSelected ? 'text-[#F57C00]' : '';
+          const first = idx === 0 ? 'rounded-tr-[35%]' : '';
+          const last = item.last
+            ? 'rounded-br-[35%] bg-gradient-to-r from-[#545454] to-[#323232] text-[#fafafa]'
+            : '';
+          const hover = item.last
+            ? 'hover:from-[#325c63] hover:to-[#323232]'
+            : 'hover:bg-[#CBF8FE]';
+          const className = [base, selected, first, last, hover].join(' ');
 
-        const content = (
-          <>
-            <Image
-              src={item.img}
-              alt={item.alt}
-              width={64}
-              height={64}
-              className="w-1/4 h-auto mb-3 pointer-events-none"
-              draggable={false}
-              priority={idx === 0}
-              unoptimized={item.img.startsWith('http')}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = '/images/eshop logo.png';
-              }}
-            />
-            <span className="mt-1">{item.label}</span>
-          </>
-        );
-
-        // Back button logic for non-homepage
-        if (pathname !== '/' && item.label === 'Back') {
-          return (
-            <a
-              key={item.label}
-              href="#"
-              draggable={false}
-              className={className}
-              onClick={handleBack}
-            >
-              {content}
-            </a>
+          const content = (
+            <>
+              <Image
+                src={item.img}
+                alt={item.alt}
+                width={64}
+                height={64}
+                className="w-1/4 h-auto mb-3 pointer-events-none"
+                draggable={false}
+                priority={idx === 0}
+                unoptimized={item.img.startsWith('http')}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/images/eshop logo.png';
+                }}
+              />
+              <span className="mt-1">{item.label}</span>
+            </>
           );
-        }
 
-        // Settings button logic
-        if (item.label === 'Settings') {
+          if (pathname !== '/' && item.label === 'Back') {
+            return (
+              <a key={item.label} href="#" draggable={false} className={className} onClick={handleBack}>
+                {content}
+              </a>
+            );
+          }
+
+          if (item.label === 'Settings') {
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                draggable={false}
+                className={className}
+                onClick={() => setSelectedLabel(item.label)}
+              >
+                {content}
+              </a>
+            );
+          }
+
+          if (pathname === '/' && item.href.startsWith('#')) {
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleClick(e, item.href, item.label)}
+                draggable={false}
+                className={className}
+              >
+                {content}
+              </a>
+            );
+          }
+
+          if (pathname !== '/' && item.anchor) {
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                draggable={false}
+                className={className}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (item.anchor) {
+                    sessionStorage.setItem('scrollToAnchor', item.anchor);
+                  }
+                  window.location.href = item.href;
+                }}
+              >
+                {content}
+              </a>
+            );
+          }
+
           return (
             <a
               key={item.label}
@@ -193,58 +256,104 @@ export default function Sidebar() {
               {content}
             </a>
           );
-        }
+        })}
+      </nav>
 
-        // Homepage anchor logic
-        if (pathname === '/' && item.href.startsWith('#')) {
-          return (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleClick(e, item.href, item.label)}
-              draggable={false}
-              className={className}
+      {/* Mobile Menu Toggle Button */}
+      <div className="fixed top-4 left-4 z-[100] md:hidden isolate">
+        <motion.button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="w-16 h-16 bg-white rounded-full flex items-center justify-center relative z-[101]"
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          animate={{
+            boxShadow: isMobileMenuOpen
+              ? '0px 0px 0px rgba(0, 0, 0, 0)'
+              : '0px 4px 2.5px rgba(0, 0, 0, 0.35)'
+          }}
+        >
+          {isMobileMenuOpen ? (
+            <motion.span
+              key="close-icon"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="text-3xl select-none"
             >
-              {content}
-            </a>
-          );
-        }
-
-        // All other buttons link to homepage and scroll to section when not on homepage
-        if (pathname !== '/' && item.anchor) {
-          return (
-            <a
-              key={item.label}
-              href={item.href}
-              draggable={false}
-              className={className}
-              onClick={(e) => {
-                e.preventDefault();
-                // Store anchor in sessionStorage so homepage knows where to scroll
-                if (item.anchor) {
-                  sessionStorage.setItem('scrollToAnchor', item.anchor);
-                }
-                window.location.href = item.href;
-              }}
+              ✕
+            </motion.span>
+          ) : (
+            <motion.div
+              key="open-icon"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
-              {content}
-            </a>
-          );
-        }
+              <Image
+                src="/images/hambureger menu icon.svg"
+                alt="Menu"
+                width={32}
+                height={32}
+                className="pointer-events-none"
+              />
+            </motion.div>
+          )}
+        </motion.button>
+      </div>
 
-        // All other buttons link to homepage when not on homepage
-        return (
-          <a
-            key={item.label}
-            href={item.href}
-            draggable={false}
-            className={className}
-            onClick={() => setSelectedLabel(item.label)}
-          >
-            {content}
-          </a>
-        );
-      })}
-    </nav>
+      {/* Expanding Circle Background */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              key="circle-bg"
+              initial={{ scale: 1 }}
+              animate={{ scale: circleScale}}
+              exit={{ scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.4, 0.25, 0.1, 1] }}
+              className="fixed top-4 left-4 w-16 h-16 bg-white rounded-full z-50 origin-center"
+              style={{ transformOrigin: 'middle center' }}
+            />
+
+            {/* Mobile Fullscreen Menu */}
+            <motion.nav
+              key="mobile-menu"
+              initial={{ opacity: 0, scale: '0%', x: '-80%', y: '-80%' }}
+              animate={{ opacity: 1, scale: '150%', x: 0, y: 0 }}
+              exit={{ opacity: 0, scale: '0%', x: '-80%', y: '-80%'  }}
+              transition={{duration: 0.5, ease: [0.4, 0.25, 0.1, 1], delay: 0.05}}
+              className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-transparent md:hidden space-y-6"
+            >
+              {sidebarItems.map((item) => {
+                const isSelected = item.label === selectedLabel;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href.startsWith('#') ? item.href : item.href}
+                    draggable={false}
+                    onClick={(e) => {
+                      if (item.label === 'Back' && pathname !== '/') {
+                        handleBack(e);
+                      } else if (pathname === '/' && item.href.startsWith('#')) {
+                        handleClick(e, item.href, item.label);
+                      } else {
+                        setSelectedLabel(item.label);
+                        setIsMobileMenuOpen(false);
+                      }
+                    }}
+                    className={`text-2xl font-semibold ${
+                      isSelected ? 'text-orange-600' : 'text-gray-700'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

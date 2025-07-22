@@ -32,9 +32,9 @@ const GameCard: React.FC<GameCardProps> = ({
           : isMedium
             ? "w-full sm:w-1/2 md:w-1/3"
             : "w-full sm:w-1/2 md:w-1/4"
-      } m-[1%] text-center select-none cursor-none`}
+      } m-[1%] text-center select-none`}
       style={isSecretTheme ? {
-        background: '#ff16ea',
+        background: 'radial-gradient(circle at center, #bb00ff, #6aff00)',
         color: '#faecb7',
         borderRadius: '75%',
         border: '4px solid #faecb7',
