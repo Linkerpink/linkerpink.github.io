@@ -38,8 +38,8 @@ export default function EasterEggUnlocker() {
   if (!showPopup) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur 1 pointer-events-auto">
-      <div className={`text-2xl font-bold px-8 py-6 rounded-2xl shadow-2xl flex flex-col items-center gap-4 ${gradientClass}`}
+    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur 1 pointer-events-auto">
+      <div className={`text-4xl font-bold px-8 py-12 rounded-2xl shadow-2xl flex flex-col items-center gap-16 ${gradientClass} w-full max-w-[75vh] h-full max-h-[35vh]`}
         style={isSecretTheme ? {
           borderRadius: '75%',
           background: '#ff16ea',
@@ -56,7 +56,7 @@ export default function EasterEggUnlocker() {
             Secret theme unlocked!
         </motion.span>
         <button
-          className="mt-4 px-6 py-2 rounded-lg bg-white text-pink-600 font-semibold text-lg shadow hover:bg-pink-100 transition-colors"
+          className="mt-4 px-6 py-2 rounded-lg bg-white text-[#5F5F5F] font-semibold text-lg shadow interactable-object"
           onClick={() => setShowPopup(false)}
         >
           Close

@@ -86,7 +86,7 @@ const GameCard: React.FC<GameCardProps> = ({
         {title}
         {displayDate && (
           <div>
-            <small className="block text-xs text-gray-500 mt-1">{displayDate}</small>
+            <small className="block text-xs text-[#5F5F5F] mt-1">{displayDate}</small>
           </div>
         )}
       </h2>

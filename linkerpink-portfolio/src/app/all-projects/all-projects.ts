@@ -71,6 +71,18 @@ export const allProjects = [
     ],
   },
   {
+    href: "",
+    imgSrc: "/images/portfolio site cover temp.png",
+    title: "Portfolio Website",
+    date: "2025-07-23",
+    displayDate: formatDisplayDate("2025-07-23"),
+    technologies: [
+      "/next.svg",
+      "/images/typescript logo.svg",
+      "/images/tailwind css logo.svg",
+    ],
+  },
+  {
     href: "https://linkerpink.itch.io/shy",
     imgSrc: "/images/SHYGame.jpg",
     title: "Shy",
@@ -126,6 +138,16 @@ export const allProjects = [
     ],
   },
   {
+    href: "",
+    imgSrc: "/images/gribby grab's toy store cover temp.png",
+    title: "Gribby Grab's Toy Store",
+    date: "not released",
+    displayDate: formatDisplayDate("not released"),
+    technologies: [
+      "/images/unreal engine logo.svg",
+    ],
+  },
+   {
     href: "",
     imgSrc: "/images/not grow a garden temp logo.png",
     title: "Not Grow A Garden",

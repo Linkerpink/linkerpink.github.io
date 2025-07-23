@@ -15,14 +15,19 @@ const Skills = [
         description: "experience: 3 years",
     },
     {
-        name: "Godot / GDScript",
+        name: "Unreal Engine",
+        logo: "/images/unreal engine logo.svg",
+        description: "experience: 1 month",
+    },
+    {
+        name: "Godot Engine",
         logo: "/images/godot logo.svg",
         description: "experience: 1 year",
     },
     {
-        name: "Unreal Engine",
-        logo: "/images/unreal engine logo.svg",
-        description: "experience: 1 month",
+        name: "GDScript",
+        logo: "/images/gdscript logo.webp",
+        description: "experience: 1 year",
     },
     {
         name: "Scratch",
@@ -38,6 +43,21 @@ const Skills = [
         name: "Git & GitHub",
         logo: "/images/git logo.svg",
         description: "experience: 2 years",
+    },
+    {
+        name: "Next.js",
+        logo: "/next.svg",
+        description: "experience: 1 month",
+    },
+    {
+        name: "TypeScript",
+        logo: "/images/typescript logo.svg",
+        description: "experience: 1 month",
+    },
+    {
+        name: "Tailwind CSS",
+        logo: "/images/tailwind css logo.svg",
+        description: "experience: 1 month",
     },
     {
         name: "Premiere Pro",

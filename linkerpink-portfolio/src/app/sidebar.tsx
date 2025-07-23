@@ -280,7 +280,13 @@ export default function Sidebar() {
               transition={{ duration: 0.2 }}
               className="text-3xl select-none"
             >
-              ✕
+              <Image
+                src="/images/close icon.svg"
+                alt="Menu"
+                width={32}
+                height={32}
+                className="pointer-events-none"
+              />
             </motion.span>
           ) : (
             <motion.div
