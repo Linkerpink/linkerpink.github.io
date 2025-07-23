@@ -43,13 +43,12 @@ const GameCard: React.FC<GameCardProps> = ({
     >
       <Link
         href={href}
-        target="_blank"
         draggable={false}
         className="no-underline group block interactable-object"
         style={isSecretTheme ? { color: '#faecb7', fontFamily: 'Smooch, cursive, Arial, sans-serif' } : {}}
       >
         {/* Image container */}
-        <div className="relative w-full h-[80%]">
+        <div className="relative aspect-[16/9] w-full h-[80%]">
           <Image
             src={imgSrc}
             alt={title}

@@ -105,7 +105,7 @@ export default function Home() {
 
         <div className="w-full pt-16 px-4">
           <Link
-            href="/all-projects"
+            href="/projects"
             className="block group interactable-object"
             prefetch={false}
             draggable={false}
