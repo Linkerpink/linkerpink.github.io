@@ -21,7 +21,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setThemeState] = useState<'light' | 'dark' | 'secret'>("light");
   const [secretUnlocked, setSecretUnlockedState] = useState(false);
 
-  // On mount, sync theme and secretUnlocked with localStorage and html class
   useLayoutEffect(() => {
     const storedTheme = (localStorage.getItem('theme') as 'light' | 'dark' | 'secret') || 'light';
     setThemeState(storedTheme);

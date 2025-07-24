@@ -16,6 +16,8 @@ function generateSlug(title: string): string {
 
 // The full project list with generated slugs
 export const allProjects = [
+  // robo rebellion
+
   {
     title: "Robo Rebellion: Dawn of the Machine",
     slug: "robo-rebellion-dawn-of-the-machine",
@@ -24,7 +26,8 @@ export const allProjects = [
     date: "2024-07-10",
     displayDate: formatDisplayDate("2024-07-10"),
     platform: "Itch.io",
-    description: "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
+    description:
+      "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
     href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
@@ -39,16 +42,51 @@ export const allProjects = [
     ],
 
     featured: true,
+
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "csharp",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
+
+  // not suepr maria 63
+
   {
-    href: "https://linkerpink.itch.io/not-suepr-maria-63",
-    imgSrc: "/images/Not Suepr Maria 63.webp",
     title: "Not Suepr Maria 63",
+    slug: "not-suepr-maria-63",
+    banner: "/images/not suepr maria 63.png",
+    icon: "/images/not suepr maria 63.png",
     date: "2025-04-17",
     displayDate: formatDisplayDate("2025-04-17"),
+    platform: "Itch.io",
+    description:
+      "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
+    href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
+    github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+    media: [
+      { type: "image", src: "/images/not suepr maria 63.png" },
+      { type: "image", src: "/images/not suepr 1.png" },
+      { type: "image", src: "/images/not suepr 2.png" },
+      { type: "image", src: "/images/not suepr 3.png" },
+      { type: "image", src: "/images/not suepr 4.png" },
+      { type: "youtubeId", src: "9c8ntgfiQsk", title: "Gameplay Video" },
+    ],
 
     featured: true,
+
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "csharp",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
   {
     href: "https://linkerpink.itch.io/the-royal-spin",
@@ -61,15 +99,42 @@ export const allProjects = [
     featured: true,
   },
   {
-    href: "https://gx.games/games/ef2jjg/when-time-collides/",
-    imgSrc: "/images/when time collides.webp",
     title: "When Time Collides",
+    slug: "when-time-collides",
+    banner: "/images/when time collides.webp",
+    icon: "/images/when time collides.webp",
     date: "2022-03-18",
     displayDate: formatDisplayDate("2022-03-18"),
-    technologies: ["/images/gamemaker studio logo.svg"],
     platform: "GX Games",
-    
+    imgSrc: "/images/when time collides.webp",
+    href: "https://gx.games/games/ef2jjg/when-time-collides/",
+    description:
+      "When Time Collides is a small retro platformer where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself.",
+    technologies: ["/images/gamemaker studio logo.svg"],
+
+    media: [
+      { type: "image", src: "/images/when time collides.webp" },
+      { type: "image", src: "/images/wtc 1.webp" },
+      { type: "image", src: "/images/wtc 2.webp" },
+      { type: "image", src: "/images/wtc 3.webp" },
+      { type: "youtubeId", src: "qTu8QpEhT8A", title: "Gameplay Video" },
+      {
+        type: "youtubeId",
+        src: "zdwZJZxRDiE",
+        title: "The Making Of When Time Collides",
+      },
+    ],
+
     featured: true,
+
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "gml",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
   {
     href: "",
@@ -85,6 +150,7 @@ export const allProjects = [
 
     featured: true,
   },
+
   {
     href: "https://linkerpink.itch.io/shy",
     imgSrc: "/images/SHYGame.jpg",
@@ -92,7 +158,7 @@ export const allProjects = [
     date: "2024-05-26",
     displayDate: formatDisplayDate("2024-05-26"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-    
+
     featured: true,
   },
   {
@@ -112,7 +178,7 @@ export const allProjects = [
     date: "2024-9-10",
     displayDate: formatDisplayDate("2024-9-10"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -122,7 +188,7 @@ export const allProjects = [
     date: "2024-12-5",
     displayDate: formatDisplayDate("2024-12-5"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -132,7 +198,7 @@ export const allProjects = [
     date: "not released",
     displayDate: formatDisplayDate("not released"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -142,7 +208,7 @@ export const allProjects = [
     date: "not released",
     displayDate: formatDisplayDate("not released"),
     technologies: ["/images/unreal engine logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -152,8 +218,128 @@ export const allProjects = [
     date: "not released",
     displayDate: formatDisplayDate("not released"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
+
+    codeSnippets: [
+      {
+        name: "PlayerMovement.cs",
+        language: "csharp",
+        description:
+          "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
+        code: `using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+
+public class PlayerMovement : MonoBehaviour
+{
+    #region Variabelen
+
+    public Transform cameraTransformatie;
+    
+    [Header("Snelheden")]
+    [SerializeField] private float bewegingsSnelheid;
+    
+    [Header("Hoeken")]
+    private float m_hoek;
+    private float m_doelHoek;
+    private float m_laatsteHoek;
+    
+    [Header("Directies")]
+    private Vector2 m_invoerDirectie;
+    private Vector3 m_bewegingsDirectie;
+    
+    [Header("Soepel Bewegen")]
+    [SerializeField] private float m_soepeleTijdDraaien = 0.1f;
+    private float m_draaiSoepeleSnelheid;
+    
+    [Header("Componenten")]
+    private Rigidbody m_stijfLichaam;
+    private BlijheidStok m_blijheidStok;
+
+    public bool magBewegen = true;
+    
+    private float deltaTijd = 0.0f; // Nodig voor anti insect kader snelheid text
+
+    #endregion
+
+    private void WakkerWorden()
+    {
+        m_stijfLichaam = GetComponent<Rigidbody>();
+        m_blijheidStok = FindAnyObjectByType<BlijheidStok>();
+    }
+    
+    private void Bijwerken()
+    {
+        // Krijg invoerdirectie van de blijheidStok
+        m_invoerDirectie = m_blijheidStok.KrijgInvoer();
+        
+        deltaTijd += (Time.deltaTime - deltaTijd) * 0.1f;
+    }
+
+    private void VastBijwerken()
+    {
+        if (m_invoerDirectie.sqrMagnitude > 0.01f && magBewegen) 
+        {
+            m_bewegingsDirectie = new Vector3(m_invoerDirectie.x, 0, m_invoerDirectie.y);
+            m_doelHoek = Mathf.Atan2(m_bewegingsDirectie.x, m_bewegingsDirectie.z) * Mathf.Rad2Deg + cameraTransformatie.eulerAngles.y;
+            m_hoek = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_doelHoek, ref m_draaiSoepeleSnelheid, m_soepeleTijdDraaien);
+            m_laatsteHoek = m_hoek;
+        }
+        else
+        {
+            m_bewegingsDirectie = Vector3.zero;
+            m_hoek = m_laatsteHoek;
+        }
+
+        if (magBewegen)
+        {
+            m_stijfLichaam.linearVelocity = m_bewegingsDirectie * bewegingsSnelheid;
+        }
+        
+        transform.rotation = Quaternion.Euler(0f, m_hoek, 0f);
+    }
+    
+    private void OnGUI()
+    {
+        if (SpelBeheerder.Instance.antiInsectInschakelen)
+        {
+            int w = Screen.width, h = Screen.height;
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(10, 100, w, h * 2 / 100);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = h * 2 / 50;
+            style.normal.textColor = Color.white;
+
+            float fps = 1.0f / deltaTijd;
+            string text = string.Format("{0:0.} fps", fps);
+            GUI.Label(rect, text, style);    
+        }
+    }
+    
+    #region Neppe Functies
+    
+    private void Awake()
+    {
+        WakkerWorden();
+    }
+    
+    private void Update()
+    {
+        Bijwerken();
+    }
+
+    private void FixedUpdate()
+    {
+        VastBijwerken();
+    }
+
+    #endregion
+}`,
+      },
+    ],
   },
   {
     href: "https://github.com/Linkerpink/shmup-2",
@@ -162,7 +348,7 @@ export const allProjects = [
     date: "2024-10-10",
     displayDate: formatDisplayDate("2024-10-10"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-    
+
     featured: false,
   },
   {
@@ -172,7 +358,7 @@ export const allProjects = [
     date: "2025-01-27",
     displayDate: formatDisplayDate("2025-01-27"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -182,7 +368,7 @@ export const allProjects = [
     date: "2024-4-4",
     displayDate: formatDisplayDate("2024-4-4"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -192,7 +378,7 @@ export const allProjects = [
     date: "2024-03-01",
     displayDate: formatDisplayDate("2024-03-01"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-  
+
     featured: false,
   },
   {
@@ -202,7 +388,7 @@ export const allProjects = [
     date: "2024-04-26",
     displayDate: formatDisplayDate("2024-04-26"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-    
+
     featured: false,
   },
 ].map((project) => ({

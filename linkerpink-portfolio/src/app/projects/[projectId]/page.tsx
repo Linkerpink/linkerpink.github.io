@@ -5,6 +5,8 @@ import { allProjects } from "../all-projects";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 
+import CodeBlock from "../code-block";
+
 export default function ProjectDetails() {
   const { projectId } = useParams() as { projectId: string };
   const project = allProjects.find((p) => p.slug === projectId);
@@ -30,8 +32,8 @@ export default function ProjectDetails() {
           <Image
             src={project.banner}
             alt={`${project.title} Banner`}
-            width={1200}
-            height={400}
+            width={2400}
+            height={800}
             className="w-full h-full object-cover"
             priority
           />
@@ -78,7 +80,6 @@ export default function ProjectDetails() {
           </div>
         </div>
 
-        {/* Right: Button Container */}
         {/* Right: Button Container */}
         {(project.href || project.github) && (
           <div className="w-full md:w-[250px] shrink-0 bg-white rounded-3xl p-6 flex flex-col gap-4 self-center">
@@ -132,7 +133,7 @@ export default function ProjectDetails() {
       {/* Description */}
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-          <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+          <span className="w-1.5 h-6 bg-[#F57C00] rounded-sm" />
           Software Description
         </h2>
         <hr className="border-t-2 border-[#BEBEBE] mb-6" />
@@ -141,11 +142,41 @@ export default function ProjectDetails() {
         </p>
       </section>
 
+      {/* Code Snippets */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+          <span className="w-1.5 h-6 bg-[#F57C00] rounded-sm" />
+          Code Snippets
+        </h2>
+        <hr className="border-t-2 border-[#BEBEBE] mb-6" />
+
+        {project.codeSnippets && project.codeSnippets.length > 0 && (
+          <section className="mb-8">
+            {project.codeSnippets.map(
+              ({ language, name, description, code }, i) => (
+                <div
+                  key={i}
+                  className="mb-6 rounded-md overflow-hidden"
+                >
+                  <CodeBlock
+                    language={language}
+                    name={name}
+                    description={description}
+                  >
+                    {code}
+                  </CodeBlock>
+                </div>
+              )
+            )}
+          </section>
+        )}
+      </section>
+
       {/* Screenshots */}
       {screenshots.length > 0 && (
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+            <span className="w-1.5 h-6 bg-[#F57C00] rounded-sm" />
             Screenshots
           </h2>
           <hr className="border-t-2 border-[#BEBEBE] mb-6" />
@@ -166,7 +197,7 @@ export default function ProjectDetails() {
       {videoLikeMedia.length > 0 && (
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+            <span className="w-1.5 h-6 bg-[#F57C00] rounded-sm" />
             Related Videos
           </h2>
           <hr className="border-t-2 border-[#BEBEBE] mb-6" />
