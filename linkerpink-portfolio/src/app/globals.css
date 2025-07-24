@@ -50,7 +50,12 @@ html {
 }
 
 .interactable-object {
-  @apply object-cover rounded-[10px] shadow-[0px_5px_5px_rgba(0,0,0,0.3)] transition-all duration-200 outline-[0px] outline-[#5ef6f600];
+  @apply object-cover rounded-[10px] shadow-[0px_5px_5px_rgba(0,0,0,0.3)] transition-all duration-200 outline-[0px] outline-[#5ef6f600] cursor-pointer;
+  outline-style: solid;
+}
+
+.custom-interactable-object {
+  @apply object-cover transition-all duration-200 outline-[0px] outline-[#5ef6f600] cursor-pointer;
   outline-style: solid;
 }
 
@@ -59,6 +64,11 @@ html.secret .interactable-object {
 }
 
 .interactable-object:hover {
+  @apply outline-[8px] animate-[pulse-outline_0.75s_infinite_alternate_linear];
+  animation: pulse-outline 0.75s infinite alternate linear;
+}
+
+.custom-interactable-object:hover {
   @apply outline-[8px] animate-[pulse-outline_0.75s_infinite_alternate_linear];
   animation: pulse-outline 0.75s infinite alternate linear;
 }

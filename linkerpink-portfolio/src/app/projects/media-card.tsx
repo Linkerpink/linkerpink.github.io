@@ -1,86 +1,67 @@
+// components/MediaCard.tsx
 import Image from "next/image";
 import { useTheme } from "../theme-context";
-import Link from "next/link";
 
 interface MediaCardProps {
-  href?: string;
-  imgSrc?: string;
-  videoSrc?: string;      // regular video file
-  gifSrc?: string;        // animated gif
-  youtubeId?: string;     // YouTube embed
   title: string;
   size?: "large" | "medium" | "small";
+  imgSrc?: string;
+  gifSrc?: string;
+  videoSrc?: string;
+  youtubeId?: string;
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({
   title,
-  imgSrc,
-  videoSrc,
-  gifSrc,
-  youtubeId,
   size = "small",
-  href,
+  imgSrc,
+  gifSrc,
+  videoSrc,
+  youtubeId,
 }) => {
   const isLarge = size === "large";
   const isMedium = size === "medium";
   const { theme } = useTheme();
   const isSecretTheme = theme === "secret";
 
-  const wrapperClass = `horizontal-game ${
-    isLarge
-      ? "w-full md:w-1/2"
-      : isMedium
-      ? "w-full sm:w-1/2 md:w-1/3"
-      : "w-full sm:w-1/2 md:w-1/4"
-  } m-[1%] text-center select-none`;
+  const widthClass = isLarge
+    ? "w-full md:w-1/2"
+    : isMedium
+    ? "w-full sm:w-1/2 md:w-1/3"
+    : "w-full sm:w-1/2 md:w-1/4";
 
-  const secretStyle = isSecretTheme
-    ? {
-        background: "radial-gradient(circle at center, #bb00ff, #6aff00)",
-        color: "#faecb7",
-        borderRadius: "75%",
-        border: "4px solid #faecb7",
-        fontFamily: "Smooch, cursive, Arial, sans-serif",
+  let iconSrc: string | null = null;
+  if (imgSrc || gifSrc) iconSrc = "/images/zoom icon.webp";
+  else if (videoSrc) iconSrc = "/images/video icon.webp";
+
+  return (
+    <div
+      className={`horizontal-game ${widthClass} m-[1%] text-center select-none`}
+      style={
+        isSecretTheme
+          ? {
+              background: "radial-gradient(circle at center, #bb00ff, #6aff00)",
+              color: "#faecb7",
+              borderRadius: "75%",
+              border: "4px solid #faecb7",
+              fontFamily: "Smooch, cursive, Arial, sans-serif",
+            }
+          : {}
       }
-    : {};
-
-  // Decide which type of media is shown
-  const isVideo = !!videoSrc;
-  const isGif = !!gifSrc;
-  const isYouTube = !!youtubeId;
-
-  const mediaTypeIcon = isVideo
-    ? "🎥"
-    : isGif
-    ? "🌀"
-    : youtubeId
-    ? "▶️"
-    : imgSrc
-    ? "🔍"
-    : null;
-
-  const showTitle = isVideo || isYouTube || isGif;
-
-  const media = (
-    <>
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
+    >
+      <div
+        className="relative aspect-[16/9] w-full rounded-lg overflow-hidden interactable-object hover:cursor-pointer"
+        style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
+      >
         {imgSrc && (
           <Image
             src={imgSrc}
             alt={title}
-            fill
-            className="object-cover select-none cursor-pointer"
+            width={600}
+            height={400}
+            className="w-full h-full object-cover"
             draggable={false}
-            style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
-          />
-        )}
-
-        {videoSrc && (
-          <video
-            src={videoSrc}
-            controls
-            className="absolute inset-0 w-full h-full object-cover"
-            style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
+            style={isSecretTheme ? { borderRadius: "75%" } : {}}
           />
         )}
 
@@ -88,35 +69,48 @@ const MediaCard: React.FC<MediaCardProps> = ({
           <Image
             src={gifSrc}
             alt={title}
-            fill
-            className="object-cover select-none"
-            style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
+            width={600}
+            height={400}
+            className="w-full h-full object-cover"
+            draggable={false}
+            style={isSecretTheme ? { borderRadius: "75%" } : {}}
+          />
+        )}
+
+        {videoSrc && (
+          <video
+            src={videoSrc}
+            controls
+            className="w-full h-full object-cover"
+            style={isSecretTheme ? { borderRadius: "75%" } : {}}
           />
         )}
 
         {youtubeId && (
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}`}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="absolute inset-0 w-full h-full"
-            style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
+            className="w-full h-full object-cover"
+            style={isSecretTheme ? { borderRadius: "75%" } : {}}
           />
         )}
 
-        {/* Media Type Icon */}
-        {mediaTypeIcon && (
-          <div className="absolute bottom-2 right-2 bg-white bg-opacity-90 rounded-md px-0.5 py-0.5 flex items-center justify-center shadow w-8 h-8 text-lg">
-            <span className="leading-none">{mediaTypeIcon}</span>
+        {iconSrc && (
+          <div className="absolute bottom-0 right-0 rounded-md items-center w-12 h-12">
+            <Image
+              src={iconSrc}
+              alt="media type"
+              fill
+              className="object-bottom-right object-contain"
+            />
           </div>
         )}
       </div>
 
-      {/* Only show title for video/gif/youtube */}
-      {showTitle && (
-        <h2
-          className="mt-[10px] text-[1.5em] select-none cursor-text"
+      {/* Only show title for video and YouTube */}
+      {(videoSrc || youtubeId) && (
+        <div
+          className="mt-2 font-semibold"
           style={
             isSecretTheme
               ? {
@@ -127,27 +121,6 @@ const MediaCard: React.FC<MediaCardProps> = ({
           }
         >
           {title}
-        </h2>
-      )}
-    </>
-  );
-
-  const commonProps = {
-    className: "no-underline group block interactable-object",
-    style: isSecretTheme
-      ? { color: "#faecb7", fontFamily: "Smooch, cursive, Arial, sans-serif" }
-      : {},
-  };
-
-  return (
-    <div className={wrapperClass} style={secretStyle}>
-      {href ? (
-        <Link href={href} draggable={false} {...commonProps}>
-          {media}
-        </Link>
-      ) : (
-        <div draggable={false} {...commonProps}>
-          {media}
         </div>
       )}
     </div>

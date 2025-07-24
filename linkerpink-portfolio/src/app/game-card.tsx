@@ -67,8 +67,8 @@ const GameCard: React.FC<GameCardProps> = ({
                   key={i}
                   src={icon}
                   alt="tech"
-                  width={30}
-                  height={30}
+                  width={32}
+                  height={32}
                   className="w-8.5 h-8.5 object-contain"
                   style={isSecretTheme ? { borderRadius: '75%' } : {}}
                 />

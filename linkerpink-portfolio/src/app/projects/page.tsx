@@ -40,9 +40,10 @@ export default function AllProjectsPage() {
             href={project.slug ? `/projects/${project.slug}` : project.href}
             title={project.title}
             imgSrc={
-              project.media?.find((m) => m.type === "image")?.src ??
-              "/images/vandringjorne side.jpg"
-            }
+                  project.imgSrc ||
+                  project.media?.find((m) => m.type === "image")?.src ||
+                  "/images/eng.png"
+                }
             technologies={project.technologies}
             displayDate={project.displayDate}
             size="small"

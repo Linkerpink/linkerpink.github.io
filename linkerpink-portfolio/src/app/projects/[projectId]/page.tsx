@@ -3,6 +3,7 @@
 import MediaCard from "../media-card"; // adjust path as needed
 import { allProjects } from "../all-projects";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 export default function ProjectDetails() {
   const { projectId } = useParams() as { projectId: string };
@@ -16,33 +17,138 @@ export default function ProjectDetails() {
     );
   }
 
-  // Separate images
   const screenshots = (project.media ?? []).filter((m) => m.type === "image");
-
-  // Combined video-like media in original order
   const videoLikeMedia = (project.media ?? []).filter((m) =>
     ["video", "gif", "youtubeId"].includes(m.type)
   );
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-8">
-      {/* Title & Date */}
-      <div>
-        <h1 className="text-3xl font-bold mb-1">{project.title}</h1>
-        <p className="text-sm text-gray-500">{project.displayDate}</p>
-      </div>
+    <div className="min-h-screen relative px-6">
+      {/* Banner */}
+      {project.banner && (
+        <div className="w-full mb-10 rounded-3xl overflow-hidden aspect-[10/3] custom-interactable-object shadow-[0px_3px_6px_rgba(0,0,0,0.5)]">
+          <Image
+            src={project.banner}
+            alt={`${project.title} Banner`}
+            width={1200}
+            height={400}
+            className="w-full h-full object-cover"
+            priority
+          />
+        </div>
+      )}
 
-      {/* Technologies */}
-      <div className="flex flex-wrap gap-2">
-        {project.technologies.map((tech, index) => (
-          <img key={index} src={tech} alt="" className="w-8 h-8 object-contain" />
-        ))}
-      </div>
+      {/* Title + Icon + Date */}
+      <header className="mb-10 flex flex-col md:flex-row gap-4 items-center">
+        {/* Left: Icon + Title Block */}
+        <div className="flex-1 bg-white rounded-3xl p-5">
+          <div className="flex items-center gap-4">
+            {project.icon && (
+              <Image
+                src={project.icon}
+                alt={`${project.title} Icon`}
+                width={512}
+                height={512}
+                className="w-38 h-38 object-cover rounded-3xl border-8 border-white shadow-[0px_0px_6px_rgba(0,0,0,0.5)] custom-interactable-object aspect-[1/1]"
+              />
+            )}
+            <div>
+              <h1 className="text-2xl font-extrabold leading-tight">
+                {project.title}
+              </h1>
+              <p className="text-sm text-[#5F5F5F] mt-2">
+                {project.displayDate}
+              </p>
 
-      {/* Screenshots (images) */}
+              {project.technologies.length > 0 && (
+                <div className="mt-3 flex gap-2 flex-wrap">
+                  {project.technologies.map((icon, i) => (
+                    <Image
+                      key={i}
+                      src={icon}
+                      alt="tech"
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 object-contain"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Button Container */}
+        {/* Right: Button Container */}
+        {(project.href || project.github) && (
+          <div className="w-full md:w-[250px] shrink-0 bg-white rounded-3xl p-6 flex flex-col gap-4 self-center">
+            {/* View Project (dynamic platform) */}
+            {project.href && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold interactable-object"
+              >
+                <Image
+                  src={
+                    project.platform?.toLowerCase().includes("gx")
+                      ? "/images/gx games logo.jpg"
+                      : "/images/itch.io logo.png"
+                  }
+                  alt={`${project.platform || "Platform"} Logo`}
+                  width={48}
+                  height={48}
+                  draggable={false}
+                  className="rounded-md"
+                />
+                View on {project.platform || "Platform"}
+              </a>
+            )}
+
+            {/* GitHub */}
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-gray-500 to-gray-900 text-white font-semibold interactable-object"
+                draggable={false}
+              >
+                <Image
+                  src="/images/github logo.svg"
+                  alt="GitHub Icon"
+                  width={48}
+                  height={48}
+                  draggable={false}
+                />
+                View on GitHub
+              </a>
+            )}
+          </div>
+        )}
+      </header>
+
+      {/* Description */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+          <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+          Software Description
+        </h2>
+        <hr className="border-t-2 border-[#BEBEBE] mb-6" />
+        <p className="text-[#5F5F5F] leading-relaxed whitespace-pre-line">
+          {project.description}
+        </p>
+      </section>
+
+      {/* Screenshots */}
       {screenshots.length > 0 && (
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Screenshots</h2>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+            Screenshots
+          </h2>
+          <hr className="border-t-2 border-[#BEBEBE] mb-6" />
           <div className="flex flex-wrap justify-center gap-6">
             {screenshots.map((img, i) => (
               <MediaCard
@@ -53,14 +159,18 @@ export default function ProjectDetails() {
               />
             ))}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* Combined Videos, GIFs, YouTube */}
+      {/* Videos / GIFs / YouTube */}
       {videoLikeMedia.length > 0 && (
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Media</h2>
-          <div className="flex flex-wrap justify-start gap-6">
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-orange-500 rounded-sm" />
+            Related Videos
+          </h2>
+          <hr className="border-t-2 border-[#BEBEBE] mb-6" />
+          <div className="flex flex-wrap justify-center gap-6">
             {videoLikeMedia.map((mediaItem, i) => {
               switch (mediaItem.type) {
                 case "video":
@@ -68,8 +178,8 @@ export default function ProjectDetails() {
                     <MediaCard
                       key={i}
                       videoSrc={mediaItem.src}
-                      title={`Video ${i + 1}`}
-                      size="medium"
+                      title={mediaItem.title || project.title}
+                      size="large"
                     />
                   );
                 case "gif":
@@ -78,7 +188,7 @@ export default function ProjectDetails() {
                       key={i}
                       gifSrc={mediaItem.src}
                       title={`GIF ${i + 1}`}
-                      size="medium"
+                      size="small"
                     />
                   );
                 case "youtubeId":
@@ -86,8 +196,8 @@ export default function ProjectDetails() {
                     <MediaCard
                       key={i}
                       youtubeId={mediaItem.src}
-                      title={`YouTube Video ${i + 1}`}
-                      size="medium"
+                      title={mediaItem.title || project.title}
+                      size="large"
                     />
                   );
                 default:
@@ -95,24 +205,7 @@ export default function ProjectDetails() {
               }
             })}
           </div>
-        </div>
-      )}
-
-      {/* Description */}
-      <div>
-        <p className="mt-6">{project.description}</p>
-      </div>
-
-      {/* External Link */}
-      {project.href && (
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline block mt-6"
-        >
-          View Project
-        </a>
+        </section>
       )}
     </div>
   );
