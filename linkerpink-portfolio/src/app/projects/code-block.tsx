@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Highlight from "react-highlight";
 import { AnimatePresence, motion } from "framer-motion";
 import "highlight.js/styles/kimbie-light.css";
+import MediaCard from "./media-card";
 
 interface CodeBlockProps {
   language: string;
@@ -31,8 +32,7 @@ export default function CodeBlock({
   return (
     <section
       aria-label={`${language} code block: ${name}`}
-      className="relative border border-gray-300 rounded-xl overflow-hidden shadow-md bg-white transition-shadow duration-300
-        hover:shadow-lg focus-within:shadow-lg"
+      className="relative border border-gray-300 rounded-3xl overflow-hidden bg-white"
     >
       {/* Header */}
       <header
@@ -45,11 +45,7 @@ export default function CodeBlock({
             setIsOpen((v) => !v);
           }
         }}
-        className="flex justify-between items-center px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100
-          text-gray-900 font-mono text-base font-semibold cursor-pointer select-none
-          rounded-t-xl shadow-sm
-          hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200
-          focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:ring-offset-1"
+        className="flex justify-between items-center px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-900 font-mono text-base font-semibold cursor-pointer select-none rounded-t-xl shadow-sm hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F57C00] focus:ring-offset-1"
       >
         <span className="truncate">
           {language.toUpperCase()} — {name}
@@ -71,7 +67,7 @@ export default function CodeBlock({
         </motion.button>
       </header>
 
-      {/* Animated content */}
+      {/* Animated Content */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -86,21 +82,17 @@ export default function CodeBlock({
             className="overflow-hidden"
           >
             <article ref={contentRef}>
+              {/* Description */}
               {description && (
                 <div className="text-gray-700 bg-gray-100 px-6 py-3 border-t border-b border-gray-200 text-sm leading-relaxed">
                   {description}
                 </div>
               )}
-              <pre className="p-6 overflow-auto bg-gray-100 text-gray-900 rounded-b-xl text-sm leading-relaxed font-mono shadow-lg">
-                <Highlight className={language}>
-                  {children
-                    .trim()
-                    .split("\n")
-                    .map((line, i) => (
-                      <span key={i}>{line || "\u00A0"}</span>
-                    ))}
-                </Highlight>
-              </pre>
+
+              {/* Code */}
+              <div className="p-6 overflow-auto bg-gray-50 text-gray-900 rounded-b-xl text-sm leading-relaxed font-mono">
+                <Highlight className={language}>{children.trim()}</Highlight>
+              </div>
             </article>
           </motion.div>
         )}

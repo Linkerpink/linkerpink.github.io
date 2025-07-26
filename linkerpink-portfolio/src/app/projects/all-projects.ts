@@ -16,13 +16,13 @@ function generateSlug(title: string): string {
 
 // The full project list with generated slugs
 export const allProjects = [
-  // robo rebellion
 
+  // robo rebellion //
   {
     title: "Robo Rebellion: Dawn of the Machine",
     slug: "robo-rebellion-dawn-of-the-machine",
     banner: "/images/robo rebellion.png",
-    icon: "/images/robo rebellion.png",
+    icon: "/images/robo rebellion icon.webp",
     date: "2024-07-10",
     displayDate: formatDisplayDate("2024-07-10"),
     platform: "Itch.io",
@@ -32,12 +32,12 @@ export const allProjects = [
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
     media: [
+      { type: "image", src: "/images/robo rebellion 1.webp" },
+      { type: "image", src: "/images/robo rebellion 6.jpeg" },
+      { type: "image", src: "/images/robo rebellion 4.jpeg" },
+      { type: "image", src: "/images/robo rebellion 3.jpeg" },
       { type: "image", src: "/images/robo rebellion.png" },
-      { type: "image", src: "/images/vandringjorne bijt.jpg" },
-      { type: "image", src: "/images/vandringjorne horror.jpg" },
-      { type: "image", src: "/images/vandringjorne side.jpg" },
-      { type: "image", src: "/images/robo rebellion.png" },
-      { type: "image", src: "/images/vandringjorne bijt.jpg" },
+      { type: "image", src: "/images/robo rebellion 2.png" },
       { type: "youtubeId", src: "pjqwkHgBgVQ", title: "Launch Trailer" },
     ],
 
@@ -45,16 +45,535 @@ export const allProjects = [
 
     codeSnippets: [
       {
-        name: "insane script",
+        name: "Player.cs",
         language: "csharp",
-        description: "ik was beter.",
-        code: `insane code`,
+        description: "Here are some functions I made for the player. the player was made with multiple people, so I will only be showing the parts I made, and are also interesting. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
+        code: `
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Dash,
+    Dead
+}
+
+public PlayerState state;
+
+private void Awake()
+{
+    //Input
+    controls = new Controls();
+
+    controls.Player.Movement.performed += context => MoveInput(context.ReadValue<Vector2>());
+    controls.Player.Movement.canceled += context => state = PlayerState.Idle;
+    
+    controls.Player.Dash.performed += context => DashInput();
+
+    input = GetComponent<PlayerInput>();
+
+    //Animations / model swaps
+    robotSwordSlash = GameObject.Find("P_RobotSwordSlash");
+    robotRifleRun = GameObject.Find("P_RobotRifleRun");
+    robotRifleIdle = GameObject.Find("P_RobotRifleIdle");
+}
+
+private void MoveInput(Vector2 direction)
+{
+    if (state != PlayerState.Dash)
+    {
+        state = PlayerState.Move;
+        moveDirection = new Vector3(direction.x, 0f, direction.y);
+    }     
+}
+
+private void DashInput()
+{
+    
+    if (canDash && state != PlayerState.Dash)
+    {
+        state = PlayerState.Dash;
+        audioSource.PlayOneShot(dashClip, 1);
+        dashTimer = 0f;
+        dashDirection = lastMoveDirection;
+        dashCoolDown = initialDashCoolDown;
+    }
+
+}
+
+private void Start()
+{
+    //States
+    state = PlayerState.Idle;
+
+    //Dash
+    initialDashStrength = dashStrength;
+    initialDashCoolDown = dashCoolDown;
+    dashTrail.SetActive(false);
+
+    //Camera
+    cameraManager = FindObjectOfType<CameraManager>();
+
+    //Animations / model swaps
+    robotSwordSlash.SetActive(false);
+    robotRifleRun.SetActive(false);
+    robotRifleIdle.SetActive(false);
+}
+
+private void Update()
+{
+    if (!gameManager.gamePaused)
+    {
+        switch (state)
+        {
+            case PlayerState.Idle:
+                IdleState();
+                break;
+            case PlayerState.Move:
+                MoveState();
+                break;
+            case PlayerState.Dash:
+                DashState();
+                break;
+            case PlayerState.Dead:
+                DeadState();
+                break;
+        }
+
+        if (state != PlayerState.Dead)
+        {
+            if (moveDirection != Vector3.zero)
+            {
+                lastMoveDirection = moveDirection;
+                dashDirection = lastMoveDirection;
+            }
+
+            //Input
+            aim = controls.Player.Aim.ReadValue<Vector2>();
+
+            RotatePlayer();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //cameraManager.ScreenShake(10f, 2f, 0.2f);
+            }
+
+            if (dashCoolDown > 0f)
+            {
+                dashCoolDown -= Time.deltaTime;
+                canDash = false;
+            }
+            else
+            {
+                canDash = true;
+            }
+        }
+
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.B)) enableDebugText = !enableDebugText;
+    }        
+}
+
+private void FixedUpdate()
+{
+    if (state != PlayerState.Dash)
+    {
+        rb.velocity = moveDirection * moveSpeed;
+    }
+}
+
+private void IdleState()
+{
+    moveDirection = Vector3.zero;
+
+    if (!melee.isPerformingMelee)
+    {
+        //Animations / model swaps
+        robotSwordSlash.SetActive(false);
+        robotRifleRun.SetActive(false);
+        robotRifleIdle.SetActive(true);
+    }
+    
+}
+
+private void MoveState()
+{
+    if (moveDirection == Vector3.zero) 
+    {
+        state = PlayerState.Idle;
+    }
+
+    if (!melee.isPerformingMelee)
+    {
+        //Animations / model swaps
+        robotSwordSlash.SetActive(false);
+        robotRifleRun.SetActive(true);
+        robotRifleIdle.SetActive(false);
+    }
+}
+
+private void DashState()
+{
+    dashTrail.SetActive(true);
+    dashStrength = initialDashStrength;
+
+    float dashDistance = dashStrength * dashDuration;
+
+    LayerMask layerMask = LayerMask.GetMask("environmentLayer");
+
+    RaycastHit hit;
+
+    if (Physics.Raycast(transform.position, dashDirection, out hit, 2f, layerMask))
+    {
+        rb.position = hit.point - dashDirection * 0.1f;
+        state = PlayerState.Move;
+        dashTrail.SetActive(false);
+        return;
+    }
+
+    rb.velocity = dashDirection * dashStrength;
+
+    if (dashTimer < dashDuration)
+    {
+        dashTimer += Time.deltaTime;
+    }
+    else
+    {
+        state = PlayerState.Move;
+        dashTrail.SetActive(false);
+    }
+}
+
+private void RotatePlayer()
+{
+        if (isGamepad)
+        {
+            //Controller rotation
+            if (Mathf.Abs(aim.x) > controllerDeadzone || Mathf.Abs(aim.y) > controllerDeadzone)
+            {
+                Vector3 playerDirection = Vector3.right * aim.x + Vector3.forward * aim.y;
+
+                if (playerDirection.sqrMagnitude > 0.0f)
+                {
+                    Quaternion newRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, controllerRotationSmoothing * Time.deltaTime);
+                }
+            }
+        }
+        else
+        {
+            //Mouse rotation
+            Ray ray = Camera.main.ScreenPointToRay(aim);
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            float rayDistance;
+
+            if (groundPlane.Raycast(ray, out rayDistance))
+            {
+                Vector3 point = ray.GetPoint(rayDistance);
+                LookAt(point);
+            }
+        }   
+}
+
+private void LookAt(Vector3 _point)
+{
+    Vector3 heightCorrectedPoint = new Vector3(_point.x, transform.position.y, _point.z);
+    transform.LookAt(heightCorrectedPoint);
+}
+
+//Input
+public void OnDeviceChange(PlayerInput _input)
+{
+    isGamepad = _input.currentControlScheme.Equals("Gamepad") ? true : false;
+}
+
+private void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("Shotgun Pickup"))
+    {
+        cameraManager.ChangeCamera(cameraManager.currentCam, cameraManager.playerCamZoomedSmall);
+    }
+}
+
+        `,
+      },
+
+      {
+        name: "PlayerInteraction.cs",
+        language: "csharp",
+        description: "I was also in charge of the player interaction, pickups, keycards and inventory. the code blocks below are conntected with this one",
+        code: `
+private void OnTriggerStay(Collider other)
+{
+    if (controls.Player.Interact.IsPressed())
+    {
+        if (other.gameObject.tag == "Interactable")
+        {
+            Debug.Log("Interacted with: " + other);
+
+            InteractionIcon interactionIcon = other.GetComponentInChildren<InteractionIcon>();
+
+            KeyCard keyCard = other.GetComponent<KeyCard>();
+            if (keyCard != null && interactionIcon != null)
+            {
+                inventory.AddKeyCard(keyCard.GetKeyCardType());
+                playerAudioSource.PlayOneShot(keycardPickUpClip, 1);
+                Destroy(interactionIcon.gameObject);
+                Destroy(keyCard.gameObject);
+            }
+
+            Door door = other.GetComponent<Door>();
+            if (door == null)
+            {
+                return;
+            }
+
+            else if (inventory.ContainsKeyCard(door.GetKeyCardType()))
+            {
+                inventory.RemoveKeyCard(door.GetKeyCardType());
+                door.OpenAllDoors(door.GetKeyCardType());
+                playerAudioSource.PlayOneShot(doorOpenClip, 1);
+            }
+            
+            if (!inventory.ContainsKeyCard(door.GetKeyCardType()))
+            {
+                door.PlayLockedAnimation(door);
+            }
+        }
+
+        if (other.gameObject.tag == "Shotgun Pickup")
+        {
+            playerAudioSource.PlayOneShot(shotgunPickUpClip, 1);
+            inventory.AddWeapon(Weapons.Shotgun);
+            Destroy(other.gameObject);
+            cameraManager.ChangeCamera(cameraManager.currentCam, cameraManager.playerCam);
+        }
+    }
+}
+        `,
+      },
+
+      {
+        name: "PlayerInventory.cs",
+        language: "csharp",
+        description: "This script shows the player inventory / weapon switching",
+        code: `
+public enum Weapons
+{
+    Rifle,
+    Shotgun,
+}
+
+public Weapons selectedWeapon;
+
+private void Start()
+{
+    AddWeapon(Weapons.Rifle);
+    selectedWeapon = Weapons.Rifle;
+}
+
+public List<KeyCard.KeyCardType> GetKeyCardList()
+{
+    return keyCardList;
+}
+
+public void AddKeyCard(KeyCard.KeyCardType keyCardType)
+{
+    if (!keyCardList.Contains(keyCardType))
+    {
+        Debug.Log("Added KeyCard: " + keyCardType);
+        keyCardList.Add(keyCardType);
+        OnKeysChanged?.Invoke(this, EventArgs.Empty);
+    }
+    else
+    {
+        Debug.Log("KeyCard already in inventory: " + keyCardType);
+    }
+}
+
+
+public void RemoveKeyCard(KeyCard.KeyCardType keyCardType)
+{
+    Debug.Log("Removed KeyCard: " + keyCardType);
+    keyCardList.Remove(keyCardType);
+    OnKeysChanged?.Invoke(this, EventArgs.Empty);
+}
+
+public bool ContainsKeyCard(KeyCard.KeyCardType keyCardType)
+{
+    return keyCardList.Contains(keyCardType);
+}
+
+public void AddWeapon(Weapons weapon)
+{
+    if (!weaponsList.Contains(weapon))
+    {
+        Debug.Log("Added Weapon: " + weapon);
+        weaponsList.Add(weapon);
+    }
+    else
+    {
+        Debug.Log("KeyCard already in inventory: " + weapon);
+    }
+}
+
+public Weapons GetSelectedWeapon()
+{
+    return selectedWeapon;
+}
+
+private void SwitchWeapon()
+{
+    if (weaponsList.Count > 1)
+    {
+        switch (selectedWeapon)
+        {
+            case Weapons.Rifle:
+                audioSource.PlayOneShot(rifleSwitch, 1);
+                selectedWeapon = Weapons.Shotgun;
+                playerShootingRaycast = GetComponent<PlayerShootingRaycast>();
+                playerShootingRaycast.shootingEffect = shotgunMuzzleFlash;
+                break;
+
+            case Weapons.Shotgun:
+                audioSource.PlayOneShot(shotgunSwitch, 1);
+                selectedWeapon = Weapons.Rifle;
+                playerShootingRaycast = GetComponent<PlayerShootingRaycast>();
+                playerShootingRaycast.shootingEffect = rifleMuzzleFlash;
+
+                break;
+        }
+    }
+}
+        `,
+      },
+
+  {
+        name: "KeyUI.cs",
+        language: "csharp",
+        description: "This script shows the keycard stacking ui.",
+        code: `
+private void Awake()
+{
+    playerInventory = GameObject.Find("Player").GetComponent<PlayerInventory>();
+
+    container = transform.Find("Container");
+    keyCardTemplate = container.Find("Key Card Template");
+    keyCardTemplate.gameObject.SetActive(false);
+}
+
+private void Start()
+{
+    playerInventory.OnKeysChanged += PlayerInventory_OnKeysChanged;
+    UpdateVisual(); // Initial update
+}
+
+private void PlayerInventory_OnKeysChanged(object sender, System.EventArgs e)
+{
+    UpdateVisual();
+}
+
+private void UpdateVisual()
+{
+    // Clean up old keys
+    foreach (Transform child in container)
+    {
+        if (child == keyCardTemplate) continue;
+        Destroy(child.gameObject);
+    }
+
+    // Instantiate current key list
+    List<KeyCard.KeyCardType> keyCardList = playerInventory.GetKeyCardList();
+    for (int i = 0; i < keyCardList.Count; i++)
+    {
+        KeyCard.KeyCardType keyCardType = keyCardList[i];
+        Transform keyCardTransform = Instantiate(keyCardTemplate, container);
+        keyCardTransform.gameObject.SetActive(true);
+        keyCardTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(distanceX * i, 0);
+        Image keyCardImage = keyCardTransform.Find("Key Card Background").GetComponent<Image>();
+
+        switch (keyCardType)
+        {
+            default:
+            case KeyCard.KeyCardType.red: keyCardImage.color = Color.red; break;
+            case KeyCard.KeyCardType.green: keyCardImage.color = Color.green; break;
+            case KeyCard.KeyCardType.blue: keyCardImage.color = Color.blue; break;
+            case KeyCard.KeyCardType.yellow: keyCardImage.color = Color.yellow; break;
+            case KeyCard.KeyCardType.purple: keyCardImage.color = new Color(0.5f, 0.0f, 0.5f); break;
+        }
+    }
+}
+        `,
+      },
+
+      
+      {
+        name: "CameraManager.cs",
+        language: "csharp",
+        description: "This is the camera manager I made for the game. This manager is able to switch cameras in a smooth way using CineMachine, and give screenshake when needed.",
+        code: `
+private void Start()
+{
+    //Set the current cam
+    currentCam = playerCam;
+    currentCam.Priority = 100;
+}
+
+public void ScreenShake(float amplitude, float frequency, float length)
+{
+    perlin = currentCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+    perlin.m_AmplitudeGain = amplitude;
+    perlin.m_FrequencyGain = frequency;
+    StartCoroutine(ShakeTimer(length));
+}
+
+public void ChangeCamera(CinemachineVirtualCamera oldCam, CinemachineVirtualCamera cam)
+{
+    oldCam.Priority = 0;
+    cam.Priority = 100;
+
+    currentCam = cam;
+}
+
+private IEnumerator ShakeTimer(float length)
+{
+    yield return new WaitForSeconds(length);
+
+    //Reset noise
+    perlin.m_AmplitudeGain = 0;
+    perlin.m_FrequencyGain = 0;
+}
+        `,
+      },
+
+      {
+        name: "GameManager.cs",
+        language: "csharp",
+        description: "Here are some functions I made in the GameManager that improve the gameplay experience. The rumble was made with enabling the motors of the controller if the player is playing with a controller, and stopping it in a certain amount of time.",
+        code: `
+public void ControllerRumble(float leftMotorIntensity, float rightMotorIntensity, float time)
+{
+    if (player != null) 
+    {
+        if (player.isGamepad)
+        {
+            Gamepad.current.SetMotorSpeeds(0.50f, 0.50f);
+            StartCoroutine(StopControllerRumble(time));
+        }
+    }
+}
+
+private IEnumerator StopControllerRumble(float time)
+{
+    yield return new WaitForSeconds(time);
+    InputSystem.ResetHaptics();
+}
+        `,
       },
     ],
   },
 
-  // not suepr maria 63
-
+  // not suepr maria 63 //
   {
     title: "Not Suepr Maria 63",
     slug: "not-suepr-maria-63",

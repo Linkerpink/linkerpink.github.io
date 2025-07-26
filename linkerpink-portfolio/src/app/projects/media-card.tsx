@@ -9,6 +9,7 @@ interface MediaCardProps {
   gifSrc?: string;
   videoSrc?: string;
   youtubeId?: string;
+  onClick?: () => void; // <-- new optional prop
 }
 
 const MediaCard: React.FC<MediaCardProps> = ({
@@ -18,6 +19,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
   gifSrc,
   videoSrc,
   youtubeId,
+  onClick, // <-- accept onClick
 }) => {
   const isLarge = size === "large";
   const isMedium = size === "medium";
@@ -50,6 +52,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
       }
     >
       <div
+        onClick={onClick} // <-- add click handler here
         className="relative aspect-[16/9] w-full rounded-lg overflow-hidden interactable-object hover:cursor-pointer"
         style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
       >
@@ -66,14 +69,12 @@ const MediaCard: React.FC<MediaCardProps> = ({
         )}
 
         {gifSrc && (
-          <Image
+          <img
             src={gifSrc}
             alt={title}
-            width={600}
-            height={400}
             className="w-full h-full object-cover"
             draggable={false}
-            style={isSecretTheme ? { borderRadius: "75%" } : {}}
+            style={isSecretTheme ? { borderRadius: "75%" } : { borderRadius: "10px" }}
           />
         )}
 

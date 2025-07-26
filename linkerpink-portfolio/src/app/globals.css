@@ -56,7 +56,7 @@ html {
 }
 
 .custom-interactable-object {
-  @apply object-cover transition-all duration-200 outline-[0px] outline-[#5ef6f600] cursor-pointer;
+  @apply object-cover transition-all duration-200 outline-[0px] outline-[#5ef6f600];
   outline-style: solid;
 }
 
@@ -74,6 +74,14 @@ html.secret .interactable-object {
   animation: pulse-outline 0.75s infinite alternate linear;
 }
 
+.banner-animate {
+  @apply transition-transform duration-300;
+}
+
+.banner-animate:hover {
+  @apply scale-105 duration-300;
+}
+
 
 @keyframes pulse-outline {
     0% {
@@ -83,38 +91,6 @@ html.secret .interactable-object {
         outline-color: #09C6DB;
     }
 }
-
-pre {
-  counter-reset: linenumber;
-  position: relative;
-  padding-left: 4.5rem; /* more space for line numbers */
-}
-
-pre code {
-  display: block;
-  white-space: pre-wrap;
-}
-
-pre code > span {
-  counter-increment: linenumber;
-  display: block;
-  padding-left: 2.5rem; /* more padding so code text doesn't touch numbers */
-  position: relative;
-}
-
-pre code > span::before {
-  content: counter(linenumber);
-  position: absolute;
-  left: 0;
-  width: 5rem; /* wider for spacing */
-  text-align: right;
-  color: #f57c00;
-  user-select: none;
-  pointer-events: none;
-  font-weight: 600;
-  padding-right: 5rem; /* little gap after number */
-}
-
 
 .secret body {
   background: var(--secret-bg-image) repeat fixed, var(--background);
