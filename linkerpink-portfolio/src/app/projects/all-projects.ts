@@ -1,5 +1,3 @@
-import { platform } from "os";
-
 // Helper to format date as 'Month Year' or 'Not Released'
 function formatDisplayDate(date: string): string {
   if (date.toLowerCase() === "not released") return "Not Released";
