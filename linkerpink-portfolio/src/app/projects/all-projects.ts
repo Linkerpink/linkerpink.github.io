@@ -18,8 +18,7 @@ function generateSlug(title: string): string {
 
 // The full project list with generated slugs
 export const allProjects = [
-
-// Robo Rebellion: Dawn of the Machine //
+  // Robo Rebellion: Dawn of the Machine //
   {
     title: "Robo Rebellion: Dawn of the Machine",
     slug: "robo-rebellion-dawn-of-the-machine",
@@ -30,12 +29,12 @@ export const allProjects = [
     platform: "Itch.io",
     description:
       "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
-    
+
     href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
-    
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-    
+
     media: [
       { type: "image", src: "/images/robo rebellion.png" },
       { type: "image", src: "/images/robo rebellion 2.png" },
@@ -52,7 +51,8 @@ export const allProjects = [
       {
         name: "Player.cs",
         language: "csharp",
-        description: "Here are some functions I made for the player. the player was made with multiple people, so I will only be showing the parts I made, and are also interesting. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
+        description:
+          "Here are some functions I made for the player. the player was made with multiple people, so I will only be showing the parts I made, and are also interesting. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
         code: `
 public enum PlayerState
 {
@@ -305,7 +305,8 @@ private void OnTriggerEnter(Collider other)
       {
         name: "PlayerInteraction.cs",
         language: "csharp",
-        description: "I was also in charge of the player interaction, pickups, keycards and inventory. the code blocks below are conntected with this one",
+        description:
+          "I was also in charge of the player interaction, pickups, keycards and inventory. the code blocks below are conntected with this one",
         code: `
 private void OnTriggerStay(Collider other)
 {
@@ -360,7 +361,8 @@ private void OnTriggerStay(Collider other)
       {
         name: "PlayerInventory.cs",
         language: "csharp",
-        description: "This script shows the player inventory / weapon switching",
+        description:
+          "This script shows the player inventory / weapon switching",
         code: `
 public enum Weapons
 {
@@ -452,7 +454,7 @@ private void SwitchWeapon()
         `,
       },
 
-  {
+      {
         name: "KeyUI.cs",
         language: "csharp",
         description: "This script shows the keycard stacking ui.",
@@ -510,11 +512,11 @@ private void UpdateVisual()
         `,
       },
 
-      
       {
         name: "CameraManager.cs",
         language: "csharp",
-        description: "This is the camera manager I made for the game. This manager is able to switch cameras in a smooth way using CineMachine, and give screenshake when needed.",
+        description:
+          "This is the camera manager I made for the game. This manager is able to switch cameras in a smooth way using CineMachine, and give screenshake when needed.",
         code: `
 private void Start()
 {
@@ -554,7 +556,8 @@ private IEnumerator ShakeTimer(float length)
       {
         name: "GameManager.cs",
         language: "csharp",
-        description: "Here are some functions I made in the GameManager that improve the gameplay experience. The rumble was made with enabling the motors of the controller if the player is playing with a controller, and stopping it in a certain amount of time.",
+        description:
+          "Here are some functions I made in the GameManager that improve the gameplay experience. The rumble was made with enabling the motors of the controller if the player is playing with a controller, and stopping it in a certain amount of time.",
         code: `
 public void ControllerRumble(float leftMotorIntensity, float rightMotorIntensity, float time)
 {
@@ -578,7 +581,7 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-// Not Suepr Maria 63 //
+  // Not Suepr Maria 63 //
   {
     title: "Not Suepr Maria 63",
     slug: "not-suepr-maria-63",
@@ -591,9 +594,9 @@ private IEnumerator StopControllerRumble(float time)
       "VERY GOOD REMAKE OF SUEPR MARIA 63 😎😎😨😱 (please don't sue this is a school project)",
     href: "https://linkerpink.itch.io/not-suepr-maria-63",
     github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
-    
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-    
+
     media: [
       { type: "image", src: "/images/not suepr maria 63.png" },
       { type: "image", src: "/images/not suepr 1.png" },
@@ -615,24 +618,22 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-// The Royal Spin //
+  // The Royal Spin //
   {
     title: "The Royal Spin",
     slug: "the-royal-spin",
     banner: "/images/the royal spin banner.png",
     icon: "/images/the royal spin logo.png",
-    date: "2025-04-17",
-    displayDate: formatDisplayDate("2025-04-17"),
+    date: "2025-07-14",
+    displayDate: formatDisplayDate("2025-07-14"),
     platform: "Itch.io",
     description:
       "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink-github-io-beta.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio",
     href: "https://linkerpink.itch.io/the-royal-spin",
     github: "https://github.com/MarkBSH/Suicide-Squad",
-    
-    technologies: [
-      "/images/unity logo.png", "/images/c sharp logo.svg"
-    ],
-    
+
+    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
     media: [
       { type: "image", src: "/images/the royal spin logo.png" },
       { type: "image", src: "/images/trs 1.jpg" },
@@ -654,8 +655,8 @@ private IEnumerator StopControllerRumble(float time)
       },
     ],
   },
-  
-// When Time Colldes //
+
+  // When Time Colldes //
   {
     title: "When Time Collides",
     slug: "when-time-collides",
@@ -666,11 +667,11 @@ private IEnumerator StopControllerRumble(float time)
     platform: "GX Games",
     imgSrc: "/images/when time collides.webp",
     href: "https://gx.games/games/ef2jjg/when-time-collides/",
-    
+
     description:
       "When Time Collides is a small retro platformer where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself.",
-    
-      technologies: ["/images/gamemaker studio logo.svg"],
+
+    technologies: ["/images/gamemaker studio logo.svg"],
 
     media: [
       { type: "image", src: "/images/when time collides.webp" },
@@ -697,7 +698,7 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-// Portfolio Website //
+  // Portfolio Website //
   {
     title: "Portfolio Website",
     slug: "portfolio-website",
@@ -706,21 +707,19 @@ private IEnumerator StopControllerRumble(float time)
     date: "2025-07-23",
     displayDate: formatDisplayDate("2025-07-23"),
     imgSrc: "/images/portfolio site cover temp.png",
-    
+    platform: "Web",
+
     github: "https://github.com/Linkerpink/linkerpink.github.io",
 
-    description:
-    "best portfolio website ever made?Q?!?!?!!?",
-    
+    description: "best portfolio website ever made?Q?!?!?!!?",
+
     technologies: [
       "/next.svg",
       "/images/typescript logo.svg",
       "/images/tailwind css logo.svg",
     ],
 
-    media: [
-      { type: "image", src: "/images/portfolio site cover temp.png" },
-    ],
+    media: [{ type: "image", src: "/images/portfolio site cover temp.png" }],
 
     featured: true,
 
@@ -734,29 +733,24 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-// Shy //
+  // Shy //
   {
     title: "Shy",
     slug: "shy",
     banner: "/images/SHYGame.jpg",
     icon: "/images/SHYGame.jpg",
-    date: "2025-07-23",
-    displayDate: formatDisplayDate("2025-07-23"),
+    date: "2024-05-26",
+    displayDate: formatDisplayDate("2024-05-26"),
     href: "https://linkerpink.itch.io/shy/",
     github: "https://github.com/GLU-CSD/shy-Linkerpink",
     imgSrc: "/images/SHYGame.jpg",
     platform: "Itch.io",
-    
-    description:
-    "banger emotes",
-    
-    technologies: [
-      "/images/unity logo.png", "/images/c sharp logo.svg"
-    ],
 
-    media: [
-      { type: "image", src: "/images/SHYGame.jpg" },
-    ],
+    description: "banger emotes",
+
+    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    media: [{ type: "image", src: "/images/SHYGame.jpg" }],
 
     featured: true,
 
@@ -770,35 +764,116 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-  
-
+  // Slimetastic Punchout //
   {
-    href: "https://linkerpink.itch.io/slimetastic-punchout",
-    imgSrc: "/images/slimetastic punchout cover art.png",
     title: "Slimetastic Punchout",
-    date: "2024-12-5",
+    slug: "slimetastic-punchout",
+    banner: "/images/slimetastic punchout cover art.png",
+    icon: "/images/slimetastic punchout cover art.png",
+
+    date: "2025-07-23",
     displayDate: formatDisplayDate("2024-12-5"),
+
+    href: "https://nielscraft12.itch.io/slimetastic-punchout",
+    github: "https://github.com/GLU-CSD/shy-Linkerpink",
+
+    imgSrc: "/images/slimetastic punchout cover art.png",
+    platform: "Itch.io",
+
+    description:
+      "Slimetastic Punchout is a chaotic and fun local multiplayer game where you take control of colorful, squishy slimes and battle it out in fast-paced arenas. The goal? Cover as many tiles as you can while sliding, bouncing, and splattering your way across the map. Along the way, you can land some solid punches to shove your opponents out of the way—or just throw them off their game. Every match is unpredictable, full of laughter, and a messy fight for control. It’s slimy chaos at its best! \n\nDevelopers: \nNiels de Laat \nNoah van Uunen \n\nArtists: \nSeemay Alsemgeest \nJordy Andriessen \nLisa van der Kloet",
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
+    media: [
+      { type: "image", src: "/images/slimetastic punchout cover art.png" },
+      { type: "image", src: "/images/sp 2.png" },
+      { type: "image", src: "/images/sp 3.png" },
+      { type: "youtubeId", src: "zgEdaaWe3JQ", title: "Launch Trailer" },
+    ],
+
     featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
   },
+
+  // Fnaf Unity Fortnite Official Game Godot //
   {
-    href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
-    imgSrc: "/images/fnaf unity fortnite official game godot.webp",
     title: "Fnaf Unity Fortnite Official Game Godot",
+    slug: "fnaf-unity-fortnite-official-game-godot",
+    banner: "/images/fnaf unity fortnite official game godot.webp",
+    icon: "/images/fnaf unity fortnite official game godot.webp",
+
     date: "not released",
     displayDate: formatDisplayDate("not released"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+    github:
+      "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+
+    imgSrc: "/images/fnaf unity fortnite official game godot.webp",
+    platform: "Itch.io",
+
+    description:
+      "horror \n\n Developers: \nLinkerpink\nJesse Faassen \nhttps://sites.google.com/view/jesse-faassen/home?authuser=0 \n\nArtists: \nLinkerpink \nJesse Faassen \nhttps://sites.google.com/view/jesse-faassen/home?authuser=0",
+
+    technologies: [
+      "/images/fnaf unity fortnite official game godot.webp",
+      "/images/unity logo.png",
+      "/images/fortnite.webp",
+      "/images/official.webp",
+      "/images/game.jpg",
+      "/images/godot logo.svg",
+    ],
+
+    media: [
+      {
+        type: "image",
+        src: "/images/fnaf unity fortnite official game godot.webp",
+      },
+    ],
 
     featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik ben LETTERLIJK beter.",
+        code: `horror code`,
+      },
+    ],
   },
+
+  // Not Grow A Garden //
   {
-    href: "",
-    imgSrc: "/images/not grow a garden temp logo.png",
     title: "Not Grow A Garden",
+    slug: "not-grow-a-garden",
+    banner: "/images/not grow a garden temp logo.png",
+    icon: "/images/not grow a garden temp logo.png",
+
     date: "not released",
     displayDate: formatDisplayDate("not released"),
+
+    href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+    github:
+      "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+
+    imgSrc: "/images/not grow a garden temp logo.png",
+    platform: "Itch.io",
+
+    description: "anti horror \n\n Developers: \nLinkerpink\nMathijn Wismeijer",
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    media: [{ type: "image", src: "/images/not grow a garden temp logo.png" }],
 
     featured: false,
 
@@ -922,55 +997,188 @@ public class PlayerMovement : MonoBehaviour
       },
     ],
   },
+
+  // SHMUP 2 (traumatic flashbacks) //
   {
-    href: "https://github.com/Linkerpink/shmup-2",
-    imgSrc: "/images/shmup 2.webp",
     title: "SHMUP 2",
+    slug: "shmup-2",
+    banner: "/images/shmup 2 banner.webp",
+    icon: "/images/shmup 2 icon.webp",
+
     date: "2024-10-10",
     displayDate: formatDisplayDate("2024-10-10"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    href: "https://linkeralt.itch.io/shmup-2/",
+    github: "https://github.com/Linkerpink/shmup-2",
+
+    imgSrc: "/images/shmup 2.webp",
+    platform: "itch.io",
+
+    description:
+      "pain multiplied by 2 \n\nScratch version: \nhttps://scratch.mit.edu/projects/1076756881/",
+
+    technologies: [
+      "/images/unity logo.png",
+      "/images/c sharp logo.svg",
+      "/images/scratch logo.png",
+    ],
+
+    media: [{ type: "image", src: "/images/shmup 2.webp" }],
 
     featured: false,
-  },
-  {
-    href: "https://linkerpink.itch.io/not-not-balatro",
-    imgSrc: "/images/not not balatro.webp",
-    title: "Not Not Balatro",
-    date: "2025-01-27",
-    displayDate: formatDisplayDate("2025-01-27"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-    featured: false,
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
   },
-  {
-    href: "https://rileytimmerman.itch.io/bug-exterminator",
-    imgSrc: "/images/shmup.webp",
-    title: "Bug Exterminator",
-    date: "2024-4-4",
-    displayDate: formatDisplayDate("2024-4-4"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-    featured: false,
-  },
+  // Asteroids 3D //
   {
-    href: "https://linkerpink.itch.io/asteroids-3d",
-    imgSrc: "/images/asteroids 3d.webp",
     title: "Asteroids 3D",
+    slug: "asteroids-3d",
+    banner: "/images/asteroids 3d.webp",
+    icon: "/images/asteroids 3d.webp",
+
     date: "2024-03-01",
     displayDate: formatDisplayDate("2024-03-01"),
+
+    href: "https://linkerpink.itch.io/asteroids-3d",
+    github: "https://github.com/Linkerpink/Poker-Roguelike",
+
+    imgSrc: "/images/asteroids 3d.webp",
+    platform: "itch.io",
+
+    description:
+      "Bug Exterminator is an indie SHMUP where you shoot mutant insects and help clean up a destroyed world. As a robot frog you fly through the land and defeat all the insects that stand in your way, but there's a menacing monster at the end, can you defeat it? \n\nThis game was created by a team of first year students (4 Game Artists, 2 Creative Software Developers) in under 3 weeks.",
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
+    media: [{ type: "image", src: "/images/asteroids 3d.webp" }],
+
     featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
   },
+
+  // Not Not Balatro (even more traumatic flashbacks) //
   {
-    href: "https://linkerpink.itch.io/disco-dungeon",
-    imgSrc: "/images/disco dungeon temp.webp",
+    title: "Not Not Balatro",
+    slug: "not-not-balatro",
+    banner: "/images/not not balatro.webp",
+    icon: "/images/not not balatro icon.webp",
+
+    date: "2025-01-27",
+    displayDate: formatDisplayDate("2025-01-27"),
+
+    href: "https://linkerpink.itch.io/not-not-balatro",
+    github: "https://github.com/Linkerpink/Poker-Roguelike",
+
+    imgSrc: "/images/not not balatro.webp",
+    platform: "itch.io",
+
+    description:
+      "Not Not Balatro is a very good game 😱 \n\nwow i LOVE NOT NOT baltro but Not baltro is also very good game just like NOT NOT NOT baltro GL making NOT NOT baltro FR NOT NOT no cap/",
+
+    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    media: [{ type: "image", src: "/images/not not balatro.webp" }],
+
+    featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
+  },
+
+  // Bug Exterminator (half a spider in 3 weeks!!! jeremy mode and maxwell mode make me not wanna cry) //
+  {
+    title: "Bug Exterminator",
+    slug: "bug-xterminator",
+    banner: "/images/shmup.webp",
+    icon: "/images/shmup.webp",
+
+    date: "2024-4-4",
+    displayDate: formatDisplayDate("2024-4-4"),
+
+    href: "https://rileytimmerman.itch.io/bug-exterminator",
+    github: "https://github.com/Linkerpink/Poker-Roguelike",
+
+    imgSrc: "/images/shmup.webp",
+    platform: "itch.io",
+
+    description:
+      "Bug Exterminator is an indie SHMUP where you shoot mutant insects and help clean up a destroyed world. As a robot frog you fly through the land and defeat all the insects that stand in your way, but there's a menacing monster at the end, can you defeat it? \n\nThis game was created by a team of first year students (4 Game Artists, 2 Creative Software Developers) in under 3 weeks.",
+
+    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+    media: [
+      { type: "image", src: "/images/shmup.webp" },
+      { type: "youtubeId", src: "VBLMkvfqAlw", title: "Launch Trailer" },
+    ],
+
+    featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
+  },
+
+  // Disco Dungeon (HELL) //
+  {
     title: "Disco Dungeon",
+    slug: "disco-dungeon",
+    banner: "/images/disco dungeon temp.webp",
+    icon: "/images/disco dungeon temp.webp",
+
     date: "2024-04-26",
     displayDate: formatDisplayDate("2024-04-26"),
+
+    href: "https://linkerpink.itch.io/disco-dungeon",
+    github: "https://github.com/Linkerpink/Poker-Roguelike",
+
+    imgSrc: "/images/disco dungeon temp.webp",
+    platform: "itch.io",
+
+    description: "fortnite.",
+
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
+    media: [
+      { type: "image", src: "/images/disco dungeon temp.webp" },
+    ],
+
     featured: false,
+
+    codeSnippets: [
+      {
+        name: "horror script",
+        language: "csharp",
+        description: "ik was slechter.",
+        code: `horror code`,
+      },
+    ],
   },
 ].map((project) => ({
   ...project,

@@ -69,8 +69,8 @@
                         key={i}
                         src={icon}
                         alt="tech"
-                        width={32}
-                        height={32}
+                        width={512}
+                        height={512}
                         className="w-8 h-8 object-contain"
                       />
                     ))}
