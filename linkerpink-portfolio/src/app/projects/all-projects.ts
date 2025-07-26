@@ -1,3 +1,5 @@
+import { platform } from "os";
+
 // Helper to format date as 'Month Year' or 'Not Released'
 function formatDisplayDate(date: string): string {
   if (date.toLowerCase() === "not released") return "Not Released";
@@ -17,7 +19,7 @@ function generateSlug(title: string): string {
 // The full project list with generated slugs
 export const allProjects = [
 
-  // robo rebellion //
+// Robo Rebellion: Dawn of the Machine //
   {
     title: "Robo Rebellion: Dawn of the Machine",
     slug: "robo-rebellion-dawn-of-the-machine",
@@ -28,9 +30,12 @@ export const allProjects = [
     platform: "Itch.io",
     description:
       "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
+    
     href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
+    
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+    
     media: [
       { type: "image", src: "/images/robo rebellion.png" },
       { type: "image", src: "/images/robo rebellion 2.png" },
@@ -573,7 +578,7 @@ private IEnumerator StopControllerRumble(float time)
     ],
   },
 
-  // not suepr maria 63 //
+// Not Suepr Maria 63 //
   {
     title: "Not Suepr Maria 63",
     slug: "not-suepr-maria-63",
@@ -586,7 +591,9 @@ private IEnumerator StopControllerRumble(float time)
       "VERY GOOD REMAKE OF SUEPR MARIA 63 😎😎😨😱 (please don't sue this is a school project)",
     href: "https://linkerpink.itch.io/not-suepr-maria-63",
     github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
+    
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+    
     media: [
       { type: "image", src: "/images/not suepr maria 63.png" },
       { type: "image", src: "/images/not suepr 1.png" },
@@ -607,16 +614,48 @@ private IEnumerator StopControllerRumble(float time)
       },
     ],
   },
+
+// The Royal Spin //
   {
-    href: "https://linkerpink.itch.io/the-royal-spin",
-    imgSrc: "/images/the royal spin logo.png",
     title: "The Royal Spin",
-    date: "2025-7-11",
-    displayDate: formatDisplayDate("2025-7-11"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+    slug: "the-royal-spin",
+    banner: "/images/the royal spin banner.png",
+    icon: "/images/the royal spin logo.png",
+    date: "2025-04-17",
+    displayDate: formatDisplayDate("2025-04-17"),
+    platform: "Itch.io",
+    description:
+      "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink-github-io-beta.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio",
+    href: "https://linkerpink.itch.io/the-royal-spin",
+    github: "https://github.com/MarkBSH/Suicide-Squad",
+    
+    technologies: [
+      "/images/unity logo.png", "/images/c sharp logo.svg"
+    ],
+    
+    media: [
+      { type: "image", src: "/images/the royal spin logo.png" },
+      { type: "image", src: "/images/trs 1.jpg" },
+      { type: "image", src: "/images/trs 2.jpg" },
+      { type: "image", src: "/images/trs 3.jpg" },
+      { type: "image", src: "/images/trs 4.jpg" },
+      { type: "image", src: "/images/trs 5.jpg" },
+      { type: "youtubeId", src: "T5x7aK-R4FY", title: "Gameplay Video" },
+    ],
 
     featured: true,
+
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "csharp",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
+  
+// When Time Colldes //
   {
     title: "When Time Collides",
     slug: "when-time-collides",
@@ -627,9 +666,11 @@ private IEnumerator StopControllerRumble(float time)
     platform: "GX Games",
     imgSrc: "/images/when time collides.webp",
     href: "https://gx.games/games/ef2jjg/when-time-collides/",
+    
     description:
       "When Time Collides is a small retro platformer where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself.",
-    technologies: ["/images/gamemaker studio logo.svg"],
+    
+      technologies: ["/images/gamemaker studio logo.svg"],
 
     media: [
       { type: "image", src: "/images/when time collides.webp" },
@@ -655,51 +696,82 @@ private IEnumerator StopControllerRumble(float time)
       },
     ],
   },
+
+// Portfolio Website //
   {
-    href: "",
-    imgSrc: "/images/portfolio site cover temp.png",
     title: "Portfolio Website",
+    slug: "portfolio-website",
+    banner: "/images/portfolio site cover temp.png",
+    icon: "/images/portfolio site cover temp.png",
     date: "2025-07-23",
     displayDate: formatDisplayDate("2025-07-23"),
+    imgSrc: "/images/portfolio site cover temp.png",
+    
+    github: "https://github.com/Linkerpink/linkerpink.github.io",
+
+    description:
+    "best portfolio website ever made?Q?!?!?!!?",
+    
     technologies: [
       "/next.svg",
       "/images/typescript logo.svg",
       "/images/tailwind css logo.svg",
     ],
 
+    media: [
+      { type: "image", src: "/images/portfolio site cover temp.png" },
+    ],
+
     featured: true,
+
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "tsx",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
 
+// Shy //
   {
-    href: "https://linkerpink.itch.io/shy",
-    imgSrc: "/images/SHYGame.jpg",
     title: "Shy",
-    date: "2024-05-26",
-    displayDate: formatDisplayDate("2024-05-26"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+    slug: "shy",
+    banner: "/images/SHYGame.jpg",
+    icon: "/images/SHYGame.jpg",
+    date: "2025-07-23",
+    displayDate: formatDisplayDate("2025-07-23"),
+    href: "https://linkerpink.itch.io/shy/",
+    github: "https://github.com/GLU-CSD/shy-Linkerpink",
+    imgSrc: "/images/SHYGame.jpg",
+    platform: "Itch.io",
+    
+    description:
+    "banger emotes",
+    
+    technologies: [
+      "/images/unity logo.png", "/images/c sharp logo.svg"
+    ],
+
+    media: [
+      { type: "image", src: "/images/SHYGame.jpg" },
+    ],
 
     featured: true,
-  },
-  {
-    href: "https://github.com/Linkerpink/Open-Pixel-Art",
-    imgSrc: "/images/open pixel art temp logo.png",
-    title: "Open Pixel Art",
-    date: "not released",
-    displayDate: formatDisplayDate("not released"),
-    technologies: ["/images/godot logo.svg", "/images/gdscript logo.webp"],
 
-    featured: false,
+    codeSnippets: [
+      {
+        name: "insane script",
+        language: "tsx",
+        description: "ik was beter.",
+        code: `insane code`,
+      },
+    ],
   },
-  {
-    href: "",
-    imgSrc: "/images/one tool.webp",
-    title: "One Tool",
-    date: "2024-9-10",
-    displayDate: formatDisplayDate("2024-9-10"),
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-    featured: false,
-  },
+  
+
   {
     href: "https://linkerpink.itch.io/slimetastic-punchout",
     imgSrc: "/images/slimetastic punchout cover art.png",
@@ -717,16 +789,6 @@ private IEnumerator StopControllerRumble(float time)
     date: "not released",
     displayDate: formatDisplayDate("not released"),
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-
-    featured: false,
-  },
-  {
-    href: "",
-    imgSrc: "/images/gribby grab's toy store cover temp.png",
-    title: "Gribby Grab's Toy Store",
-    date: "not released",
-    displayDate: formatDisplayDate("not released"),
-    technologies: ["/images/unreal engine logo.svg"],
 
     featured: false,
   },

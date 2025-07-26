@@ -1,12 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+
 import { ThemeProvider } from "./theme-context";
 import Sidebar from "./sidebar";
 import EasterEggUnlocker from "./easter-egg-unlocker";
-
-import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
-
 
 export default function ClientRoot({ children }: { children: React.ReactNode }) {
   return (

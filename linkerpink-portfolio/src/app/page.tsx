@@ -117,7 +117,7 @@ export default function Home() {
               <GameCard
                 key={i}
                 title={project.title}
-                href={project.slug ? `/projects/${project.slug}` : project.href}
+                href={`/projects/${project.slug}`}
                 imgSrc={
                   project.imgSrc ||
                   project.media?.find((m) => m.type === "image")?.src ||
@@ -136,7 +136,7 @@ export default function Home() {
               <GameCard
                 key={i}
                 title={project.title}
-                href={project.slug ? `/projects/${project.slug}` : project.href}
+                href={`/projects/${project.slug}`}
                 imgSrc={
                   project.imgSrc ||
                   project.media?.find((m) => m.type === "image")?.src ||

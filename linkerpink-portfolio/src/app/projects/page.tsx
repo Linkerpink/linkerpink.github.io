@@ -37,7 +37,7 @@ export default function AllProjectsPage() {
         {sortedProjects.map((project, i) => (
           <GameCard
             key={i}
-            href={project.slug ? `/projects/${project.slug}` : project.href}
+            href={`/projects/${project.slug}`}
             title={project.title}
             imgSrc={
                   project.imgSrc ||

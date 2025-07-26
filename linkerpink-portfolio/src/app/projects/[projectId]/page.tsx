@@ -209,7 +209,7 @@
                       <MediaCard
                         key={i}
                         videoSrc={mediaItem.src}
-                        title={mediaItem.title || project.title}
+                        title={project.title}
                         size="large"
                       />
                     );
@@ -227,7 +227,7 @@
                       <MediaCard
                         key={i}
                         youtubeId={mediaItem.src}
-                        title={mediaItem.title || project.title}
+                        title={`Video ${i + 1}`}
                         size="large"
                       />
                     );
