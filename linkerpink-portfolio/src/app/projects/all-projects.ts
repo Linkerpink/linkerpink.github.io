@@ -32,12 +32,12 @@ export const allProjects = [
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
     media: [
+      { type: "image", src: "/images/robo rebellion.png" },
+      { type: "image", src: "/images/robo rebellion 2.png" },
       { type: "image", src: "/images/robo rebellion 1.webp" },
       { type: "image", src: "/images/robo rebellion 6.jpeg" },
       { type: "image", src: "/images/robo rebellion 4.jpeg" },
       { type: "image", src: "/images/robo rebellion 3.jpeg" },
-      { type: "image", src: "/images/robo rebellion.png" },
-      { type: "image", src: "/images/robo rebellion 2.png" },
       { type: "youtubeId", src: "pjqwkHgBgVQ", title: "Launch Trailer" },
     ],
 
@@ -583,9 +583,9 @@ private IEnumerator StopControllerRumble(float time)
     displayDate: formatDisplayDate("2025-04-17"),
     platform: "Itch.io",
     description:
-      "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
-    href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
-    github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
+      "VERY GOOD REMAKE OF SUEPR MARIA 63 😎😎😨😱 (please don't sue this is a school project)",
+    href: "https://linkerpink.itch.io/not-suepr-maria-63",
+    github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
     media: [
       { type: "image", src: "/images/not suepr maria 63.png" },
