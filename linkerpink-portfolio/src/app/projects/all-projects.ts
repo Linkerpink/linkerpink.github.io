@@ -589,7 +589,7 @@ private IEnumerator StopControllerRumble(float time)
     displayDate: formatDisplayDate("2025-04-17"),
     platform: "Itch.io",
     description:
-      "This is a remake of Super Mario 64 made in Unity using C#, but made in about 4 weeks of time for a school project. This game was made purely for fun and with love for the original game, I was not trying to make a full and polished remake with intent of having people playing this instead of the original. \n\nI remade the outside of the castle, a bit of the inside of the castle, and bob omb battlefield. Most models were ripped from the original game, but the animations were made by myself, because I could not find the original animations and mixamo animations didn't feel right with capturing the spirit of the original. \n\nWhat I made: \n\n Player movement, attacks, animations, interactions etc \n\n Scriptable Object based dialogue system that connects a dialogue sequence to the textbox, and spawns them accordingly \n\nScriptable Object based star system \n\nGameManager script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. \n\nBase enemy script that enemies could be built off of \n\nBoss fight with King Bob Omb \n\nRace with Koopa The Quick \n\nScene transitions \n\nCutscene system \n\nBillboarded sprites",
+      "This is a remake of Super Mario 64 made in Unity using C#, but made in about 4 weeks of time for a school project. This game was made purely for fun and with love for the original game, I was not trying to make a full and polished remake with intent of having people playing this instead of the original. \n\nI remade the outside of the castle, a bit of the inside of the castle, and bob omb battlefield. Most models were ripped from the original game, but the animations were made by myself, because I could not find the original animations and mixamo animations didn't feel right with capturing the spirit of the original. \n\nWhat I made: \n Player movement, attacks, animations, interactions etc \n Scriptable Object based dialogue system that connects a dialogue sequence to the textbox, and spawns them accordingly \nScriptable Object based star system \nGameManager script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. \nBase enemy script that enemies could be built off of \nBoss fight with King Bob Omb \nRace with Koopa The Quick \nScene transitions \nCutscene system \nBillboarded sprites",
     href: "https://linkerpink.itch.io/not-suepr-maria-63",
     github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
 
@@ -2062,7 +2062,7 @@ public void WinRace()
     displayDate: formatDisplayDate("2025-07-14"),
     platform: "Itch.io",
     description:
-      "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink-github-io-beta.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio",
+      "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio \n\nWhat I made: \nGame Settings \nShop \nGameManager script that holds the game state and displays the items in the player's inventory at that moment \nRussian Roulette \nRent system \nSound System \nKeys & Doors \nMain Menu camera sequences",
     href: "https://linkerpink.itch.io/the-royal-spin",
     github: "https://github.com/MarkBSH/Suicide-Squad",
 
@@ -2081,12 +2081,536 @@ public void WinRace()
     featured: true,
 
     codeSnippets: [
-      {
-        name: "insane script",
-        language: "C#",
-        description: "ik was beter.",
-        code: `insane code`,
-      },
+{
+	name: "SettingsManager.cs",
+	language: "C#",
+	description: "This is the script that manages player settings. The current player settings and default player settings are stored in a Scriptable Object, that then gets loaded when the game loads a scene.",
+	code: `
+private void Start()
+{
+	LoadPlayerSettings();
+
+	if (playerSettings.fieldOfView < 10)
+	{
+		LoadDefaultSettings();
+	}
+}
+
+private void FindObjects()
+{
+	m_playerCam = FindAnyObjectByType<FirstPersonCam>();
+	if (m_playerCam != null)
+	{
+		m_playerCam.m_MouseSensitivity = playerSettings.mouseSensitivity;
+		m_playerCam.GetComponent<Camera>().fieldOfView = playerSettings.fieldOfView;
+	}
+}
+
+public void ChangeViewBobbing()
+{
+	playerSettings.viewBobbingEnabled = m_viewBobbingSlider.value;
+	UpdateSettingsUI();
+	SavePlayerSettings();
+}
+
+public void ChangeMouseSens(float _value)
+{
+	playerSettings.ChangeMouseSensitivity(_value);
+	UpdateSettingsUI();
+	SavePlayerSettings();
+}
+
+public void ChangeCameraFOV(float _value)
+{
+	playerSettings.ChangeFieldOfView(_value);
+	UpdateSettingsUI();
+	SavePlayerSettings();
+}
+
+public void LoadDefaultSettings()
+{
+	ChangeMouseSens(defaultSettings.mouseSensitivity);
+	ChangeCameraFOV(defaultSettings.fieldOfView);
+
+	SavePlayerSettings();
+	UpdateSettingsUI();
+}
+
+public void UpdateSettingsUI()
+{
+	m_mouseSensText.SetText("Mouse Sensitivity: " + playerSettings.mouseSensitivity.ToString());
+	m_mouseSensSlider.value = playerSettings.mouseSensitivity;
+
+	m_camFOVText.SetText("Camera Field Of View: " + playerSettings.fieldOfView.ToString());
+	m_camFOVSlider.value = playerSettings.fieldOfView;
+	
+	// m_viewBobbingText.SetText("View Bobbing: " + playerSettings.viewBobbingEnabled.ToString());
+	// m_viewBobbingSlider.value = playerSettings.viewBobbingEnabled;
+}
+
+public void SavePlayerSettings()
+{
+	PlayerPrefs.SetFloat("Mouse Sensitivity", playerSettings.mouseSensitivity);
+	PlayerPrefs.SetFloat("Field Of View", playerSettings.fieldOfView);
+	//PlayerPrefs.SetFloat("View Bobbing Enabled", playerSettings.viewBobbingEnabled);
+	PlayerPrefs.Save();
+
+	FindObjects();
+}
+
+public void LoadPlayerSettings()
+{
+	if (PlayerPrefs.HasKey("Mouse Sensitivity"))
+	{
+		playerSettings.mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity");
+	}
+	else
+	{
+		PlayerPrefs.SetFloat("Mouse Sensitivity", defaultSettings.mouseSensitivity);
+		playerSettings.mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity");
+	}
+
+	if (PlayerPrefs.HasKey("Field Of View"))
+	{
+		playerSettings.fieldOfView = PlayerPrefs.GetFloat("Field Of View");
+	}
+	else
+	{
+		PlayerPrefs.SetFloat("Mouse Sensitivity", defaultSettings.mouseSensitivity);
+		playerSettings.fieldOfView = PlayerPrefs.GetFloat("Field Of View");
+	}
+}
+	`
+},
+
+{
+	name: "GameManager.cs",
+	language: "C#",
+	description: "This is the GameManager script that can pause the game, locks / unlocks cursor and displays the items in the player's inventory at that moment ",
+	code: `
+#region Common GameManager Functions
+
+public void ChangeScene(string _scene)
+{
+	SceneManager.LoadScene(_scene);
+}
+
+public void LockCursor()
+{
+	Cursor.lockState = CursorLockMode.Locked;
+}
+
+public void UnlockCursor()
+{
+	Cursor.lockState = CursorLockMode.None;
+}
+
+public void EnablePause()
+{
+	if (FindAnyObjectByType<PlayerInteracting>())
+	{
+		m_playerInteracting = FindAnyObjectByType<PlayerInteracting>();
+	}
+
+	if (currentScene != "Main Menu" && !m_playerInteracting.m_IsInteracting)
+	{
+		if (!paused)
+		{
+			PauseGame();
+		}
+		else
+		{
+			UnpauseGame();
+		}
+	}
+}
+
+public void PauseGame()
+{
+	paused = true;
+	Time.timeScale = 0;
+
+	if (UIManager.Instance.pauseUI != null)
+	{
+		UIManager.Instance.pauseUI.SetActive(true);
+	}
+
+	UnlockCursor();
+}
+
+public void UnpauseGame()
+{
+	paused = false;
+	Time.timeScale = 1;
+
+	if (UIManager.Instance.pauseUI != null)
+	{
+		UIManager.Instance.pauseUI.SetActive(false);
+	}
+
+	LockCursor();
+}
+
+#endregion
+
+#region Shop & Items
+
+public void BuyItem(Item _item)
+{
+	if (money >= _item.itemCost)
+	{
+		// Look if the player has the item and if it's allowed to have duplicates of the same time in the inventory
+		if (items.ContainsKey(_item) && !_item.duplicatesAllowed)
+		{
+			Debug.Log("Can only buy one of this item");
+		}
+		else
+		{
+			// Buy Item
+			if (_item.itemType == Item.ItemType.Default)
+			{
+				AddItem(_item);
+			}
+			else if (_item.itemType == Item.ItemType.SpellPack)
+			{
+				RandomSpellGiver.Instance.SetupSpellGiver();
+			}
+			else if (_item.itemType == Item.ItemType.Alchohol)
+			{
+				FindAnyObjectByType<DrunkEffect>().Drink();
+			}
+
+			RemoveMoney(_item.itemCost);
+		}
+	}
+	else
+	{
+		Debug.Log("Not enough money");
+	}
+}
+
+public void AddItem(Item _item)
+{
+	if (!items.ContainsKey(_item))
+	{
+		items.Add(_item, 0);
+	}
+	else
+	{
+		items[_item]++;
+	}
+
+	UpdateItemUI();
+}
+
+public void RemoveItem(Item _item)
+{
+	if (items.ContainsKey(_item))
+	{
+		if (items[_item] > 0)
+		{
+			items[_item]--;
+		}
+		else
+		{
+			items.Remove(_item);
+		}
+	}
+	else
+	{
+		Debug.LogError($"Trying to remove an item that doesn't exist in the items dictionary :( Item name: {_item.name}");
+
+		foreach (var kvp in items)
+		{
+			Debug.Log($"Inventory item: {kvp.Key.name} x{kvp.Value}");
+		}
+	}
+
+
+	UpdateItemUI();
+}
+
+public Item TryGetItem(string _name)
+{
+	bool _found = false;
+
+	foreach (Item _item in items.Keys)
+	{
+		if (_item.name == _name && !_found)
+		{
+			_found = true;
+			return _item;
+		}
+	}
+
+	return null;
+}
+
+public void EnableShopUI()
+{
+	m_shopManager.shopUI.SetActive(true);
+
+	UnlockCursor();
+}
+
+public void DisableShopUI()
+{
+	m_shopManager = FindAnyObjectByType<ShopManager>();
+	m_shopManager.shopUI.SetActive(false);
+
+	if (RandomSpellGiver.Instance.m_spellScreenActive == false)
+	{
+		LockCursor();
+	}
+}
+
+private void UpdateItemUI()
+{
+	if (m_itemUI != null)
+	{
+		foreach (Transform _child in m_itemUI.transform)
+		{
+			// Make sure there are no item icons left
+			Destroy(_child.gameObject);
+		}
+
+		foreach (Item _item in items.Keys)
+		{
+			if (_item.itemType != Item.ItemType.SpellPack)
+			{
+				GameObject _itemIconObject = Instantiate(m_itemIconPrefab);
+				_itemIconObject.transform.SetParent(m_itemUI.transform);
+
+				Image _itemIcon = _itemIconObject.GetComponent<Image>();
+				_itemIcon.sprite = _item.itemIcon;
+
+				TextMeshProUGUI _itemAmountText = _itemIconObject.GetComponentInChildren<TextMeshProUGUI>();
+
+				int _amount;
+
+				if (items.ContainsKey(_item))
+				{
+					_amount = items[_item] + 1;
+				}
+				else
+				{
+					_amount = 0;
+				}
+
+				_itemAmountText.SetText(_amount.ToString());
+			}
+		}
+	}
+	else
+	{
+		Debug.LogError("Item UI not found!");
+	}
+}
+
+private IEnumerator DisableShopUICoroutine()
+{
+	yield return new WaitForSeconds(0.25f);
+	DisableShopUI();
+}
+
+#endregion
+	`
+},
+
+{
+	name: "RussianRoulette.cs",
+	language: "C#",
+	description: "This is the script for handling russian roulette. Some of the functions are used in animations as events.",
+	code: `
+public void StartRussianRouletteSetup()
+{
+	if (!playedRoulette)
+	{
+		m_animator.SetTrigger("Start Russian Roulette Intro");
+		m_interactableCameras.EnableCamera();
+		completedRussianRouletteSetup = false;
+	}
+	
+	m_tableGun.SetActive(false);
+	AudioManager.Instance.Stop("bg music");
+	AudioManager.Instance.Play("piano slam");
+	AudioManager.Instance.Play("heart beat");
+}
+
+public void CompleteRussianRouletteSetup()
+{
+	completedRussianRouletteSetup = true;
+	m_ableToCloseRoulette = true;
+}
+
+public void StartRussianRoulette()
+{
+	if (!playedRoulette)
+	{
+		FindAnyObjectByType<PlayerStartInteract>().ClearControlsUIHolder();
+
+		int _rnd = 1;
+		if (!GameManager.Instance.m_IsInstaWin)
+		{
+			_rnd = Random.Range(0, 5);
+		}
+		else
+		{
+			GameManager.Instance.m_IsInstaWin = false;
+		}
+
+		if (_rnd == 0)
+		{
+			RouletteDeath();
+		}
+		else
+		{
+			RouletteWin();
+		}
+
+		completedRussianRouletteSetup = true;
+		m_ableToCloseRoulette = false;
+	}
+}
+
+public void CloseRussianRoulette()
+{
+	if (completedRussianRouletteSetup && m_ableToCloseRoulette)
+	{
+		if (GetComponentInChildren<InteracteblesCameras>())
+		{
+			GetComponentInChildren<InteracteblesCameras>().DisableCamera();
+		}
+
+		completedRussianRouletteSetup = false;
+		print("closed Russian Roulette");
+
+		m_txt = "";
+
+		m_animator.SetTrigger("Close Russian Roulette");
+
+		AudioManager.Instance.Play("bg music");
+		AudioManager.Instance.Stop("heart beat");
+		m_tableGun.SetActive(true);
+	}
+}
+
+private void RouletteDeath()
+{
+	m_animator.SetTrigger("Roulette Death");
+
+	// Destroy object instead of set active, caused weird interact issues
+	Destroy(GetComponentInChildren<BoxCollider>().gameObject);
+	FindAnyObjectByType<PlayerInteracting>().m_InteractLink = null;
+	playedRoulette = true;
+}
+
+private void RouletteWin()
+{
+	m_animator.SetTrigger("Win Russian Roulette");
+
+	// Destroy object instead of set active, caused weird interact issues
+	Destroy(GetComponentInChildren<BoxCollider>().gameObject);
+	playedRoulette = true;
+}
+
+public void RouletteWinEvent()
+{
+	CloseRussianRoulette();
+	print(hasSeenEscapeSequence);
+
+	if (!hasSeenEscapeSequence)
+	{
+		if (FindAnyObjectByType<PlayerInteracting>())
+		{
+			FindAnyObjectByType<PlayerInteracting>().StartCoroutine(FindAnyObjectByType<PlayerInteracting>().CloseCoolDown(0f));
+		}
+
+		hasSeenEscapeSequence = true;
+		FindAnyObjectByType<PlayerInteracting>().m_InteractLink = null;
+		FindAnyObjectByType<PlayerStartInteract>().CreateControlsUI("B", "- Spell Book", false);
+		m_gameManager.ChangeCamera(playerCamera, escapeCamera, escapeCamera.transform.position, escapeCamera.transform.rotation, escapeCamera.fieldOfView);
+		GameObject.FindWithTag("EntranceDoorTrigger").GetComponent<Animator>().SetTrigger("doorOpen");
+		AudioManager.Instance.Stop("heart beat");
+		StartCoroutine(GoToEnding(7.5f));
+	}
+}
+
+public void RouletteDeathEvent()
+{
+	FindAnyObjectByType<FirstPersonMovement>().Die();
+	AudioManager.Instance.Stop("heart beat");
+}
+
+private IEnumerator GoToEnding(float _delay)
+{
+	yield return new WaitForSeconds(_delay);
+	SceneManager.LoadScene("Main Menu");
+}
+	`
+},
+
+{
+	name: "AudioManager.cs",
+	language: "C#",
+	description: "This is the script that handles the functions for sounds. It is based on the simple sound system I made for my game: Shy.",
+	code: `
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{ 
+	foreach(Sound s in sounds)
+	{
+		s.source = gameObject.AddComponent<AudioSource>();
+		s.source.clip = s.clip;
+
+		s.source.volume = s.volume;
+		s.source.pitch = s.pitch;
+		s.source.loop = s.loop;
+	}
+}
+
+public void Play(string _name)
+{
+	Sound s = Array.Find(sounds, sound => sound.name == _name);
+	if (s == null) 
+	{
+		Debug.LogWarning("Sound: " + name + " not found!");
+		return;
+	}
+	s.source.Play();
+}
+
+public void Stop(string _name)
+{
+	Sound s = Array.Find(sounds, sound => sound.name == _name);
+	if (s == null) 
+	{
+		Debug.LogWarning("Sound: " + name + " not found!");
+		return;
+	}
+	s.source.Stop();
+}
+
+public void StopAll()
+{
+	foreach (Sound s in sounds)
+	{
+		s.source.Stop();
+	}
+}
+
+public void SetVolume(float _volume, string _name)
+{
+	Sound s = Array.Find(sounds, sound => sound.name == _name);
+	if (s == null) 
+	{
+		Debug.LogWarning("Sound: " + name + " not found!");
+		return;
+	}
+	s.source.volume = _volume;
+}
+	`
+},
+
     ],
   },
 
