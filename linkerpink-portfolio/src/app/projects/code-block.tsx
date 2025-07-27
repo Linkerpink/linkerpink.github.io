@@ -107,7 +107,7 @@ export default function CodeBlock({
             setIsOpen((v) => !v);
           }}
           type="button"
-          whileHover={{ scale: 1.3 }}
+          whileHover={{ scale: 1.5 }}
           whileTap={{ scale: 0.9 }}
         >
           {isOpen ? "−" : "+"}

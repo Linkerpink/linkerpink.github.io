@@ -349,7 +349,7 @@ export default function Sidebar() {
                       }
                     }}
                     className={`text-2xl font-semibold ${
-                      isSelected ? 'text-orange-600' : 'text-gray-700'
+                      isSelected ? 'text-[#F57C00]' : 'text-gray-700'
                     }`}
                   >
                     {item.label}

@@ -26,7 +26,7 @@ export const allProjects = [
     displayDate: formatDisplayDate("2024-07-10"),
     platform: "Itch.io",
     description:
-      "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.)",
+      "Robo Rebellion Dawn of the Machine, is a top down TwinStick game made by a team of 6 people. 3 Artists and 3 Developers, the game was made as a school project within a short timespan of 4 weeks with it's end goal being a sci-fi based top down shooter.\n\nFEATURES\n\nThe game build supports both QWERTY keyboards and controller. Realistic gun bass! Trigger warning. (Headphone users be warned.) \n\nthe player was made with multiple people, so I will only be showing the parts I made, and are also interesting. \n\nWhat I made: \n- Player Movement, dashing and rotation \n- Player Interaction \n- Pickups \n- Keycards & inventory \n- Keycard stacking UI \n- Weapon switching \n- Player Camera, camera switching and screenshake \n- GameManager, rumble and game state management \n- Tutorial popups \n- Main Menu camera switching \n- Weapon, Ammo & Health UI",
 
     href: "https://lulaobobao.itch.io/robo-rebellion-dawn-of-the-machine",
     github: "https://github.com/GLU-Gaming/twinstick-2024-arcane-interactive",
@@ -50,7 +50,7 @@ export const allProjects = [
         name: "Player.cs",
         language: "C#",
         description:
-          "Here are some functions I made for the player. the player was made with multiple people, so I will only be showing the parts I made, and are also interesting. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
+          "Here are some functions I made for the player. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
         code: `
 public enum PlayerState
 {
@@ -589,7 +589,7 @@ private IEnumerator StopControllerRumble(float time)
     displayDate: formatDisplayDate("2025-04-17"),
     platform: "Itch.io",
     description:
-      "This is a remake of Super Mario 64 made in Unity using C#, but made in about 4 weeks of time for a school project. This game was made purely for fun and with love for the original game, I was not trying to make a full and polished remake with intent of having people playing this instead of the original. \n\nI remade the outside of the castle, a bit of the inside of the castle, and bob omb battlefield. Most models were ripped from the original game, but the animations were made by myself, because I could not find the original animations and mixamo animations didn't feel right with capturing the spirit of the original. \n\nWhat I made: \n Player movement, attacks, animations, interactions etc \n Scriptable Object based dialogue system that connects a dialogue sequence to the textbox, and spawns them accordingly \nScriptable Object based star system \nGameManager script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. \nBase enemy script that enemies could be built off of \nBoss fight with King Bob Omb \nRace with Koopa The Quick \nScene transitions \nCutscene system \nBillboarded sprites",
+      "This is a remake of Super Mario 64 made in Unity using C#, but made in about 4 weeks of time for a school project. This game was made purely for fun and with love for the original game, I was not trying to make a full and polished remake with intent of having people playing this instead of the original. \n\nI remade the outside of the castle, a bit of the inside of the castle, and bob omb battlefield. Most models were ripped from the original game, but the animations were made by myself, because I could not find the original animations and mixamo animations didn't feel right with capturing the spirit of the original. \n\nWhat I made: \n- Player movement, attacks, animations, interactions etc \n- Scriptable Object based dialogue system that connects a dialogue sequence to the textbox, and spawns them accordingly \n- Scriptable Object based star system \n- GameManager script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. \n- Base enemy script that enemies could be built off of \n- Boss fight with King Bob Omb \n- Race with Koopa The Quick \n- Scene transitions \n- Cutscene system \n- Billboarded sprites",
     href: "https://linkerpink.itch.io/not-suepr-maria-63",
     github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
 
@@ -2062,7 +2062,7 @@ public void WinRace()
     displayDate: formatDisplayDate("2025-07-14"),
     platform: "Itch.io",
     description:
-      "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio \n\nWhat I made: \nGame Settings \nShop \nGameManager script that holds the game state and displays the items in the player's inventory at that moment \nRussian Roulette \nRent system \nSound System \nKeys & Doors \nMain Menu camera sequences",
+      "The Royal Spin is a game made by a group of 4 students. \n\nGamble and drink your heart out to pay rent and turn the tide with powerful spell cards. In this game you play Slots, Roulette and Russian Roulette. The goal is buying keys to escape. \n\nDevelopers: \nhttps://sites.google.com/view/mark-biesheuvel-portfolio \nhttps://linkerpink.vercel.app/ \n\nArtists: \nhttps://www.artstation.com/bellebunnik \nhttps://www.artstation.com/sekerio \n\nWhat I made: \n- Game Settings \n- Shop \n- GameManager script that holds the game state and displays the items in the player's inventory at that moment \n- Russian Roulette \n- Rent system \n- Sound System \n- Keys & Doors \n- Main Menu camera sequences",
     href: "https://linkerpink.itch.io/the-royal-spin",
     github: "https://github.com/MarkBSH/Suicide-Squad",
 
@@ -2704,7 +2704,7 @@ public void SetVolume(float _volume, string _name)
     imgSrc: "/images/SHYGame.jpg",
     platform: "Itch.io",
 
-    description: "banger emotes",
+    description: "Shy is a stealth game where you need to get keys and try to escape while not getting cought by the guards. Press B to emote. \n\nWhat I made: \n- Emote wheel. \n- GameManager \n- Audio System \n- Player \n- Guards \n- Keys & Doors",
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
@@ -2714,11 +2714,463 @@ public void SetVolume(float _volume, string _name)
 
     codeSnippets: [
       {
-        name: "insane script",
-        language: "tsx",
-        description: "ik was beter.",
-        code: `insane code`,
-      },
+	name: "EmoteWheel.cs",
+	language: "C#",
+	description: "This is the script that handles the emote wheel. Most of it is made in unity's canvas.",
+	code: `
+void Update()
+{
+	if (Input.GetKeyDown(KeyCode.B))
+	{
+		ChangeEnableEmoteWheel();
+	}
+
+	if (enableEmoteWheel)
+	{
+		//GetComponent<CanvasGroup>().alpha = 1f;
+		wheel.transform.localScale = Vector3.Lerp(wheel.transform.localScale, Vector3.one, 0.05f);
+		gameManager.ChangeCamera(gameManager.freeLookCam, gameManager.playerCam);
+
+		//animator.SetBool("animateIn", false);
+	}
+	else
+	{
+		//GetComponent<CanvasGroup>().alpha = 0f;
+		wheel.transform.localScale = Vector3.zero;
+
+		//animator.SetBool("animateIn", false);
+	}
+}
+
+public void ChangeEnableEmoteWheel()
+{
+	if (canChangeEmoteWheel)
+	{
+		if (!gameManager.gamePaused)
+		{
+			enableEmoteWheel = !enableEmoteWheel;
+
+			if (enableEmoteWheel)
+			{
+				player.canMove = false;
+			}else
+			{
+				player.canMove = true;
+			}
+		}
+	}   
+}
+	`
+},
+
+{
+	name: "Emote.cs",
+	language: "C#",
+	description: "This is the script for making the player emote when they have selected an emote from the wheel, and then changes the camera acordingly",
+	code: `
+public void EmoteDab()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(1f, emoteCam));
+
+			animator.SetTrigger("emoteDab");
+			audioManager.Play("Dab");
+
+			gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteFlippinSexy()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting) 
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(3f, emoteCam));
+
+			animator.SetTrigger("emoteFlippinSexy");
+
+			gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteDance()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(2f, emoteCam));
+
+			animator.SetTrigger("emoteDance");
+
+			gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteSalute()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(1f, emoteCam));
+
+			animator.SetTrigger("emoteSalute");
+
+			gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteDefaultDance()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(5f, emoteCam));
+
+			animator.SetTrigger("emoteDefaultDance");
+
+			audioManager.Play("Default Dance");
+
+			gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteGriddy()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			emoteWheel.ChangeEnableEmoteWheel();
+			//StartCoroutine(EmoteTimer(7f, emoteCam));
+
+			animator.SetTrigger("emoteGriddy");
+
+			audioManager.Play("Griddy");
+
+			//gameManager.ChangeCamera(playerCam, emoteCam);
+		}
+	}
+}
+
+public void EmoteSus()
+{
+	if (emoteWheel.enableEmoteWheel)
+	{
+		if (!isEmoting)
+		{
+			animator.SetTrigger("emoteSus");
+			emoteWheel.ChangeEnableEmoteWheel();
+			StartCoroutine(EmoteTimer(10f, emoteCamSus));
+
+			gameManager.ChangeCamera(playerCam, emoteCamSus);
+		}
+	}
+}
+
+private IEnumerator EmoteTimer(float time, CinemachineVirtualCamera cam)
+{
+	//Make sure the cam variable is the same as the cam you change it to
+	isEmoting = true;
+	emoteWheel.player.canMove = false;
+	yield return new WaitForSeconds(time);
+	isEmoting = false;
+	emoteWheel.player.canMove = true;
+
+	gameManager.ChangeCamera(cam, playerCam);
+}
+	`
+},
+
+{
+	name: "GameManager.cs",
+	language: "C#",
+	description: "This is the GameManager script that handles the pausing of the game, camera switching, level completion and cheats",
+	code: `
+private void Update()
+{
+	if (Input.GetButtonDown("Pause"))
+	{
+		gamePaused = !gamePaused;
+	}
+
+	if (gamePaused)
+	{
+		Time.timeScale = 0.0f;
+		pauseUi.enabled = true;
+		
+		if (Input.GetKeyDown(KeyCode.Return))
+		{
+			enableCheatInput = !enableCheatInput;
+		}
+
+		if (enableCheatInput)
+		{
+			cheatInput.SetActive(true);
+		}
+		else
+		{
+			cheatInput.SetActive(false);
+		}
+	}
+	else
+	{
+		Time.timeScale = 1.0f;
+		pauseUi.enabled = false;
+		enableCheatInput = false;
+	}
+
+	if (levelCompleted)
+	{
+		StartCoroutine(LevelCompleted());
+	}
+}
+
+public void ChangeCamera(CinemachineVirtualCamera oldCam, CinemachineVirtualCamera cam)
+{
+	oldCam.Priority = 0;
+	cam.Priority = 10;
+}
+
+public void CheckInput(string s)
+{
+
+	input = cheatInput.GetComponent<TMP_InputField>().text;
+	Debug.Log(input);
+	if (input == "enable cheats")
+	{
+		enableCheats = true;
+		Debug.Log("Cheats enabled");
+	}
+
+	if (input == "disable cheats")
+	{
+		enableCheats = false;
+		Debug.Log("Cheats disabled");
+	}
+}
+
+public IEnumerator LevelCompleted()
+{
+	winText.SetActive(true);
+	yield return new WaitForSeconds(5f);
+	SceneManager.LoadScene("Main Menu");
+	levelCompleted = false;
+}
+	`
+},
+
+{
+	name: "AudioManager.cs",
+	language: "C#",
+	description: "This is a simple AudioManager for playing sounds in the game. The sounds array should be set in the unity editor and should contain every audio in the game with the correct naming.",
+	code: `
+public Sound[] sounds;
+
+private void Awake()
+{
+	foreach(Sound s in sounds)
+	{
+		s.source = gameObject.AddComponent<AudioSource>();
+		s.source.clip = s.clip;
+
+		s.source.volume = s.volume;
+		s.source.pitch = s.pitch;
+		s.source.loop = s.loop;
+	}
+
+	Play("Music");
+}
+
+public void Play(string name)
+{
+	Sound s = Array.Find(sounds, sound => sound.name == name);
+	if (s == null) 
+	{
+		Debug.LogWarning("Sound: " + name + " not found!");
+		return;
+	}
+	s.source.Play();
+}
+	`
+},
+
+{
+	name: "PlayerMovement.cs",
+	language: "C#",
+	description: "This is the script for the player. It works with the Unity NavMesh and moves to a point set when clicked on the screen.",
+	code: `
+private void Update()
+{
+	cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+	if (Input.GetMouseButtonDown(0))
+	{
+		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast(ray, out hit))
+		{
+			NavMeshHit navHit;
+			if (NavMesh.SamplePosition(hit.point, out navHit, 1.0f, NavMesh.AllAreas))
+			{
+				agent.SetDestination(navHit.position);
+			}
+		}
+	}
+
+	agentSpeed = agent.velocity.magnitude;
+
+	animator.SetFloat("Walking", agentSpeed);
+
+	animator.SetFloat("sleepTimer", sleepTimer);
+
+	if (!canMove)
+	{
+		agent.velocity = Vector3.zero;
+		agentSpeed = 0;
+	}else
+	{
+		if (agentSpeed > 0.1)
+		{
+			sleepTimer = 0;
+		}
+		else
+		{
+			sleepTimer += Time.deltaTime;
+		}
+	}
+
+}
+
+private IEnumerator Die()
+{
+	//Level failed
+	died = true;
+	canMove = false;
+	emoteWheel.enableEmoteWheel = false;
+	emoteWheel.canChangeEmoteWheel = false;
+	dieText.enabled = true;
+	animator.SetTrigger("Died");
+	audioManager.Play("Gasp");
+
+	yield return new WaitForSeconds(5f);
+	SceneManager.LoadScene("Main Menu");
+}
+
+private void OnTriggerEnter(Collider other)
+{
+	if (other.gameObject.tag == "Enemy" && !died && !gameManager.levelCompleted)
+	{
+		StartCoroutine(Die());
+	}
+}
+
+private void OnTriggerStay(Collider other)
+{
+	if (other.gameObject.tag == "Exit")
+	{
+		if (gameManager.doorsOpened >= 2 & !gameManager.levelCompleted)
+		{
+			//Level complete
+			gameManager.levelCompleted = true;
+			
+			animator.SetTrigger("levelCompleted");
+			canMove = false;
+			emoteWheel.enableEmoteWheel = false;
+			emoteWheel.canChangeEmoteWheel = false;
+		}
+	}
+}
+	`
+},
+
+{
+	name: "Enemy.cs",
+	language: "C#",
+	description: "This is the script for the enemy. It also uses the Unity Navmesh. When not seeing the player, it will patrol around. When the enemy is patroling, it will choose a random point in a certain range and move to that. When it sees the player, it will chase it when in a certain range.",
+	code: `
+private void Update()
+{
+	//Check for sight and attack range
+	playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+
+	if (!playerInSightRange)
+	{
+		Patroling();
+	}
+
+	if (playerInSightRange)
+	{
+		ChasePlayer();
+	}
+
+	if (player.died) 
+	{
+		agent.speed = 0;
+		animator.SetTrigger("Outrage");
+		transform.Rotate(playerTransform.position);
+	}
+}
+
+private void Patroling()
+{
+	if (!walkPointSet)
+	{
+		SearchWalkPoint();
+	}
+
+	if (walkPointSet)
+	{
+		agent.SetDestination(walkPoint);
+	}
+
+	Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+	//Walkpoint reached
+	if (distanceToWalkPoint.magnitude < 1f)
+	{
+		walkPointSet = false;
+	}
+}
+
+private void SearchWalkPoint()
+{
+	//Calculate random point in range
+	float randomZ = Random.Range(-walkPointRange, walkPointRange);
+	float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+	walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+	if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+	{
+		walkPointSet = true;
+	}
+}
+
+private void ChasePlayer()
+{
+	agent.SetDestination(playerTransform.position);
+}
+	`
+},
+
     ],
   },
 
