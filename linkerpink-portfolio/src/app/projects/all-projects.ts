@@ -2627,7 +2627,7 @@ public void SetVolume(float _volume, string _name)
     href: "https://gx.games/games/ef2jjg/when-time-collides/",
 
     description:
-      "When Time Collides is a small retro platformer where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself.",
+      "When Time Collides is a small retro platformer made for the GameMaker Studio GameJam 2022 where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself. \n\nDeveloper: \nNoah (Linkerpink) \n\nArtists: \nLuca (SupercatLuigi Player) \nBelle \n\n What I made: \n- Player Movement \n- Player Interaction \n- Player Camera \n- Time Switching Mechanic \n- Textbox System \n- Tutorial Dummy with easter eggs \n- Boss Fight \n\nI lost the most up to date version of the source code. I used Google Drive, because I didn't know what Git was at the time. So the most up to date version of the source code may differ from the build that is playable online.",
 
     technologies: ["/images/gamemaker studio logo.svg"],
 
@@ -2647,12 +2647,585 @@ public void SetVolume(float _volume, string _name)
     featured: true,
 
     codeSnippets: [
-      {
-        name: "insane script",
-        language: "gml",
-        description: "ik was beter.",
-        code: `insane code`,
-      },
+{
+	name: "PlayerObject: Step",
+	language: "GML",
+	description: "This is the Step event of the player object. It handles the player movement, time switching and attacking.",
+	code: `
+//day and night switching
+timekey = keyboard_check_pressed (ord("C"))// or (gamepad_button_check_pressed(0, gp_face3));
+attackkey = keyboard_check_pressed(ord("X"))
+
+if cancontrol = true
+{
+	if timekey and day == true
+	{
+		cancontrol = false;
+		sprite_index = PlayerSpriteSlash;
+		audio_play_sound(TimeChangeSound,3,false);
+		ScreenShake(10,20);
+		alarm[0] = 20;
+	}
+	
+	if timekey and day == false
+	{
+		cancontrol = false;
+		sprite_index = PlayerSpriteSlash;
+		audio_play_sound(TimeChangeSound,3,false);
+		ScreenShake(10,20);
+		alarm[1] = 20;
+	}
+	//attacking
+	if attackkey == true
+	{
+		cancontrol = false;
+		sprite_index = PlayerSpriteSlash;
+		alarm[2] = 20;
+	}
+}
+
+
+if day == true
+{
+	grav = 0.4;
+	if (cancontrol)
+	{
+		leftkey = keyboard_check(vk_left)// or (gamepad_button_check(0, gp_padl));
+		rightkey = keyboard_check(vk_right)// or (gamepad_button_check(0, gp_padr));
+		jumpkey = keyboard_check_pressed (vk_space)// or (gamepad_button_check_pressed(0, gp_face1));
+
+		var move = rightkey - leftkey;
+
+		horispeed = move * walkspeed;
+		// left and right movement
+		//horizontal collisions
+		if (place_meeting(x+horispeed,y,ObstacleObject))
+		{
+		while (!place_meeting(x+sign(horispeed),y,ObstacleObject))
+		{
+			x = x + sign(horispeed);
+		}
+			horispeed = 0;
+		}
+
+		x = x + horispeed;
+
+		// jumping
+		vertispeed = vertispeed + grav;
+
+		if (place_meeting(x ,y+1,ObstacleObject)) and (jumpkey)
+		{
+		    vertispeed = -8;
+			audio_play_sound(JumpSound,5,false);
+		}
+
+		//vertical collisions
+		if (place_meeting(x, y+vertispeed,ObstacleObject))
+		{
+		   while (!place_meeting(x, y+sign(vertispeed), ObstacleObject))
+		   {
+		    y = y + sign(vertispeed);
+		   }
+		    vertispeed = 0;
+		}
+
+		y = y + vertispeed;
+
+		// animations :))))))))))))))))))))
+
+		image_speed = 1;
+		// standing animation
+		if (horispeed == 0)
+		{
+			sprite_index = PlayerSprite;
+		}
+		// running animation
+		else 
+		{
+			sprite_index = PlayerSpriteRun;
+		}
+
+		//jumping animation
+		if !(place_meeting(x ,y+1,ObstacleObject)) {sprite_index = PlayerSpriteJump;}
+
+		if (horispeed !=0) image_xscale = sign (horispeed);
+		image_yscale = 1;
+
+		// you are dead not a big suprise
+		if hp == 0 
+		{
+			room_restart();
+		}
+
+		// damage taken (you nooby gamer)
+		invincable = max(invincable-1,0);
+	}
+	else
+	{
+		rightkey = 0;
+		leftkey = 0;
+		jumpkey = 0;
+	}
+}
+
+if day == false
+{
+	grav = 0.1;
+	if (cancontrol)
+	{
+	leftkey = keyboard_check(vk_left)// or (gamepad_button_check(0, gp_padl));
+	rightkey = keyboard_check(vk_right)// or (gamepad_button_check(0, gp_padr));
+	jumpkey = keyboard_check_pressed (vk_space)// or (gamepad_button_check_pressed(0, gp_face1));
+
+	var move = rightkey - leftkey;
+
+	horispeed = move * walkspeed;
+	// left and right movement
+	//horizontal collisions
+	if (place_meeting(x+horispeed,y,ObstacleObject))
+	{
+	while (!place_meeting(x+sign(horispeed),y,ObstacleObject))
+	{
+		x = x + sign(horispeed);
+	}
+		horispeed = 0;
+	}
+
+	x = x + horispeed;
+
+	// jumping
+	vertispeed = vertispeed - grav;
+
+	if (place_meeting(x ,y-8,ObstacleObject)) and (jumpkey)
+	{
+	    vertispeed = +4;
+		audio_play_sound(JumpSound,5,false);
+	}
+
+	//vertical collisions
+	if (place_meeting(x, y+vertispeed -4,ObstacleObject))
+	{
+	   while (!place_meeting(x, y+sign(vertispeed), ObstacleObject))
+	   {
+	    y = y + sign(vertispeed);
+	   }
+	    vertispeed = 0;
+	}
+
+	y = y + vertispeed;
+
+	// animations :))))))))))))))))))))
+
+	image_speed = 1;
+	// standing animation
+	if (horispeed == 0) 
+	{
+		sprite_index = PlayerSprite;
+	}
+	// running animation
+	else 
+	{
+		sprite_index = PlayerSpriteRun;
+	}
+
+	//jumping animation
+	if !(place_meeting(x, y+vertispeed -4,ObstacleObject)) {sprite_index = PlayerSpriteJump;}
+
+	if (horispeed !=0) image_xscale = sign (horispeed);
+	image_yscale = -1;
+
+	// you are dead not a big suprise
+	if hp == 0 
+	{
+		room_restart();
+	}
+
+	// damage taken (you nooby gamer)
+	invincable = max(invincable-1,0);
+	}
+	else
+	{
+		rightkey = 0;
+		leftkey = 0;
+		jumpkey = 0;
+	}
+}
+
+if instance_exists(TextObject) {image_index = PlayerSprite;}
+	`
+},
+
+{
+	name: "CameraObject: Step",
+	language: "GML",
+	description: "This is the step event of the CameraObject that handles the camera movement, following the player, and screenshake effects.",
+	code: `
+// cam update
+if (instance_exists(follow))
+{
+	gotoX = follow.x;
+	gotoY = follow.y;
+}
+
+// object update
+x += (gotoX - x) / smooth;
+y += (gotoY - y) / smooth;
+
+//keep cam in room else the players see oudside the room that's not what you would want to see in geam
+x = clamp(x,w_half_view+buffer,room_width-w_half_view-buffer);
+y = clamp(y,h_half_view+buffer,room_height-h_half_view-buffer);
+
+//screenshake
+x += random_range(-shake_remain,shake_remain);
+y += random_range(-shake_remain,shake_remain);
+shake_remain = max(0,shake_remain-((1/shake_length)*shake_strong));
+
+// update camera view
+camera_set_view_pos(cam,x-w_half_view,y-h_half_view);
+
+if room = MainGameRoom5
+{
+	if instance_exists(TextObject)
+	{
+		smooth = 10;
+		follow = BossObjectIntro;
+	}
+}
+if room = MainGameRoom5
+{
+	if !instance_exists(TextObject)
+	{
+		smooth = 1;
+		follow = PlayerObject;
+	}
+}
+	`
+},
+
+{
+	name: "TextObject: Draw",
+	language: "GML",
+	description: "This is the Draw event of the TextObject that displays text on the screen. It handles the textbox, text speed, and page flipping.",
+	code: `
+accept_key = keyboard_check_pressed(vk_space);
+
+textbox_x = camera_get_view_x(view_camera[0]) +200;
+textbox_y = camera_get_view_y(view_camera[0]) +80;
+
+if text_length !=0
+{
+	PlayerObject.cancontrol = false;
+}
+if text_length == 0
+{
+	PlayerObject.cancontrol = true;
+}
+//setup
+if (setup == false)
+{
+	setup = true;
+	draw_set_font(NormalFont);
+	draw_set_valign(fa_top);
+	draw_set_halign(fa_left);
+	
+	//loop trough pages
+	for (var p = 0; p < page_number; p++)
+	{
+		text_length[p] = string_length(text[p]);
+		
+		//no character talking
+		text_x_offset[p] = 44;
+		
+		//where should the text break? good question
+	}
+}
+
+//typing the text
+if(draw_char < text_length[page])
+{
+	draw_char += text_speed;
+	draw_char = clamp(draw_char, 0, text_length[page]);
+}
+
+
+//flip trough pages
+if (accept_key)
+{
+	//if typing is done
+	if (draw_char == text_length[page])
+	{
+		//next page
+		if (page < page_number-1)
+		{
+			page++;
+			draw_char = 0;
+		}
+		//destroy textbox
+		else
+		{
+			PlayerObject.cancontrol = true;
+			instance_destroy();
+		}
+	}
+	//if typing is not done
+	else
+	{
+		draw_char = text_length[page];
+	}
+}
+
+//draw textbox
+txtb_img += txtb_img_speed;
+txtb_spr_w = sprite_get_width(txtb_spr);
+txtb_spr_h = sprite_get_height(txtb_spr);
+//back of textbox
+draw_sprite_ext(txtb_spr,txtb_img,textbox_x + text_x_offset[page],textbox_y,textbox_width/txtb_spr_w,textbox_height/txtb_spr_h,0,c_white,1);
+
+//draw the text
+var c = 0;
+//sfx
+//floating text
+var _float_y = 0;
+if float_text[c, page] == true
+{
+	float_dir[c, page] += -6;
+	_float_y = dsin(float_dir[c, page]);
+}
+
+var _drawtext = string_copy(text[page],1,draw_char);
+draw_text_ext_color(textbox_x - text_x_offset[page] -70 + border, textbox_y + _float_y + border -70, _drawtext, line_sep, line_width, col_1[c, page], col_2[c, page], col_3[c, page], col_4[c, page], 1);
+	`
+},
+
+{
+	name: "GameTextScript.gml",
+	language: "GML",
+	description: "This is the script that holds all the dialogue for the game. It is used by the TextObject to display text on the screen when needed.",
+	code: `
+/// param text_id
+function scr_game_text(_text_id) 
+{
+	switch(_text_id)
+	{
+		case "sign1":
+		scr_text("Press the spacebar on the keyboard to jump.")
+		break;
+		
+		case "sign2":
+		scr_text("Press C on the keyboard to change the time.");
+		break;
+		
+		case "sign3":
+		scr_text("In the night the gravity is lower. Try to switch between day and night often.");
+		break;
+		
+		case "sign4":
+		scr_text("Watch out spikes ahead!");
+		break;
+		
+		case "dummy1":
+		scr_text("Hello there. I'm a dummy. You can practice combat on me. Use X on the keyboard to attack.");
+		break;
+		
+		case "dummy2":
+		scr_text("I think that's enough practicing for now.");
+		break;
+		
+		case "dummy3":
+		scr_text("Uhm please stop it's hurting.");
+		break;
+		
+		case "dummy4":
+		scr_text("Please stop.");
+		break;
+		
+		case "dummy5":
+		scr_text("STOP!");
+		break;
+		
+		case "dummy6":
+		scr_text("IT'S HURTING STOP!");
+		break;
+		
+		case "dummy7":
+		scr_text("Ok I think you just don't have feelings for others or something.");
+		break;
+		
+		case "dummy8":
+		scr_text("Would you like it if you got hit in the face about 70 times?");
+		scr_text("I think not.");
+		break;
+		
+		case "dummy9":
+		scr_text("You're starting to annoy me a bit.");
+		break;
+		
+		case "dummy10":
+		scr_text("I'm asking you again");
+		scr_text("please");
+		scr_text("STOP!");
+		break;
+		
+		case "dummy11":
+		scr_text("You're starting to annoy me a bit.");
+		break;
+		
+		case "dummy12":
+		scr_text("Don't you have anything better to do?");
+		break;
+		
+		case "dummy13":
+		scr_text("Wait I have an idea!");
+		scr_text("You're annoying me but what if I start to be annoying.");
+		break;
+		
+		case "dummy14":
+		scr_text("HAHAHAHAHAHA why are you still not giving up?");
+		break;
+		
+		case "dummy15":
+		scr_text("Ok.... It's still not working.");
+		scr_text("What if I start to say some random things to annoy you.");
+		break;
+		
+		case "dummy16":
+		scr_text("I found the perfect wikihow for you!");
+		scr_text("How to be annoying wikihow.");
+		break;
+		
+		case "dummy17":
+		scr_text("Do you know SoupDuckVPN?");
+		scr_text("It's the best VPN ever!");
+		scr_text("Stay safe online and use SoapDuckVPN.");
+		break;
+		
+		case "dummy18":
+		scr_text("The funny thing is that SoapDuckVPN doesn't even exist!");
+		scr_text("HAHAHAHAHAHA HAHAHAHAHA HAHAHAHAHAHAHA");
+		scr_text("HAHAHAHAHAHA HAHAHAHAHA HAHAHAHAHAHAHA");
+		scr_text("HAHAHAHAHAHA HAHAHAHAHA HAHAHAHAHAHAHA");
+		scr_text("HAHAHAHAHAHA HAHAHAHAHA HAHAHAHAHAHAHA");
+		break;
+		
+		case "dummy19":
+		scr_text("In the beginning god created the heavens and the earth.");
+		scr_text("And the earth was waste and void and darkness was apon the face of the deep and the spirit of God moved upon the face of the waters.");
+		scr_text("Then god said, let there be light");
+		break;
+		
+		case "dummy20":
+		scr_text("..... ... . . .... . .... .... .... ... .....");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		scr_text(".");
+		break;
+		
+		case "dummy21":
+		scr_text("Go tauch grass or something.");
+		break;
+		
+		case "boss1":
+		scr_text("You....")
+		scr_text("You shouldnt have this power")
+		scr_text("It's mine, give me that staff!")
+		break;
+	}
+}
+	`
+},
+
+{
+	name: "BossObject",
+	language: "GML",
+	description: "These are the scripts for the boss fight. The boss has a very simple AI that chooses a random numver every second. if it's 0, it will attack the player with fireballs. If it's another number it will move either up, down, left or right",
+	code: `
+Create:
+bosshp = 100;
+boss_hp_max = bosshp;
+global.bossdead = false;
+
+healthbar_width = 100;
+healthbar_height = 26;
+healthbar_x = 120 //(480/2) - (healthbar_width/2);
+healthbar_y = CameraObject.y -250;
+
+moving = 0;
+alarm[0] = 100;
+alarm[1] = 60;
+/*
+move 0 = attack
+move 1 = move right
+move 2 = move left
+move 3 = move down
+move 4 = move up
+*/
+instance_create_layer(PlayerObject.x,PlayerObject.y,layer,MusicObject)
+
+Step:
+if moving == 0
+{
+	//alarm 1
+}
+if moving == 1
+{
+	x ++;
+}
+if moving == 2
+{
+	x --;
+}
+if moving == 3
+{
+	y--;
+}
+if moving == 4
+{
+	y++;
+}
+
+if bosshp <= 0
+{
+	global.bossdead = true;
+	instance_destroy();
+}
+
+Draw GUI:
+draw_sprite(HealthBarBackgroundSprite,0,healthbar_x,healthbar_y);
+draw_sprite_stretched(HealthBarSprite,0,healthbar_x -2,healthbar_y,(bosshp/boss_hp_max) * healthbar_width +1, healthbar_height);
+draw_sprite(HealthBarBorderSprite,0,healthbar_x,healthbar_y);
+
+draw_set_font(NormalFont);
+draw_set_halign(fa_left);
+draw_set_valign(fa_center);
+draw_set_color(c_black);
+draw_text(healthbar_x +20, healthbar_y -15,"Boss");
+
+var offset = 2;
+draw_set_color(c_white);
+draw_text(healthbar_x +20 -offset, healthbar_y -15 -offset,"Boss");
+
+alarm 0:
+randomize();
+moving = irandom_range(0,4);
+
+alarm[0] = 100;
+
+alarm 1:
+if moving == 0 and PlayerObject.day == true
+{
+	instance_create_layer(x,y,layer,FireballObject);
+}
+alarm[1] = 60;
+	`
+},
+
     ],
   },
 
