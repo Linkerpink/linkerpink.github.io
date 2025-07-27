@@ -48,7 +48,7 @@ export const allProjects = [
     codeSnippets: [
       {
         name: "Player.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "Here are some functions I made for the player. the player was made with multiple people, so I will only be showing the parts I made, and are also interesting. I was in control of the player movement, controller support, animation switching, state switching, player rotation / look at and dashing",
         code: `
@@ -302,7 +302,7 @@ private void OnTriggerEnter(Collider other)
 
       {
         name: "PlayerInteraction.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "I was also in charge of the player interaction, pickups, keycards and inventory. the code blocks below are conntected with this one",
         code: `
@@ -358,7 +358,7 @@ private void OnTriggerStay(Collider other)
 
       {
         name: "PlayerInventory.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "This script shows the player inventory / weapon switching",
         code: `
@@ -454,7 +454,7 @@ private void SwitchWeapon()
 
       {
         name: "KeyUI.cs",
-        language: "csharp",
+        language: "C#",
         description: "This script shows the keycard stacking ui.",
         code: `
 private void Awake()
@@ -512,7 +512,7 @@ private void UpdateVisual()
 
       {
         name: "CameraManager.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "This is the camera manager I made for the game. This manager is able to switch cameras in a smooth way using CineMachine, and give screenshake when needed.",
         code: `
@@ -553,7 +553,7 @@ private IEnumerator ShakeTimer(float length)
 
       {
         name: "GameManager.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "Here are some functions I made in the GameManager that improve the gameplay experience. The rumble was made with enabling the motors of the controller if the player is playing with a controller, and stopping it in a certain amount of time.",
         code: `
@@ -583,20 +583,20 @@ private IEnumerator StopControllerRumble(float time)
   {
     title: "Not Suepr Maria 63",
     slug: "not-suepr-maria-63",
-    banner: "/images/not suepr maria 63.png",
-    icon: "/images/not suepr maria 63.png",
+    banner: "/images/not suepr.webp",
+    icon: "/images/not suepr.webp",
     date: "2025-04-17",
     displayDate: formatDisplayDate("2025-04-17"),
     platform: "Itch.io",
     description:
-      "VERY GOOD REMAKE OF SUEPR MARIA 63 😎😎😨😱 (please don't sue this is a school project)",
+      "This is a remake of Super Mario 64 made in Unity using C#, but made in about 4 weeks of time for a school project. This game was made purely for fun and with love for the original game, I was not trying to make a full and polished remake with intent of having people playing this instead of the original. \n\nI remade the outside of the castle, a bit of the inside of the castle, and bob omb battlefield. Most models were ripped from the original game, but the animations were made by myself, because I could not find the original animations and mixamo animations didn't feel right with capturing the spirit of the original. \n\nWhat I made: \n\n Player movement, attacks, animations, interactions etc \n\n Scriptable Object based dialogue system that connects a dialogue sequence to the textbox, and spawns them accordingly \n\nScriptable Object based star system \n\nGameManager script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. \n\nBase enemy script that enemies could be built off of \n\nBoss fight with King Bob Omb \n\nRace with Koopa The Quick \n\nScene transitions \n\nCutscene system \n\nBillboarded sprites",
     href: "https://linkerpink.itch.io/not-suepr-maria-63",
     github: "https://github.com/Linkerpink/NOT-Suepr-Maria-63",
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
     media: [
-      { type: "image", src: "/images/not suepr maria 63.png" },
+      { type: "image", src: "/images/not suepr.webp" },
       { type: "image", src: "/images/not suepr 1.png" },
       { type: "image", src: "/images/not suepr 2.png" },
       { type: "image", src: "/images/not suepr 3.png" },
@@ -608,11 +608,1447 @@ private IEnumerator StopControllerRumble(float time)
 
     codeSnippets: [
       {
-        name: "insane script",
-        language: "csharp",
-        description: "ik was beter.",
-        code: `insane code`,
+        name: "Mario.cs",
+        language: "C#",
+        description:
+          "This is the script that has taken the longest to make by far. This is the script for handling the player's movement, animations, attacks and interactions. It is a very long script so I will not show the variable declarations, because that in it self is already 100 lines. The player works with a state machine which decides what the player character should be doing. It has a few health functions that make sure you can take damage, die and give damage to the enemies. The player has 3 damage hitboxes, one for the cick and one for the punch. those are handled through the animations itself, the other one is more interesting, because that one checks if something is under the player, so if the player jumps on top of an enemy, the enemy will take damage. The player also has a few functions that make sure the player can interact with the environment, like interacting with dialogue triggers, picking up items and collecting coins.",
+        code: `
+private void Update()
+{
+    isGrounded = Physics.Raycast(transform.position, Vector3.down, groundedRayCastLength, groundLayer);
+    isOnEnemy = Physics.Raycast(transform.position, Vector3.down, groundedRayCastLength, enemyLayer);
+    isCollidingWithPole = Physics.Raycast(transform.position, Vector3.down, groundedRayCastLength, poleLayer);
+    
+    if (inputDirection.sqrMagnitude > 0.01f && state != States.DiveSlide && canMove) 
+    {
+        moveDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
+        targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+        angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+        lastAngle = angle;
+    }
+    else
+    {
+        moveDirection = Vector3.zero;
+        angle = lastAngle;
+    }
+    
+    // Set values for the Animator
+    m_animator.SetFloat("stickMovement", moveDirection.sqrMagnitude);
+    m_animator.SetBool("isGrounded", isGrounded);
+    
+    // Decide what state to switch to
+    if (canMove && state != States.Jump && state != States.GroundPound && state != States.LongJump && isGrounded && state != States.GroundPound && state != States.Dive && state != States.Punch && state != States.Kick && state != States.DiveSlide && state != States.InsideCannon)
+    {
+        if (!isCrouching)
+        {
+            // If not crouching
+            
+            if (inputDirection.sqrMagnitude >= 0.25f)
+            {
+                state = States.Run;
+                m_animator.Play("Run");
+            }
+            else if (inputDirection.sqrMagnitude >= 0.01f)
+            {
+                state = States.Walk;
+            }
+            else if (state != States.Kick && state != States.Punch)
+            {
+                state = States.Idle;
+                //m_animator.SetTrigger("land");
+            }
+            
+            m_animator.SetBool("crouch", false);
+        }
+        else
+        {
+            // If crouching
+            
+            if (inputDirection.sqrMagnitude >= stickDeadZone)
+            {
+                state = States.CrouchWalk;
+                
+            }
+            else if (state != States.Kick && state != States.Punch)
+            {
+                state = States.Crouch;
+                m_animator.SetBool("crouch", true);
+            }
+        }
+    }
+
+    if (!isGrounded && state != States.GroundPound && state != States.LongJump && state != States.Dive && state != States.Punch && state != States.Kick)
+    {
+        state = States.Jump;
+
+        switch (jumpCount)
+        {
+            case 1:
+                m_animator.Play("Jump");
+                break;
+            
+            case 2:
+                m_animator.Play("Double Jump");
+                break;
+            
+            case 3:
+                m_animator.Play("Triple jump");
+                break;
+        }
+    }
+    
+    // State switching
+    switch (state)
+    {
+        //////////Movement//////////////
+        
+        // Idle
+        case States.Idle:
+            moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0);
+            jumpCount = 0;
+            isCrouching = false;
+            break;
+        
+        // Walk
+        case States.Walk:
+            moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxWalkMoveSpeed);
+            isCrouching = false;
+            break;
+        
+        // Run
+        case States.Run:
+            moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxMoveSpeed);
+            isCrouching = false;
+            break;
+        
+        // Jump
+        case States.Jump:
+            moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxMoveSpeed);
+            jumpTimer = jumpTimerDuration;
+            
+            if (isGrounded && canMove || isCollidingWithPole && canMove)
+            {
+                m_animator.SetTrigger("land");
+                state = States.Idle;
+            }
+            
+            isCrouching = false;
+            break;
+        
+        // Crouch
+        case States.Crouch:
+            moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxCrouchMoveSpeed);
+            isCrouching = true;
+            break;
+        
+        // CrouchWalk
+        case States.CrouchWalk:
+            moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxCrouchMoveSpeed);
+            isCrouching = true;
+            break;
+        
+        // GroundPound
+        case States.GroundPound:
+            float _verticalMovement = 0f;
+
+            if (groundPoundTimer <= 0)
+            {
+                _verticalMovement = groundPoundMoveSpeed;
+            }
+            
+            m_rigidbody.linearVelocity = new Vector3(0, _verticalMovement, 0);
+
+            if (isGrounded && canMove)
+            {
+                state = States.Idle;
+                m_animator.SetTrigger("land");
+            }
+
+            if (isCollidingWithPole && canMove)
+            {
+                state = States.Idle;
+                m_animator.SetTrigger("land");
+
+                ChainChompPole _pole = GameObject.Find("Chain Chomp Area").GetComponentInChildren<ChainChompPole>();
+                
+                _pole.IncreasePolePosition();
+            }
+            
+            jumpCount = 0;
+            isCrouching = false;
+            break;
+            
+        // LongJump
+        case States.LongJump:
+            isCrouching = false;
+            m_animator.SetTrigger("longJump");
+            
+            if (longJumpTimer < longJumpTimerDuration / 2)
+            {
+                longJumpTimer += Time.deltaTime;
+                
+                float _jumpForce = jumpForce / 1.5f;
+                float _jumpSpeed = moveSpeed * 6;
+                m_rigidbody.linearVelocity = new Vector3(bufferedMoveDirection.x * _jumpSpeed, _jumpForce, bufferedMoveDirection.z * _jumpSpeed);
+            }
+            else if (longJumpTimer < longJumpTimerDuration)
+            {
+                longJumpTimer += Time.deltaTime;
+                float _jumpForce = 0f;
+                float _jumpSpeed = moveSpeed * 6;
+                m_rigidbody.linearVelocity = new Vector3(bufferedMoveDirection.x * _jumpSpeed, _jumpForce, bufferedMoveDirection.z * _jumpSpeed);
+            }
+            else
+            {
+                if (isGrounded && canMove || isCollidingWithPole && canMove)
+                {
+                    state = States.Idle;
+                    longJumpTimer = 0;
+                    m_animator.SetTrigger("land");
+                }
+            }
+            break;
+        
+        // HighJump
+        case States.HighJump:
+            if (isGrounded && canMove || isCollidingWithPole && canMove)
+            {
+                m_animator.SetTrigger("land");
+                state = States.Idle;
+            }
+            
+            isCrouching = false;
+            break;
+        
+        // DiveSlide
+        case States.DiveSlide:
+            moveDirection = new Vector3(bufferedMoveDirection.x, 0, bufferedMoveDirection.z);
+            
+            if (diveSlideTimer <= 0 && canMove)
+            {
+                state = States.Idle;
+                m_animator.SetTrigger("land");
+            }
+            isCrouching = false;
+            break;
+        
+        //////////Attacks//////////////
+        
+        // Punch
+        case States.Punch:
+            if (attackTimer <= 0)
+            {
+                state = States.Idle;
+            }
+            moveDirection = Vector3.zero;
+            isCrouching = false;
+            break;
+        
+        // Kick
+        case States.Kick:
+            if (attackTimer <= 0)
+            {
+                state = States.Idle;
+            }
+            moveDirection = Vector3.zero;
+            isCrouching = false;
+            break;
+        
+        // Dive
+        case States.Dive:
+            if (isGrounded || isCollidingWithPole && canMove)
+            {
+                state = States.DiveSlide;
+                diveSlideTimer = diveSlideTimerDuration;
+            }
+            jumpCount = 0;
+            isCrouching = false;
+            break;
+    }
+    
+    // Set movement and rotations
+    if (state != States.GroundPound && state != States.LongJump && state != States.Dive)
+    {
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+    }
+    
+    if (moveDirection != Vector3.zero)
+    {
+        moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+    }
+
+    velocity = moveDirection.normalized * moveSpeed;
+    if (state != States.GroundPound && state != States.LongJump && state != States.Dive && state != States.DiveSlide)
+    {
+        m_rigidbody.linearVelocity = new Vector3(velocity.x, m_rigidbody.linearVelocity.y, velocity.z);
+    }
+
+    // Timers
+    if (jumpTimer > 0 && isGrounded)
+    {
+        jumpTimer -= Time.deltaTime;
+    }
+    
+    if (groundPoundTimer > 0 && state == States.GroundPound)
+    {
+        groundPoundTimer -= Time.deltaTime;
+    }
+    
+    if (jumpTimer <= 0)
+    {
+        jumpCount = 0;
+    }
+
+    if (attackTimer > 0)
+    {
+        attackTimer -= Time.deltaTime;
+    }
+
+    if (attackComboTimer > 0)
+    {
+        attackComboTimer -= Time.deltaTime;
+    }
+    else
+    {
+        attackCount = 0;
+    }
+
+    if (attackCount > 3 && canMove)
+    {
+        attackCount = 0;
+        m_animator.SetTrigger("land");
+    }
+
+    if (diveSlideTimer > 0)
+    {
+        diveSlideTimer -= Time.deltaTime;
+    }
+    
+    // Iframes
+    if (iFrameTimer > 0)
+    {
+        iFrameTimer -= Time.deltaTime;
+
+        if (blinkTimer <= 0)
+        {
+            blinkTimer = blinkTimerDuration;
+            m_showModel = !m_showModel;
+        }
+
+        if (blinkTimer > 0)
+        {
+            blinkTimer -= Time.deltaTime;
+        }
+    }
+    else
+    {
+        m_showModel = true;
+    }
+
+    if (m_showModel)
+    {
+        m_marioVisual.SetActive(true);
+    }
+    else
+    {
+        m_marioVisual.SetActive(false);
+    }
+    
+    if (canMove)
+    {
+        m_playerInput.actions.FindActionMap("Player").Enable();
+        m_playerInput.actions.FindActionMap("UI").Disable();
+    }
+    else
+    {
+        m_playerInput.actions.FindActionMap("Player").Enable();
+        m_playerInput.actions.FindActionMap("UI").Disable();
+    }
+    
+    // Star stuff
+    if (m_pickedUpStar)
+    {
+        canMove = false;
+
+        if (isGrounded && !m_startedVictoryPose)
+        {
+            m_startedVictoryPose = true;
+            m_animator.SetTrigger("victoryPose");
+        }
+    }
+    
+    // Holding objects
+    if (heldObject != null)
+    {
+        heldObject.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+        heldObject.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        if (heldObject.name == "King Bob Omb" && m_kingBobOmb != null)
+        {
+            m_kingBobOmb.state = KingBobOmb.States.Grabbed;
+        }
+    }
+}
+
+public void OnMove(InputAction.CallbackContext _context)
+{
+    inputDirection = _context.ReadValue<Vector2>();
+}
+
+public void OnJump(InputAction.CallbackContext _context)
+{
+    if (_context.performed && canMove && state != States.InsideCannon)
+    {
+        // Long jump
+        if (state != States.LongJump && state != States.Dive)
+        {
+            bufferedMoveDirection = moveDirection;    
+        }
+        
+        if (state == States.CrouchWalk && moveDirection.sqrMagnitude > stickDeadZone)
+        {
+            jumpCount = 1;
+        
+            state = States.LongJump;
+        }
+    
+        // Jump
+        if (isGrounded && state != States.Jump && state != States.LongJump && state != States.DiveSlide || isCollidingWithPole && state != States.Jump && state != States.LongJump && state != States.DiveSlide)
+        {
+            if (jumpCount < 3)
+            {
+                jumpCount++;                
+            }
+        
+            float _jumpForce = jumpForce + jumpCount;
+            m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x, _jumpForce, m_rigidbody.linearVelocity.z);
+            state = States.Jump;
+        }
+        
+        // High jump
+        if (state == States.Crouch)
+        {
+            m_animator.SetBool("crouch", false);
+            
+            state = States.HighJump;
+            
+            m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x, jumpForce * 2f, m_rigidbody.linearVelocity.z);
+            
+            m_animator.SetTrigger("highJump");
+        }
+
+        if (state == States.DiveSlide && isGrounded && canMove)
+        {
+            state = States.Idle;
+            m_animator.SetTrigger("land");
+        }
+    }
+
+    if (_context.performed && state == States.InsideCannon)
+    {
+        float _jumpForce = jumpForce * 10f;
+        m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x, _jumpForce, m_rigidbody.linearVelocity.z);
+        state = States.Jump;
+    }
+}
+
+public void OnCrouch(InputAction.CallbackContext _context)
+{
+    if (_context.performed && canMove)
+    {
+        if (isGrounded)
+        {
+            isGrounded = true;
+            isCrouching = true;
+            m_animator.SetBool("crouch", true);
+        }
+        else if (state != States.GroundPound && !isGrounded)
+        {
+            m_animator.SetTrigger("groundPound");
+            state = States.GroundPound;
+            groundPoundTimer = groundPoundTimerDuration;
+        }
+    }
+    
+    if (_context.canceled && state == States.Crouch || _context.canceled && state == States.CrouchWalk)
+    {
+        isCrouching = false;
+        m_animator.SetBool("crouch", false);
+    }
+}
+
+public void OnAttack(InputAction.CallbackContext _context)
+{
+    if (_context.performed && canMove)
+    {
+        // Hold king bob omb
+        if (heldObject == null && isCollidingWithKingBobOmb && m_kingBobOmbObject != null)
+        {
+            heldObject = m_kingBobOmbObject;
+        }
+
+        // Throw object
+        if (heldObject != null)
+        {
+            print("throw object");
+            
+            heldObject.transform.position = new Vector3(heldObject.transform.position.x, transform.position.y + 4, heldObject.transform.position.z) + transform.forward * 4f;
+
+            if (heldObject.name == "King Bob Omb" && m_kingBobOmb != null && m_kingBobOmb.state == KingBobOmb.States.Grabbed)
+            {
+                m_kingBobOmb.state = KingBobOmb.States.Thrown;
+                heldObject = null;
+            }
+        }
+        
+        // Dialogue
+        if (m_isCollidingWithDialogueHitbox && m_dialogueHitbox != null)
+        {
+            DialogueSequence _dialogueSequence = m_dialogueHitbox.GetComponent<DialogueGiver>().dialogueSequence;
+            m_textbox.StartDialogueSequence(_dialogueSequence);
+        }
+        
+        // Attacking
+        if (attackCount <= 2 && isGrounded && attackTimer <= 0 && moveDirection.sqrMagnitude < stickDeadZone)
+        {
+            // Punch
+            attackCount++;
+            state = States.Punch;
+            m_animator.Play("Punch");
+            attackTimer = attackTimerDuration;
+            attackComboTimer = attackComboTimerDuration;
+        }
+        else if (state != States.Run && attackTimer <= 0 && moveDirection.sqrMagnitude < stickDeadZone)
+        {
+            // Kick
+            attackCount++;
+            state = States.Kick;
+            m_animator.Play("Kick");
+            attackTimer = attackTimerDuration;
+            attackComboTimer = attackComboTimerDuration;
+        }
+        
+        if (state != States.Dive && state != States.DiveSlide && moveDirection.sqrMagnitude > stickDeadZone && state != States.LongJump && !isGrounded)
+        {
+            //Dive
+            attackCount++;
+            state = States.Dive;
+            m_animator.Play("Dive");
+            m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x * 1.5f, m_rigidbody.linearVelocity.y, m_rigidbody.linearVelocity.z * 1.5f);
+        }
+    }
+}
+
+public void TakeDamage(int _damageAmount)
+{
+    if (iFrameTimer <= 0)
+    {
+        hp -= _damageAmount;
+        if (hp <= 0)
+        {
+            Die();
+        }
+
+        iFrameTimer = iFrameDuration;
+        
+        // Power Meter
+        if (!m_powerMeter.showing)
+        {
+            print("show power meter");
+            m_powerMeter.ShowPowerMeter();
+        }
+        else
+        {
+            print("skill issueee");
+        }
+    }
+}
+
+public void Heal(int _healAmount)
+{
+    if (hp < 8)
+    {
+        hp += _healAmount;    
+    }
+    
+    // Power Meter
+    if (m_powerMeter.showing && hp >= 8)
+    {
+        print("hide power meter");
+        m_powerMeter.HidePowerMeter();
+    }
+}
+
+public void Die()
+{
+    SceneManager.LoadScene("Peach's Castle Inside Main Room");
+}
+
+private void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Jump Hitbox"))
+    {
+        if (isOnEnemy)
+        {
+            other.GetComponentInParent<Enemy>().TakeDamage(1);
+            m_rigidbody.AddForce(0f,10f,0f,ForceMode.Impulse);
+        }
+    }
+
+    if (other.CompareTag("King Bob Omb"))
+    {
+        isCollidingWithKingBobOmb = true;
+        m_kingBobOmbObject = other.gameObject;
+    }
+    
+    if (other.CompareTag("Dialogue Hitbox"))
+    {
+        m_isCollidingWithDialogueHitbox = true;
+        m_dialogueHitbox = other;
+    }
+
+    if (other.CompareTag("Star"))
+    {
+        print("should pick up star");
+        GameManager.Instance.GetStar(other.gameObject.GetComponent<StarHolder>().star);
+        other.gameObject.SetActive(false);
+        m_pickedUpStar = true;
+    }
+
+    if (other.CompareTag("Top Hitbox"))
+    {
+        RaceManager _raceManager = FindObjectOfType<RaceManager>();
+
+        if (_raceManager != null)
+        {
+            _raceManager.EndRace();
+
+            if (_raceManager.raceState == RaceManager.RaceStates.Racing)
+            {
+                _raceManager.raceState = RaceManager.RaceStates.Won;
+            }    
+        }
+
+        if (GameManager.Instance.currentStar != null && m_kingBobOmb != null)
+        {
+            if (m_kingBobOmb.stage == 0 && GameManager.Instance.currentStar.name == "Star 1")
+            {
+                m_textbox.StartDialogueSequence(m_kingBobOmbStartBattleDialogueSequence);    
+            }
+        }
+
+        if (!GameManager.Instance.shownCastleIntroDialogue)
+        {
+            if (other.CompareTag("Castle Dialogue"))
+            {
+                GameManager.Instance.shownCastleIntroDialogue = true;
+                m_textbox.StartDialogueSequence(GameManager.Instance.castleIntroDialogueSequence);
+
+            }
+        }
+    }
+
+    if (other.CompareTag("Enemy"))
+    {
+        Enemy _enemy = other.GetComponent<Enemy>();
+        
+        if (!isOnEnemy && state != States.Punch && state != States.Kick && state != States.Dive &&
+            state != States.Jump && state != States.GroundPound)
+        {
+            TakeDamage(_enemy.damageAmount);
+        }
+        else
+        {
+            _enemy.TakeDamage(1);
+        }
+    }
+
+    if (other.CompareTag("Death"))
+    {
+        Die();
+    }
+}
+
+private void OnTriggerExit(Collider other)
+{
+    if (other.CompareTag("Dialogue Hitbox"))
+    {
+        m_isCollidingWithDialogueHitbox = false;
+    }
+    
+    if (other.CompareTag("King Bob Omb"))
+    {
+        isCollidingWithKingBobOmb = false;
+        m_kingBobOmbObject = null;
+    }
+}
+
+private void OnTriggerStay(Collider other)
+{
+    if (other.CompareTag("Cannon"))
+    {
+        state = States.InsideCannon;
+    }
+}
+`,
       },
+
+      {
+        name: "DialogueSequence.cs",
+        language: "C#",
+        description: "This is the Scriptable Object in charge of making a sequence of dialogue that the textbox will follow. It has a string array where you can add different pages of dialogue to in the editor. It has values for the color that the textbox needs to be. It also has possible ending functions, like opening a cannon, starting / ending fights and starting a race",
+        code: `
+public string[] dialogue;
+
+public Color textBoxColor;
+public Color textColor;
+
+public enum DialogueTypes
+{
+    Nothing,
+    KingBobOmbStartFight,
+    KingBobOmbEndFight,
+    KoopaTheQuickStartRace,
+    KoopaTheQuickWinRace,
+    KoopaTheQuickLoseRace,
+    PinkBobOmbOpenCannon,
+}
+
+public DialogueTypes dialogueType;
+
+private Mario m_mario;
+
+private GameManager m_gameManager;
+
+private void Awake()
+{
+    m_gameManager = FindObjectOfType<GameManager>();
+}
+
+public void EndDialogueFunction()
+{
+    switch (dialogueType)
+    {
+        case DialogueTypes.KingBobOmbStartFight:
+            KingBobOmb _kingBobOmb = FindAnyObjectByType<KingBobOmb>();
+            _kingBobOmb.StartFight();
+            break;
+        
+        case DialogueTypes.KingBobOmbEndFight:
+            _kingBobOmb = FindAnyObjectByType<KingBobOmb>();
+            _kingBobOmb.EndFight();
+            break;
+        
+        case DialogueTypes.KoopaTheQuickStartRace:
+            KoopaTheQuick _koopaTheQuick = FindAnyObjectByType<KoopaTheQuick>();
+            _koopaTheQuick.StartRace();
+            break;
+        
+        case DialogueTypes.KoopaTheQuickWinRace:
+            _koopaTheQuick = FindAnyObjectByType<KoopaTheQuick>();
+            _koopaTheQuick.WinRace();
+            break;
+        
+        case DialogueTypes.KoopaTheQuickLoseRace:
+            m_mario = FindObjectOfType<Mario>();
+            m_mario.Die();
+            break;
+        
+        case DialogueTypes.PinkBobOmbOpenCannon:
+            // Open Cannons
+            m_gameManager = FindAnyObjectByType<GameManager>();
+            if (!GameManager.Instance.cannonsOpened)
+            {
+                m_mario = FindObjectOfType<Mario>();
+                Animator m_animator = GameObject.Find("Cannon Covers").GetComponent<Animator>();
+                m_animator.SetTrigger("openCannon");
+                m_mario.canMove = false;
+            }
+            break;
+    }
+}
+	`,
+      },
+
+      {
+        name: "Textbox.cs",
+        language: "C#",
+        description: "This is the textbox script that loads in the information from the DialogueSequence that is given to the textbox.",
+        code: `
+private void Update()
+{
+    if (!m_textboxExists)
+    {
+        m_background.color = Color.clear;
+        m_text.color = Color.clear;
+    }
+}
+
+public void StartDialogueSequence(DialogueSequence _sequence)
+{
+    if (!m_textboxExists)
+    {
+        m_mario.canMove = false;
+        m_textboxExists = true;
+        m_sequence = _sequence;
+    
+        ResetTextbox();
+    
+        SpawnTextbox(m_sequence.dialogue[m_page]);    
+    }
+}
+
+private void SpawnTextbox(string _text)
+{
+    m_background.color = m_sequence.textBoxColor;
+    m_text.color = m_sequence.textColor;
+    
+    m_text.SetText(_text);
+    
+    m_animator.SetTrigger("textboxIn");
+}
+
+public void OnSubmit(InputAction.CallbackContext _context)
+{
+    if (_context.performed && m_sequence != null)
+    {
+        print("submit");
+        if (m_page < m_sequence.dialogue.Length - 1 && m_textboxExists)
+        {
+            m_page++;
+            SpawnTextbox(m_sequence.dialogue[m_page]);
+        }
+        else if (m_textboxExists)
+        {
+            m_sequence.EndDialogueFunction();
+            m_animator.SetTrigger("textboxOut");
+            m_textboxExists = false;
+            m_mario.canMove = true;
+        }
+    }
+}
+
+private void ResetTextbox()
+{
+    m_page = 0;
+}
+        `,
+      },
+
+      {
+        name: "GameManager.cs",
+        language: "C#",
+        description:
+          "This is the script that handles the state of the game, star selection and loading the level accordingly based on the star that is selected. It also has the screenshake function I made for Robo Rebellion.",
+        code: `
+private void Update()
+{
+    print(starsCollected.Count);
+    if (Input.GetKeyDown(KeyCode.B))
+    {
+        enableDebug = !enableDebug;
+    }
+
+    if (Input.GetKeyDown(KeyCode.R))
+    {
+        if (m_mario != null)
+        {
+            m_mario.Die();
+        }
+        
+    }
+    
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+        lockCursor = false;
+    }
+    
+    // UI
+    if (m_starsText != null)
+    {
+        SetStarsText();
+    }
+
+    if (m_coinsText != null)
+    {
+        SetCoinsText();
+    }
+
+    // Application
+    if (Application.isFocused)
+    {
+        lockCursor = true;
+    }
+
+    Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+}
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    StartCoroutine(SetObjectsWhenReady());
+}
+
+private void SetObjects()
+{
+    currentScene = SceneManager.GetActiveScene().name;
+    
+    m_canvas = GameObject.Find("Canvas");
+
+    if (m_canvas != null)
+    {
+        foreach (Transform _child in m_canvas.transform)
+        {
+            if (_child.name == "Background")
+            {
+                m_backgroundAnimator = _child.GetComponent<Animator>();
+                StartTransitionAnimation("fadeOutWhite");
+            }
+
+            if (_child.name == "Star Select")
+            {
+                SetStarText();
+            }
+        }
+    }
+    
+    m_starSelect = GameObject.Find("Star Select");
+    m_starObjects = GameObject.Find("Star Objects");
+    
+    m_mario = FindAnyObjectByType<Mario>();
+
+    if (m_mario != null)
+    {
+        if (m_starSelect != null)
+        {
+            m_mario.canMove = false;   
+        }
+        else
+        {
+            m_mario.canMove = true;    
+        }
+    }
+    
+    m_starsText = GameObject.Find("Stars Text").GetComponent<TextMeshProUGUI>();
+    m_coinsText = GameObject.Find("Coins Text").GetComponent<TextMeshProUGUI>();
+    
+    coinsCollected = 0;
+    spawned100CoinStar = false;
+}
+
+private IEnumerator SetObjectsWhenReady()
+{
+    while (GameObject.Find("Canvas") == null)
+    {
+        yield return null;
+    }
+    SetObjects();
+}
+
+
+public void StartTransitionAnimation(string _animation)
+{
+    if (m_backgroundAnimator != null)
+    {
+        m_backgroundAnimator.SetTrigger(_animation);
+    }
+}
+
+public UnityAction SelectStar(Star _star)
+{
+    StartCoroutine(InitializeLevel(_star));
+    currentStar = _star;
+    
+    if (_star.name == "Star 1")
+    {
+        m_mario.m_kingBobOmbObject = FindAnyObjectByType<KingBobOmb>().gameObject;
+        m_mario.m_kingBobOmb = m_mario.m_kingBobOmbObject.GetComponent<KingBobOmb>();
+    }
+
+    SetStarsText();
+    
+    return null;
+}
+
+public IEnumerator InitializeLevel(Star _star)
+{
+    if (m_starSelect == null && m_starObjects == null)
+    {
+        Debug.Log("zelfm,orod");
+        SetObjects();
+        yield return new WaitForSeconds(0.1f);
+    }
+    else
+    {
+        SetObjects();
+        m_starSelect.SetActive(false);
+        m_starObjects.SetActive(true);
+        m_mario.canMove = true;
+
+        foreach (Transform _child in m_starObjects.transform)
+        {
+            _child.gameObject.SetActive(false);
+        }
+        
+        if (_star.name == "Star 1")
+        {
+            foreach (Transform _child in m_starObjects.transform)
+            {
+                if (_child.name == "Star 1 Objects")
+                {
+                    _child.gameObject.SetActive(true);
+                    
+                    foreach (Transform _child2 in _child.transform)
+                    {
+                        _child2.gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    _child.gameObject.SetActive(false);
+                }
+            }
+        }
+        
+        if (_star.name == "Star 2")
+        {
+            foreach (Transform _child in m_starObjects.transform)
+            {
+                if (_child.name == "Star 2 Objects")
+                {
+                    _child.gameObject.SetActive(true);
+                    
+                    foreach (Transform _child2 in _child.transform)
+                    {
+                        _child2.gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    _child.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        if (_star.name == "Star 3")
+        {
+            foreach (Transform _child in m_starObjects.transform)
+            {
+                if (_child.name == "Star 3 Objects")
+                {
+                    _child.gameObject.SetActive(true);
+                    
+                    foreach (Transform _child2 in _child.transform)
+                    {
+                        _child2.gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    _child.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        yield return null;
+    }
+}
+
+public void HoverOverStar(Star _star)
+{
+    m_canvas = FindAnyObjectByType<Canvas>().gameObject;
+    SetStarText();
+    m_starText.SetText(_star.starName);
+}
+
+private void SetStarText()
+{
+    GameObject _starText = GameObject.Find("Star Name Text");
+
+    if (_starText != null)
+    {
+        m_starText = GameObject.Find("Star Name Text").GetComponent<TextMeshProUGUI>();    
+    }
+}
+
+private void SetStarsText()
+{
+    m_starsText = GameObject.Find("Stars Text").GetComponent<TextMeshProUGUI>();
+    
+    if (m_starsText != null)
+    {
+        m_starsText.SetText("X" + starsCollected.Count);
+    }
+}
+
+private void SetCoinsText()
+{
+    m_coinsText = GameObject.Find("Coins Text").GetComponent<TextMeshProUGUI>();
+    
+    if (m_coinsText != null)
+    {
+        m_coinsText.SetText("X" + coinsCollected);
+    }
+}
+
+public void SpawnStar(Star _star, Vector3 _position)
+{
+    GameObject _starObject = Instantiate(m_starPrefab, new Vector3(_position.x, _position.y, _position.z), Quaternion.identity);
+
+    _starObject.GetComponentInChildren<StarHolder>().star = _star;
+}
+
+public void GetStar(Star _star)
+{
+    if (!starsCollected.Contains(_star))
+    {
+        starsCollected.Add(_star);
+    }
+    
+    currentStar = null;
+    
+    print("starsCollected: " + starsCollected);
+}
+
+public void ScreenShake(float _amplitude, float _frequency, float _duration)
+{
+    m_perlin = GameObject.Find("Player Camera").GetComponent<CinemachineBasicMultiChannelPerlin>();
+    
+    m_perlin.AmplitudeGain = _amplitude;
+    m_perlin.FrequencyGain = _frequency;
+    StartCoroutine(ShakeTimer(_duration));
+}
+
+private IEnumerator ShakeTimer(float _duration)
+{
+    yield return new WaitForSeconds(_duration);
+
+    //Reset noise
+    m_perlin.AmplitudeGain = 0;
+    m_perlin.FrequencyGain = 0;
+}
+        `,
+      },
+
+      {
+	name: "Enemy.cs",
+	language: "C#",
+	description: "",
+	code: `
+public enum States
+{
+    Patroling,
+    ChargePlayer,
+}
+
+public States state = States.Patroling;
+
+private void Awake()
+{
+    m_mario = FindAnyObjectByType<Mario>();
+    m_marioTransform = m_mario.transform;
+    agent = GetComponent<NavMeshAgent>();
+    m_animator = GetComponentInChildren<Animator>();
+}
+
+private void Update()
+{
+    // Check for sight and attack range
+    playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayer);
+
+    if (!playerInSightRange)
+    {
+        state = States.Patroling;
+    }
+
+    if (playerInSightRange)
+    {
+        state = States.ChargePlayer;
+    }
+    
+    // State switching
+    switch (state)
+    {
+        // Patroling
+        case States.Patroling:
+            
+            if (!walkPointSet)
+            {
+                SearchWalkPoint();
+            }
+
+            if (walkPointSet)
+            {
+                agent.SetDestination(walkPoint);
+            }
+
+            Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+            // Walkpoint reached
+            if (distanceToWalkPoint.magnitude < 1f)
+            {
+                walkPointSet = false;
+            }
+            
+            if (m_mario.canMove)
+            {
+                agent.speed = patrolSpeed;
+            }
+            else
+            {
+                agent.speed = 0;
+            }
+            
+            break;
+        
+        // Carge Player
+        case States.ChargePlayer:
+            
+            if (m_mario.canMove)
+            {
+                agent.SetDestination(m_marioTransform.position);
+                agent.speed = runSpeed;    
+            }
+            else
+            {
+                agent.speed = 0;
+            }
+            
+            break;
+    }
+}
+
+private void SearchWalkPoint()
+{
+    // Calculate random point in range
+    float randomZ = Random.Range(-walkPointRange, walkPointRange);
+    float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+    walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+    if (Physics.Raycast(walkPoint, -transform.up, 2f, groundLayer))
+    {
+        walkPointSet = true;
+    }
+}
+
+private void OnDrawGizmosSelected()
+{
+    Gizmos.color = Color.yellow;
+    Gizmos.DrawWireSphere(transform.position, sightRange);
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(transform.position, walkPointRange);
+}
+
+private void DamagePlayer(int _damageAmount)
+{
+    m_mario.TakeDamage(_damageAmount);
+}
+
+public void TakeDamage(int _damageAmount)
+{
+    hp -= _damageAmount;
+
+    if (hp <= 0)
+    {
+        Die();
+    }
+}
+
+private void Die()
+{
+    gameObject.SetActive(false);
+}
+	`
+    },
+
+{
+	name: "KingBobOmb.cs",
+	language: "C#",
+	description: "",
+	code: `
+public enum States
+{
+	Idle,
+	Walking,
+	Grabbing,
+	Throwing,
+	Grabbed,
+	Thrown,
+}
+
+public States state = States.Idle;
+
+[SerializeField] private Star m_kingBobOmbStar;
+
+private void Awake()
+{
+	m_mario = FindAnyObjectByType<Mario>();
+	m_marioTransform = m_mario.transform;
+	agent = GetComponent<NavMeshAgent>();
+	m_animator = GetComponentInChildren<Animator>();
+	m_gameManager = FindAnyObjectByType<GameManager>();
+	m_textbox = FindAnyObjectByType<Textbox>();
+}
+
+private void Update()
+{
+	isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.5f, groundLayer);
+	
+	switch (state)
+	{
+		case States.Idle:
+			if (goToWalkTimer > 0)
+			{
+				goToWalkTimer -= Time.deltaTime;
+			}
+			else
+			{
+				state = States.Walking;
+			}
+			break;
+			
+		case States.Walking:
+			if (stage > 0 && stage < 3)
+			{
+				agent.SetDestination(walkPoint);
+
+				if (setWalkPointTimer > 0)
+				{
+					setWalkPointTimer -= Time.deltaTime;
+				}
+				else
+				{
+					SetWalkPoint(m_marioTransform.position);
+					setWalkPointTimer = setWalkPointTimerDuration;
+				}
+
+				if (stage < 2)
+				{
+					agent.angularSpeed = 75;
+				}
+				else
+				{
+					agent.angularSpeed = 180;
+					setWalkPointTimerDuration = 0.25f;
+				}    
+			}
+			else
+			{
+				state = States.Idle;
+			}
+			break;
+		
+		case States.Grabbed:
+			
+			break;
+		
+		case States.Thrown:
+			if (isGrounded)
+			{
+				state = States.Walking;
+				stage++;
+				m_gameManager.ScreenShake(10,10,0.25f);
+			}
+			break;
+	}
+
+	if (stage > 3)
+	{
+		m_textbox.StartDialogueSequence(m_loseDialogueSequence);
+		stage = -1;
+	}
+}
+
+private void SetWalkPoint(Vector3 _walkPoint)
+{
+	walkPoint = _walkPoint;
+}
+
+public void StartFight()
+{
+	state = States.Walking;
+	stage = 1;
+}
+
+public void EndFight()
+{
+	GameManager.Instance.SpawnStar(m_kingBobOmbStar, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
+	gameObject.SetActive(false);
+}
+	`
+},
+
+{
+	name: "KoopaTheQuick.cs",
+	language: "C#",
+	description: "",
+	code: `
+private void Update()
+{
+	print(racing);
+	
+	if (racing)
+	{
+		float _remainingDist = Vector3.Distance(transform.position, waypoints[m_currentWaypoint].position);
+			
+		if (_remainingDist <= 1f  &&  m_currentWaypoint < waypoints.Length - 1)
+		{
+			m_currentWaypoint++;
+			SetWaypoint();
+		}
+
+	}
+	
+	print(m_currentWaypoint);
+}
+
+public void StartRace()
+{
+	racing = true;
+	SetWaypoint(); 
+	m_raceManager= FindAnyObjectByType<RaceManager>();
+	m_raceManager.StartRace();
+}
+
+private void SetWaypoint()
+{
+	print("SET WAYPOINT 5 BIG BOOOOMB");
+	m_agent.destination = waypoints[m_currentWaypoint].position;
+}
+
+private void OnTriggerEnter(Collider other)
+{
+	if (other.CompareTag("Top Hitbox"))
+	{
+		if (m_raceManager.raceState == RaceManager.RaceStates.Racing)
+		{
+			m_raceManager.raceState = RaceManager.RaceStates.Lost;
+			
+			m_textbox.StartDialogueSequence(m_lostDialogue);
+		}
+		
+		if (m_raceManager.raceState == RaceManager.RaceStates.Won)
+		{
+			m_textbox.StartDialogueSequence(m_wonDialogue);
+		}
+	}
+}
+
+public void WinRace()
+{
+	m_agent.enabled = false;
+	print("race gewonnen :O");
+	GameManager.Instance.SpawnStar(m_star, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z));
+	racing = false;
+	gameObject.SetActive(false);
+}
+	`
+}
+
+
+
+
+
     ],
   },
 
@@ -647,7 +2083,7 @@ private IEnumerator StopControllerRumble(float time)
     codeSnippets: [
       {
         name: "insane script",
-        language: "csharp",
+        language: "C#",
         description: "ik was beter.",
         code: `insane code`,
       },
@@ -795,7 +2231,7 @@ private IEnumerator StopControllerRumble(float time)
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },
@@ -843,7 +2279,7 @@ private IEnumerator StopControllerRumble(float time)
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik ben LETTERLIJK beter.",
         code: `horror code`,
       },
@@ -878,7 +2314,7 @@ private IEnumerator StopControllerRumble(float time)
     codeSnippets: [
       {
         name: "PlayerMovement.cs",
-        language: "csharp",
+        language: "C#",
         description:
           "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
         code: `using UnityEngine;
@@ -1028,7 +2464,7 @@ public class PlayerMovement : MonoBehaviour
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },
@@ -1063,7 +2499,7 @@ public class PlayerMovement : MonoBehaviour
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },
@@ -1098,7 +2534,7 @@ public class PlayerMovement : MonoBehaviour
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },
@@ -1136,7 +2572,7 @@ public class PlayerMovement : MonoBehaviour
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },
@@ -1163,16 +2599,14 @@ public class PlayerMovement : MonoBehaviour
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-    media: [
-      { type: "image", src: "/images/disco dungeon temp.webp" },
-    ],
+    media: [{ type: "image", src: "/images/disco dungeon temp.webp" }],
 
     featured: false,
 
     codeSnippets: [
       {
         name: "horror script",
-        language: "csharp",
+        language: "C#",
         description: "ik was slechter.",
         code: `horror code`,
       },

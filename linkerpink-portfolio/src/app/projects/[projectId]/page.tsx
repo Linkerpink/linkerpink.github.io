@@ -28,7 +28,7 @@
       <div className="min-h-screen relative px-6">
         {/* Banner */}
         {project.banner && (
-          <div className="w-full mb-10 rounded-3xl overflow-hidden aspect-[10/3] shadow-[0px_3px_6px_rgba(0,0,0,0.5)]">
+          <div className="w-full mb-10 rounded-3xl overflow-hidden aspect-[10/3] shadow-[0px_3px_6px_rgba(0,0,0,0.5)] select-none">
             <Image
               src={project.banner}
               alt={`${project.title} Banner`}
@@ -36,6 +36,7 @@
               height={800}
               className="w-full h-full object-cover banner-animate"
               priority
+              draggable={false}
             />
           </div>
         )}
@@ -51,7 +52,8 @@
                   alt={`${project.title} Icon`}
                   width={512}
                   height={512}
-                  className="w-38 h-38 object-cover rounded-3xl border-8 border-white shadow-[0px_0px_6px_rgba(0,0,0,0.5)] aspect-[1/1] banner-animate"
+                  className="w-38 h-38 object-cover rounded-3xl border-8 border-white shadow-[0px_0px_6px_rgba(0,0,0,0.5)] aspect-[1/1] banner-animate select-none"
+                  draggable={false}
                 />
               )}
               <div>
@@ -89,7 +91,8 @@
                   href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold interactable-object"
+                  className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold interactable-object select-none"
+                  draggable={false}
                 >
                   <Image
                     src={
@@ -101,7 +104,7 @@
                     width={48}
                     height={48}
                     draggable={false}
-                    className="rounded-md"
+                    className="rounded-md select-none"
                   />
                   View on {project.platform || "Platform"}
                 </a>
@@ -113,7 +116,7 @@
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-gray-500 to-gray-900 text-white font-semibold interactable-object"
+                  className="flex items-center gap-3 px-2.5 py-2 rounded-full bg-gradient-to-r from-gray-500 to-gray-900 text-white font-semibold interactable-object select-none"
                   draggable={false}
                 >
                   <Image
@@ -122,6 +125,7 @@
                     width={48}
                     height={48}
                     draggable={false}
+                    className="rounded-md select-none"
                   />
                   View on GitHub
                 </a>

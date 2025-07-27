@@ -12,7 +12,6 @@ interface CodeBlockProps {
   children: string;
 }
 
-// Custom hook to detect if screen is mobile
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = React.useState(false);
   useEffect(() => {
@@ -33,12 +32,20 @@ export default function CodeBlock({
   children,
 }: CodeBlockProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
   const isMobile = useIsMobile();
   const blockRef = useRef<HTMLElement | null>(null);
 
-  // Scroll to the block when mobile fullscreen is closed
+  // Track if block was ever opened (on mobile)
   useEffect(() => {
-    if (!isOpen && isMobile && blockRef.current) {
+    if (isOpen && isMobile && !hasOpened) {
+      setHasOpened(true);
+    }
+  }, [isOpen, isMobile, hasOpened]);
+
+  // Scroll to block only if it was previously opened and is now closed
+  useEffect(() => {
+    if (hasOpened && !isOpen && isMobile && blockRef.current) {
       setTimeout(() => {
         blockRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -46,26 +53,16 @@ export default function CodeBlock({
         });
       }, 300);
     }
-  }, [isOpen, isMobile]);
-
-  // Lock body scroll when mobile fullscreen is active
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.overflow = isOpen ? "hidden" : "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen, isMobile]);
+  }, [isOpen, isMobile, hasOpened]);
 
   const content = (
-    <article className="flex flex-col h-full">
+    <article className="flex flex-col">
       {description && (
         <div className="text-gray-700 bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm leading-relaxed">
           {description}
         </div>
       )}
-      <div className="p-6 overflow-auto bg-gray-50 text-gray-900 rounded-b-xl text-sm leading-relaxed font-mono flex-1">
+      <div className="p-6 bg-gray-50 text-gray-900 text-sm leading-relaxed font-mono">
         <Highlight className={language}>{children.trim()}</Highlight>
       </div>
     </article>
@@ -102,7 +99,7 @@ export default function CodeBlock({
 
         <motion.button
           aria-label={isOpen ? "Collapse code" : "Expand code"}
-          className="text-[#F57C00] font-bold text-2xl leading-none select-none"
+          className="text-[#F57C00] font-bold text-2xl leading-none select-none cursor-pointer"
           animate={{ rotate: isOpen ? 0 : 90, scale: isOpen ? 1 : 1.2 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           onClick={(e) => {
@@ -147,11 +144,9 @@ export default function CodeBlock({
         )}
       </AnimatePresence>
 
-      {/* Fullscreen animation for mobile */}
       <AnimatePresence>
         {isOpen && isMobile && (
           <>
-            {/* Backdrop */}
             <motion.div
               key="mobile-backdrop"
               initial={{ opacity: 0 }}
@@ -161,7 +156,6 @@ export default function CodeBlock({
               className="fixed inset-0 z-[998] bg-black"
             />
 
-            {/* Fullscreen content */}
             <motion.div
               key="mobile-fullscreen"
               initial={{ scale: 0.95, opacity: 0, y: window.innerHeight / 2 }}
@@ -182,7 +176,19 @@ export default function CodeBlock({
                   ×
                 </button>
               </header>
-              <div className="flex-1 overflow-auto">{content}</div>
+
+              <div className="flex-1 overflow-auto">
+                <article className="min-h-full flex flex-col">
+                  {description && (
+                    <div className="text-gray-700 bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm leading-relaxed">
+                      {description}
+                    </div>
+                  )}
+                  <div className="p-6 bg-gray-50 text-gray-900 text-sm leading-relaxed font-mono">
+                    <Highlight className={language}>{children.trim()}</Highlight>
+                  </div>
+                </article>
+              </div>
             </motion.div>
           </>
         )}
