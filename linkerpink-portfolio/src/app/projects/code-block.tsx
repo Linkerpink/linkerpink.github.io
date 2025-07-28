@@ -58,11 +58,11 @@ export default function CodeBlock({
   const content = (
     <article className="flex flex-col">
       {description && (
-        <div className="text-gray-700 bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm leading-relaxed">
+        <div className="text-[#5F5F5F] whitespace-pre-line bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm leading-relaxed">
           {description}
         </div>
       )}
-      <div className="p-6 bg-gray-50 text-gray-900 text-sm leading-relaxed font-mono">
+      <div className="p-6 bg-gray-50 text-[#5F5F5F] whitespace-pre-line text-sm leading-relaxed font-mono">
         <Highlight className={language}>{children.trim()}</Highlight>
       </div>
     </article>
@@ -84,7 +84,7 @@ export default function CodeBlock({
             setIsOpen((v) => !v);
           }
         }}
-        className={`flex justify-between items-center px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-900 font-mono text-base font-semibold cursor-pointer select-none rounded-t-xl shadow-sm hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200
+        className={`flex justify-between items-center px-5 py-3 bg-gradient-to-r from-gray-50 to-gray-100 font-black cursor-pointer select-none rounded-t-xl shadow-sm hover:bg-gradient-to-r hover:from-orange-0 hover:to-orange-200 transition-colors duration-300 ease-in-out
           ${isOpen && !isMobile ? " sticky top-0 z-50 bg-white" : ""}`}
         style={{
           borderTopLeftRadius: "1.5rem",
@@ -93,7 +93,7 @@ export default function CodeBlock({
       >
         <div className="flex flex-col gap-1 z-10 w-full">
           <span className="truncate">
-            {language.toUpperCase()} — {name}
+            {language} — {name}
           </span>
         </div>
 
@@ -166,7 +166,7 @@ export default function CodeBlock({
             >
               <header className="relative flex items-center px-5 py-6 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-900 font-mono text-base font-semibold shadow-md">
                 <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
-                  {language.toUpperCase()} — {name}
+                  {language} — {name}
                 </span>
                 <button
                   aria-label="Close fullscreen code"
@@ -180,11 +180,11 @@ export default function CodeBlock({
               <div className="flex-1 overflow-auto">
                 <article className="min-h-full flex flex-col">
                   {description && (
-                    <div className="text-gray-700 bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm leading-relaxed">
+                    <div className="text-[#5F5F5F] leading-relaxed whitespace-pre-line bg-gray-100 px-6 py-3 border-b border-gray-200 text-sm">
                       {description}
                     </div>
                   )}
-                  <div className="p-6 bg-gray-50 text-gray-900 text-sm leading-relaxed font-mono">
+                  <div className="p-6 bg-gray-50 text-[#5F5F5F] leading-relaxed whitespace-pre-line text-sm font-mono">
                     <Highlight className={language}>{children.trim()}</Highlight>
                   </div>
                 </article>

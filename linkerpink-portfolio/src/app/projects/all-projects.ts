@@ -3746,6 +3746,46 @@ private void ChasePlayer()
 
     ],
   },
+  
+  // Open Pixel Art //
+  {
+    title: "Open Pixel Art",
+    slug: "open-pixel-art",
+    banner: "/images/open pixel art temp logo.png",
+    icon: "/images/open pixel art temp logo.png",
+
+    date: "not released",
+    displayDate: formatDisplayDate("not released"),
+
+    href: "",
+    github: "https://github.com/Linkerpink/Open-Pixel-Art",
+
+    imgSrc: "/images/open pixel art temp logo.png",
+    platform: "Itch.io",
+
+    description:
+      "A free & open source pixel art tool, made with mobile in mind. \n\nThis tool was designed for my brother (Luca / SupercatLuigi Player) , who is my main artist for full release games that we want to develop. I don't want to show them on my portfolio yet. He likes working on touch devices instead of on pc, and we couldn't find a pixel art app that suited both our needs. So I made one myself.",
+
+    technologies: [
+        "/images/godot logo.svg",
+        "/images/gdscript logo.webp"
+    ],
+
+    media: [
+      { type: "image", src: "/images/open pixel art temp logo.png" },
+    ],
+
+    featured: false,
+
+    codeSnippets: [
+      {
+        name: "fire script",
+        language: "GDScript",
+        description: "ik ben beter.",
+        code: `insane code`,
+      },
+    ],
+},
 
   // Slimetastic Punchout //
   {
@@ -3764,7 +3804,7 @@ private void ChasePlayer()
     platform: "Itch.io",
 
     description:
-      "Slimetastic Punchout is a chaotic and fun local multiplayer game where you take control of colorful, squishy slimes and battle it out in fast-paced arenas. The goal? Cover as many tiles as you can while sliding, bouncing, and splattering your way across the map. Along the way, you can land some solid punches to shove your opponents out of the way—or just throw them off their game. Every match is unpredictable, full of laughter, and a messy fight for control. It’s slimy chaos at its best! \n\nDevelopers: \nNiels de Laat \nNoah van Uunen \n\nArtists: \nSeemay Alsemgeest \nJordy Andriessen \nLisa van der Kloet",
+      "Slimetastic Punchout is a chaotic and fun local multiplayer game where you take control of colorful, squishy slimes and battle it out in fast-paced arenas. The goal? Cover as many tiles as you can while sliding, bouncing, and splattering your way across the map. Along the way, you can land some solid punches to shove your opponents out of the way—or just throw them off their game. Every match is unpredictable, full of laughter, and a messy fight for control. It’s slimy chaos at its best! \n\nDevelopers: \nNiels de Laat \nNoah van Uunen \n\nArtists: \nSeemay Alsemgeest \nJordy Andriessen \nLisa van der Kloet \n\nWhat I made: \n- Player Attacking \n- Win Calculation \n- Unused Dynamic Camera \n\nThis project was made at one of my lowest points mentally. I had a lot of personal issues and didn't have motivation on anything at that moment. I thought about not including it in the: all projects section, but that would be a bit against what I was trying to acomplish with that section of the site. I want all projects I made and are sort of showcasable to be shown here. So don't expect the best from this game. Niels carried",
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
@@ -3778,14 +3818,429 @@ private void ChasePlayer()
     featured: false,
 
     codeSnippets: [
-      {
-        name: "horror script",
-        language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
-      },
+{
+	name: "GameManager.cs",
+	language: "C#",
+	description: "Calculate win function: Gets all the tiles in the map. All the tiles hold a variable for which player touched it last. Then there is a List of sorted scores and calculates the wins from there.",
+	code: `
+private void CalculateWin()
+{
+	canCalculate = false;
+	isPerformingWin = true;
+
+	GameObject _stageScene = GameObject.Find("Stage Scene");
+	Tile[] tiles = GameObject.FindObjectsOfType<Tile>();
+
+	// Update player scores
+	for (int i = 0; i < tiles.Length; i++)
+	{
+		if (tiles[i].GetComponent<Tile>().lastPlayer >= 0)
+		{
+			playerScore[tiles[i].GetComponent<Tile>().lastPlayer] += 1;
+		}
+	}
+
+	// Convert playerScore to a List and sort in descending order
+	List<int> sortedScores = new List<int>(playerScore);
+	sortedScores.Sort((a, b) => b.CompareTo(a));  // Sort in descending order
+
+	// Create a list to hold player indices in sorted order
+	List<int> sortedPlayerIndices = new List<int>();
+	foreach (int score in sortedScores)
+	{
+		for (int i = 0; i < playerScore.Length; i++)
+		{
+			if (playerScore[i] == score && !sortedPlayerIndices.Contains(i))
+			{
+				sortedPlayerIndices.Add(i);
+				break;
+			}
+		}
+	}
+
+	// Set winner (1st place)
+	int _winner = sortedPlayerIndices[0];
+	GameObject _winnerObject = playerArray[_winner].gameObject;
+	TileColorChanger _winnerTileColorChanger = _winnerObject.GetComponent<TileColorChanger>();
+
+	// Win text
+	timerText.SetText("Player " + (_winner + 1).ToString() + " won");
+	timerText.color = _winnerTileColorChanger.colors[_winnerTileColorChanger.colorSelected];
+	timerText.alpha = 255;
+	timerText.outlineColor = Color.black;
+	timerText.outlineWidth = 0.25f;
+
+	// Animations for winner
+	// Animator _winnerAnimator = _winnerObject.GetComponentInChildren<Animator>();
+	// _winnerAnimator.SetInteger("RandomWinAnimation", Random.Range(1, 2));
+
+	// Set the winner's position (1st place)
+	foreach (Transform _child in _stageScene.transform)
+	{
+		if (_child.name == "1st Player Position")
+		{
+			_winnerObject.transform.position = _child.transform.position;
+		}
+	}
+
+	// Set positions for 2nd, 3rd, and 4th place players
+	for (int i = 1; i < sortedPlayerIndices.Count && i < 4; i++)
+	{
+		int playerIndex = sortedPlayerIndices[i];
+		GameObject playerObject = playerArray[playerIndex].gameObject;
+
+		// Find the position name based on the place (2nd, 3rd, 4th)
+		string positionName = $"{(i + 1)}{GetSuffix(i + 1)} Player Position";
+		foreach (Transform _child in _stageScene.transform)
+		{
+			if (_child.name == positionName)
+			{
+				playerObject.transform.position = _child.transform.position;
+			}
+		}
+	}
+	Stage.SetActive(true);
+	cameraManager.ChangeCamera(cameraManager.mainCam, cameraManager.winCam);
+}
+
+// Helper function to get the suffix for position numbers (1st, 2nd, 3rd, 4th)
+private string GetSuffix(int number)
+{
+	if (number == 1) return "st";
+	else if (number == 2) return "nd";
+	else if (number == 3) return "rd";
+	else return "th";
+}
+	`
+},
+
+{
+	name: "PlayerAttack.cs",
+	language: "C#",
+	description: "The player attack works by shooting a raycast and checking if it hit another player. If it did then it gives knockback to that player. It also has a cooldown so you can't spam it.",
+	code: `
+private void Update()
+{
+	if (!gameManager.isPerformingWin)
+	{
+		// Handle cooldown for punches
+		if (cooldown > 0)
+		{
+			cooldown -= Time.deltaTime;
+		}
+
+		if (punchDamageCooldown > 0)
+		{
+			punchDamageCooldown -= Time.deltaTime;
+
+			RaycastHit hit;
+
+			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, punchLength))
+			{
+				if (hit.transform.gameObject.CompareTag("Player"))
+				{
+					raycastHit = hit;
+					raycastHit.transform.gameObject.GetComponent<PlayerAttack>().HitKnockback(knockbackDuration, hitDirection);
+				}
+			}
+		}
+
+		// Modified knockback handling
+		if (knockbackTimer > 0)
+		{
+			knockbackTimer -= Time.deltaTime;
+			if (knockbackTimer <= 0)
+			{
+				rb.velocity = Vector3.zero; // Stop knockback when timer ends
+			}
+		}
+	}
+}
+
+public void OnPunch(InputAction.CallbackContext _context) // The punch input
+{
+	if (_context.performed && cooldown <= 0)
+	{
+		animator.SetTrigger("Punch");
+		cooldown = cooldownValue;
+		punchDamageCooldown = punchDamageCooldownValue;
+		hitDirection = transform.forward; // Use actual forward direction instead of lastMoveDirection
+	}
+}
+
+public void HitKnockback(float _knockbackDuration, Vector3 _hitDirection)
+{
+	if (knockbackTimer <= 0)
+	{
+		knockbackTimer = _knockbackDuration;
+		rb.velocity = Vector3.zero;
+		rb.AddForce(_hitDirection * knockbackStrength, ForceMode.Impulse);
+		playerController.SetKnockback(true);
+
+		// Start a coroutine to reset knockback state
+		StartCoroutine(ResetKnockback(_knockbackDuration));
+	}
+}
+
+private IEnumerator ResetKnockback(float duration)
+{
+	yield return new WaitForSeconds(duration);
+	playerController.SetKnockback(false);
+}
+	`
+},
+
+{
+	name: "CameraFollow.cs",
+	language: "C#",
+	description: "Dynamic camera system that gets closer or further away depending on where the players are at that moment. We didn't use it in the game, because there was a bug where sometimes it just didn't want to calculate the top. I didn't have the time and especially motivation at the time to fix it.",
+	code: `
+private void Update()
+{
+	players = gameManager.playerArray;
+
+	if (players.Length == 0)
+	{
+		return;
+	}
+
+	MoveCam();
+	ZoomCam();
+}
+
+private void MoveCam()
+{
+	Vector3 centerPoint = GetCenterPoint();
+
+	Vector3 newPosition = centerPoint + offset;
+
+	transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+}
+
+private void ZoomCam()
+{
+	float newZoom = Mathf.Lerp(minZoom, maxZoom, GetGreatestDistance() / zoomLimiter);
+	cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
+}
+
+private float GetGreatestDistance()
+{
+	var _bounds = new Bounds(players[0].transform.position, Vector3.zero);
+
+	for (int i = 0; i < players.Length; i++)
+	{
+		_bounds.Encapsulate(players[i].transform.position);
+	}
+
+	return _bounds.size.x;
+}
+
+//This function is based of the brackeys tutorial: "MULTIPLE TARGET CAMERA in Unity"
+private Vector3 GetCenterPoint()
+{
+	if (players.Length == 1)
+	{
+		return players[0].transform.position;
+	}
+
+	var _bounds = new Bounds(players[0].transform.position, Vector3.zero);
+
+	for (int i = 0; i < players.Length; i++)
+	{
+		_bounds.Encapsulate(players[i].transform.position);
+	}
+
+	return _bounds.center;
+}
+	`
+},
     ],
-  },
+},
+
+// SHMUP 2 (traumatic flashbacks) //
+{
+  title: "SHMUP 2",
+  slug: "shmup-2",
+  banner: "/images/shmup 2 banner.webp",
+  icon: "/images/shmup 2 icon.webp",
+
+  date: "2024-10-10",
+  displayDate: formatDisplayDate("2024-10-10"),
+
+  href: "https://linkeralt.itch.io/shmup-2/",
+  github: "https://github.com/Linkerpink/shmup-2",
+
+  imgSrc: "/images/shmup 2.webp",
+  platform: "itch.io",
+
+  description:
+    "A simple wave based Shoot Em Up Game. \n\nScratch version: \nhttps://scratch.mit.edu/projects/1076756881/ \n\nWhat I made: \n- Wave System \n- Player \n- Pickups \n- Infinitely scrolling background \n- Scratch version",
+
+  technologies: [
+    "/images/unity logo.png",
+    "/images/c sharp logo.svg",
+    "/images/scratch logo.png",
+  ],
+
+  media: [{ type: "image", src: "/images/shmup 2.webp" }],
+
+  featured: false,
+
+  codeSnippets: [
+    {
+      name: "horror script",
+      language: "C#",
+      description: "ik was slechter.",
+      code: `horror code`,
+    },
+],
+},
+
+// Not Grow A Garden //
+{
+  title: "Not Grow A Garden",
+  slug: "not-grow-a-garden",
+  banner: "/images/not grow a garden temp logo.png",
+  icon: "/images/not grow a garden temp logo.png",
+
+  date: "not released",
+  displayDate: formatDisplayDate("not released"),
+
+  href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+  github:
+    "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+
+  imgSrc: "/images/not grow a garden temp logo.png",
+  platform: "Itch.io",
+
+  description: "anti horror \n\n Developers: \nLinkerpink\nMathijn Wismeijer",
+
+  technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+
+  media: [{ type: "image", src: "/images/not grow a garden temp logo.png" }],
+
+  featured: false,
+
+  codeSnippets: [
+    {
+      name: "PlayerMovement.cs",
+      language: "C#",
+      description:
+        "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
+      code: `using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+
+public class PlayerMovement : MonoBehaviour
+{
+  #region Variabelen
+
+  public Transform cameraTransformatie;
+  
+  [Header("Snelheden")]
+  [SerializeField] private float bewegingsSnelheid;
+  
+  [Header("Hoeken")]
+  private float m_hoek;
+  private float m_doelHoek;
+  private float m_laatsteHoek;
+  
+  [Header("Directies")]
+  private Vector2 m_invoerDirectie;
+  private Vector3 m_bewegingsDirectie;
+  
+  [Header("Soepel Bewegen")]
+  [SerializeField] private float m_soepeleTijdDraaien = 0.1f;
+  private float m_draaiSoepeleSnelheid;
+  
+  [Header("Componenten")]
+  private Rigidbody m_stijfLichaam;
+  private BlijheidStok m_blijheidStok;
+
+  public bool magBewegen = true;
+  
+  private float deltaTijd = 0.0f; // Nodig voor anti insect kader snelheid text
+
+  #endregion
+
+  private void WakkerWorden()
+  {
+      m_stijfLichaam = GetComponent<Rigidbody>();
+      m_blijheidStok = FindAnyObjectByType<BlijheidStok>();
+  }
+  
+  private void Bijwerken()
+  {
+      // Krijg invoerdirectie van de blijheidStok
+      m_invoerDirectie = m_blijheidStok.KrijgInvoer();
+      
+      deltaTijd += (Time.deltaTime - deltaTijd) * 0.1f;
+  }
+
+  private void VastBijwerken()
+  {
+      if (m_invoerDirectie.sqrMagnitude > 0.01f && magBewegen) 
+      {
+          m_bewegingsDirectie = new Vector3(m_invoerDirectie.x, 0, m_invoerDirectie.y);
+          m_doelHoek = Mathf.Atan2(m_bewegingsDirectie.x, m_bewegingsDirectie.z) * Mathf.Rad2Deg + cameraTransformatie.eulerAngles.y;
+          m_hoek = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_doelHoek, ref m_draaiSoepeleSnelheid, m_soepeleTijdDraaien);
+          m_laatsteHoek = m_hoek;
+      }
+      else
+      {
+          m_bewegingsDirectie = Vector3.zero;
+          m_hoek = m_laatsteHoek;
+      }
+
+      if (magBewegen)
+      {
+          m_stijfLichaam.linearVelocity = m_bewegingsDirectie * bewegingsSnelheid;
+      }
+      
+      transform.rotation = Quaternion.Euler(0f, m_hoek, 0f);
+  }
+  
+  private void OnGUI()
+  {
+      if (SpelBeheerder.Instance.antiInsectInschakelen)
+      {
+          int w = Screen.width, h = Screen.height;
+          GUIStyle style = new GUIStyle();
+
+          Rect rect = new Rect(10, 100, w, h * 2 / 100);
+          style.alignment = TextAnchor.UpperLeft;
+          style.fontSize = h * 2 / 50;
+          style.normal.textColor = Color.white;
+
+          float fps = 1.0f / deltaTijd;
+          string text = string.Format("{0:0.} fps", fps);
+          GUI.Label(rect, text, style);    
+      }
+  }
+  
+  #region Neppe Functies
+  
+  private void Awake()
+  {
+      WakkerWorden();
+  }
+  
+  private void Update()
+  {
+      Bijwerken();
+  }
+
+  private void FixedUpdate()
+  {
+      VastBijwerken();
+  }
+
+  #endregion
+}`,
+    },
+  ],
+},
 
   // Fnaf Unity Fortnite Official Game Godot //
   {
@@ -3835,190 +4290,7 @@ private void ChasePlayer()
     ],
   },
 
-  // Not Grow A Garden //
-  {
-    title: "Not Grow A Garden",
-    slug: "not-grow-a-garden",
-    banner: "/images/not grow a garden temp logo.png",
-    icon: "/images/not grow a garden temp logo.png",
 
-    date: "not released",
-    displayDate: formatDisplayDate("not released"),
-
-    href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
-    github:
-      "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
-
-    imgSrc: "/images/not grow a garden temp logo.png",
-    platform: "Itch.io",
-
-    description: "anti horror \n\n Developers: \nLinkerpink\nMathijn Wismeijer",
-
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-
-    media: [{ type: "image", src: "/images/not grow a garden temp logo.png" }],
-
-    featured: false,
-
-    codeSnippets: [
-      {
-        name: "PlayerMovement.cs",
-        language: "C#",
-        description:
-          "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
-        code: `using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
-
-public class PlayerMovement : MonoBehaviour
-{
-    #region Variabelen
-
-    public Transform cameraTransformatie;
-    
-    [Header("Snelheden")]
-    [SerializeField] private float bewegingsSnelheid;
-    
-    [Header("Hoeken")]
-    private float m_hoek;
-    private float m_doelHoek;
-    private float m_laatsteHoek;
-    
-    [Header("Directies")]
-    private Vector2 m_invoerDirectie;
-    private Vector3 m_bewegingsDirectie;
-    
-    [Header("Soepel Bewegen")]
-    [SerializeField] private float m_soepeleTijdDraaien = 0.1f;
-    private float m_draaiSoepeleSnelheid;
-    
-    [Header("Componenten")]
-    private Rigidbody m_stijfLichaam;
-    private BlijheidStok m_blijheidStok;
-
-    public bool magBewegen = true;
-    
-    private float deltaTijd = 0.0f; // Nodig voor anti insect kader snelheid text
-
-    #endregion
-
-    private void WakkerWorden()
-    {
-        m_stijfLichaam = GetComponent<Rigidbody>();
-        m_blijheidStok = FindAnyObjectByType<BlijheidStok>();
-    }
-    
-    private void Bijwerken()
-    {
-        // Krijg invoerdirectie van de blijheidStok
-        m_invoerDirectie = m_blijheidStok.KrijgInvoer();
-        
-        deltaTijd += (Time.deltaTime - deltaTijd) * 0.1f;
-    }
-
-    private void VastBijwerken()
-    {
-        if (m_invoerDirectie.sqrMagnitude > 0.01f && magBewegen) 
-        {
-            m_bewegingsDirectie = new Vector3(m_invoerDirectie.x, 0, m_invoerDirectie.y);
-            m_doelHoek = Mathf.Atan2(m_bewegingsDirectie.x, m_bewegingsDirectie.z) * Mathf.Rad2Deg + cameraTransformatie.eulerAngles.y;
-            m_hoek = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_doelHoek, ref m_draaiSoepeleSnelheid, m_soepeleTijdDraaien);
-            m_laatsteHoek = m_hoek;
-        }
-        else
-        {
-            m_bewegingsDirectie = Vector3.zero;
-            m_hoek = m_laatsteHoek;
-        }
-
-        if (magBewegen)
-        {
-            m_stijfLichaam.linearVelocity = m_bewegingsDirectie * bewegingsSnelheid;
-        }
-        
-        transform.rotation = Quaternion.Euler(0f, m_hoek, 0f);
-    }
-    
-    private void OnGUI()
-    {
-        if (SpelBeheerder.Instance.antiInsectInschakelen)
-        {
-            int w = Screen.width, h = Screen.height;
-            GUIStyle style = new GUIStyle();
-
-            Rect rect = new Rect(10, 100, w, h * 2 / 100);
-            style.alignment = TextAnchor.UpperLeft;
-            style.fontSize = h * 2 / 50;
-            style.normal.textColor = Color.white;
-
-            float fps = 1.0f / deltaTijd;
-            string text = string.Format("{0:0.} fps", fps);
-            GUI.Label(rect, text, style);    
-        }
-    }
-    
-    #region Neppe Functies
-    
-    private void Awake()
-    {
-        WakkerWorden();
-    }
-    
-    private void Update()
-    {
-        Bijwerken();
-    }
-
-    private void FixedUpdate()
-    {
-        VastBijwerken();
-    }
-
-    #endregion
-}`,
-      },
-    ],
-  },
-
-  // SHMUP 2 (traumatic flashbacks) //
-  {
-    title: "SHMUP 2",
-    slug: "shmup-2",
-    banner: "/images/shmup 2 banner.webp",
-    icon: "/images/shmup 2 icon.webp",
-
-    date: "2024-10-10",
-    displayDate: formatDisplayDate("2024-10-10"),
-
-    href: "https://linkeralt.itch.io/shmup-2/",
-    github: "https://github.com/Linkerpink/shmup-2",
-
-    imgSrc: "/images/shmup 2.webp",
-    platform: "itch.io",
-
-    description:
-      "pain multiplied by 2 \n\nScratch version: \nhttps://scratch.mit.edu/projects/1076756881/",
-
-    technologies: [
-      "/images/unity logo.png",
-      "/images/c sharp logo.svg",
-      "/images/scratch logo.png",
-    ],
-
-    media: [{ type: "image", src: "/images/shmup 2.webp" }],
-
-    featured: false,
-
-    codeSnippets: [
-      {
-        name: "horror script",
-        language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
-      },
-    ],
-  },
 
   // Asteroids 3D //
   {
@@ -4059,7 +4331,7 @@ public class PlayerMovement : MonoBehaviour
   {
     title: "Not Not Balatro",
     slug: "not-not-balatro",
-    banner: "/images/not not balatro.webp",
+    banner: "/images/not not balatro banner.webp",
     icon: "/images/not not balatro icon.webp",
 
     date: "2025-01-27",

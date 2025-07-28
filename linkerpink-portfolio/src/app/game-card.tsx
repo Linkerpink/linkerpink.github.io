@@ -79,13 +79,13 @@ const GameCard: React.FC<GameCardProps> = ({
       </Link>
 
       <h2
-        className="mt-[10px] text-[1.5em] select-none cursor-text"
+        className="mt-[10px] text-[1.5em] select-none"
         style={isSecretTheme ? { color: '#faecb7', fontFamily: 'Smooch, cursive, Arial, sans-serif' } : {}}
       >
         {title}
         {displayDate && (
           <div>
-            <small className="block text-xs text-[#5F5F5F] mt-1">{displayDate}</small>
+            <small className="block text-xs text-[#5F5F5F] mt-1 select-none">{displayDate}</small>
           </div>
         )}
       </h2>
