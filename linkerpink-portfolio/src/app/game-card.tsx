@@ -71,6 +71,7 @@ const GameCard: React.FC<GameCardProps> = ({
                   height={32}
                   className="w-8.5 h-8.5 object-contain"
                   style={isSecretTheme ? { borderRadius: '75%' } : {}}
+                  draggable={false}
                 />
               ))}
             </div>

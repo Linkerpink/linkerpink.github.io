@@ -3242,7 +3242,7 @@ alarm[1] = 60;
 
     github: "https://github.com/Linkerpink/linkerpink.github.io",
 
-    description: "best portfolio website ever made?Q?!?!?!!?",
+    description: "This is the website you are currently looking at. It is made with Next.js, TypeScript, and Tailwind CSS. It is a portfolio website that showcases my development projects, skills, and experiences. The site includes some easter eggs, Good luck finding them all :) \n\nThe design of the website is based off the Nintendo Wii U eshop design, Wii U Operating System design and Nintendo Switch eshop design, modified to my own liking. I chose for this type of design because Nintendo has always had great designs for their consoles. The Wii U is my favorite console and defined a big part of my youth and life. \n\nWhat I made: \n- Home Page \n- All Projects Page \n- Project Details Page \n- Re usable Project component \n- Re usable Code Snippet component \n- Theme Support \n- Responsive design \n- Sleek Animations \n- Easter Eggs",
 
     technologies: [
       "/next.svg",
@@ -4087,12 +4087,225 @@ private Vector3 GetCenterPoint()
   featured: false,
 
   codeSnippets: [
-    {
-      name: "horror script",
-      language: "C#",
-      description: "ik was slechter.",
-      code: `horror code`,
-    },
+{
+	name: "WaveManager.cs",
+	language: "C#",
+	description: "This is the WaveManager script. It sets an initial spawnDelay between enemies spawned in a way and then starts a new wave once every enemy in a wave has been defeated. It also spawns a health pickup every time a new wave starts",
+	code: `
+private void Update()
+{
+	waveText.SetText("WAVE: " + wave);
+	spawnDelay = initialSpawnDelay - (wave / 25);
+
+	if (enemies.Count <= 0)
+	{
+		NewWave();
+	}
+}
+
+private void NewWave()
+{
+	wave += 1;
+
+	healthPickupPos = new Vector2(Random.Range(0f, 8.8f), player.transform.position.y);
+
+	Instantiate(healthPickup, healthPickupPos, Quaternion.identity);
+
+	StartCoroutine(SpawnEnemies());
+}
+
+private IEnumerator SpawnEnemies()
+{
+	for (int i = 0; i < wave; i++)
+	{
+		GameObject _enemy = Instantiate(enemyTypes[Random.Range(0, enemyTypes.Count)], enemySpawn);
+		enemies.Add(_enemy);
+		yield return new WaitForSeconds(spawnDelay);
+	}
+}
+
+public void RemoveEnemy(GameObject _enemy)
+{
+	enemies.Remove(_enemy);
+	Destroy(_enemy);
+}
+	`
+},
+
+{
+	name: "Scroll.cs",
+	language: "C#",
+	description: "This handles the background scrolling. The background is split into 3 parts in Unity, so it doesn't feel snappy when it resets to the top.",
+	code: `
+void Update()
+{
+	this.transform.position += Vector3.down * moveSpeed * Time.deltaTime;
+
+	if (this.transform.position.y + offset < secondCam.ScreenToWorldPoint(Vector2.right * (float)Screen.width).y)
+	{
+		this.transform.position = Vector2.up * 20;
+	}
+}
+	`
+},
+
+{
+	name: "PlayerMovement.cs",
+	language: "C#",
+	description: "This handles the movement of the Player character.",
+	code: `
+private void Awake()
+{
+	gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+	controls = new Controls();
+
+	controls.Player.Movement.performed += context => Movement(context.ReadValue<Vector2>());
+	controls.Player.Movement.canceled += context => Movement(context.ReadValue<Vector2>());
+
+	rb = GetComponent<Rigidbody2D>();
+	spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+}
+
+private void OnEnable()
+{
+	controls.Enable();
+}
+
+private void OnDisable()
+{
+	controls.Disable();
+}
+
+private void FixedUpdate()
+{
+	if (canMove) 
+	{
+		rb.linearVelocity = moveDirection * moveSpeed;
+	}else
+	{
+		rb.linearVelocity = Vector2.zero;
+	}
+
+	//transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, moveDirection.x * -rotationMultiplier), rotationSpeed);
+}
+
+private void Movement(Vector2 _direction)
+{
+	moveDirection = new Vector2(_direction.x, 0f);
+}
+
+public IEnumerator Freeze(float _freezeTime)
+{ 
+	canMove = false;
+	spriteRenderer.color = Color.blue;
+	yield return new WaitForSeconds(_freezeTime);
+	spriteRenderer.color = Color.white;
+	canMove = true;
+}
+
+//Input
+public void OnDeviceChange(PlayerInput _input)
+{
+	isGamepad = _input.currentControlScheme.Equals("Gamepad") ? true : false;
+}
+}
+	`
+},
+
+{
+	name: "PlayerHealth.cs",
+	language: "C#",
+	description: "This handles the Player Health. The icons are in an array and they get shown or hidden depending on how much health the player has. It also contains the flashing and invincibility functions that are timer based.",
+	code: `
+private void Update()
+{
+	foreach (GameObject healthIcon in healthIcons)
+	{
+		healthIcon.SetActive(false);
+
+		for (int i = 0; i < hp; i++)
+		{
+			healthIcons[i].SetActive(true);
+		}
+	}
+
+	if (hp <= 0)
+	{
+		Die();
+	}
+
+	//Player flashing
+	if (invincible)
+	{
+		spriteRendererTimer -= 1f * Time.deltaTime * 10;
+
+		if (spriteRendererTimer <= 0)
+		{
+			enableSpriteRenderer = !enableSpriteRenderer;
+			spriteRendererTimer = 1f;
+		}
+
+		if (enableSpriteRenderer == true)
+		{
+			spriteRenderer.enabled = true;
+		}
+		else
+		{
+			spriteRenderer.enabled = false;
+		}
+	}
+	else
+	{
+		spriteRenderer.enabled = true;
+	}
+}
+
+private void OnTriggerEnter2D(Collider2D collision)
+{
+	if (!invincible)
+	{
+		if (collision.gameObject.tag == "Enemy Bullet")
+		{
+			hp--;
+			StartCoroutine(Invincible(1f));
+		}
+
+		if (collision.gameObject.tag == "Freeze Bullet")
+		{
+			hp--;
+			StartCoroutine(movement.Freeze(1));
+			StartCoroutine(Invincible(1f));
+		}
+
+		if (collision.gameObject.tag == "Health Pickup")
+		{
+			if (hp < 3)
+			{
+				hp++;
+			}
+
+			Destroy(collision.gameObject);
+		}
+	}
+}
+
+public IEnumerator Invincible(float _iSeconds)
+{
+	invincible = true;
+	yield return new WaitForSeconds(1f);
+	invincible = false;
+}
+
+private void Die()
+{
+	SceneManager.LoadScene("Death Screen");
+}
+}
+	`
+},
+
+
 ],
 },
 
