@@ -4502,7 +4502,295 @@ public class PlayerMovement : MonoBehaviour
       },
     ],
   },
+  
+  // Bug Exterminator (half a spider in 3 weeks!!! jeremy mode and maxwell mode make me not wanna cry) //
+  {
+      title: "Bug Exterminator",
+      slug: "bug-xterminator",
+      banner: "/images/bug 4.png",
+      icon: "/images/bug 4.png",
+      
+      date: "2024-4-4",
+      displayDate: formatDisplayDate("2024-4-4"),
+      
+      href: "https://rileytimmerman.itch.io/bug-exterminator",
+      github: "https://github.com/Linkerpink/Poker-Roguelike",
+      
+      imgSrc: "/images/shmup.webp",
+      platform: "itch.io",
+      
+      description:
+      "Bug Exterminator is an indie SHMUP where you shoot mutant insects and help clean up a destroyed world. As a robot frog you fly through the land and defeat all the insects that stand in your way, but there's a menacing monster at the end, can you defeat it? \n\nThis game was created by a team of first year students (4 Game Artists, 2 Creative Software Developers) in under 3 weeks. \n\nWhat I made: \n- Cheat menu \n- Jeremy Mode (cheat) \n- Maxwell Mode (cheat) \n- Level progress bar \n- Player movement \n- Player health / health regen",
+      
+      technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+      
+      media: [
+          { type: "image", src: "/images/bug 1.png" },
+          { type: "image", src: "/images/bug 2.png" },
+          { type: "image", src: "/images/bug 3.png" },
+          { type: "image", src: "/images/shmup.webp" },
+          { type: "image", src: "/images/bug 4.png" },
+          { type: "image", src: "/images/bug 5.png" },
+          { type: "youtubeId", src: "VBLMkvfqAlw", title: "Launch Trailer" },
+        ],
+        
+        featured: false,
+        
+        codeSnippets: [
 
+{
+	name: "Player.cs",
+	language: "C#",
+	description: "This is the Player Script.",
+	code: `
+void Update()
+{
+	Timers();
+
+	Movement();
+
+	Attacking();
+
+	HP();
+
+	if (gameManager.maxwellMode == true)
+	{
+		maxwellVisuals.SetActive(true);
+		frogVisuals.SetActive(false);
+	}
+	else
+	{
+		maxwellVisuals.SetActive(false);
+		frogVisuals.SetActive(true);
+	}
+
+	if (enemiesKilled >= enemiesForMulti)
+	{
+		multiShot = true;
+	}
+	else
+	{
+		multiShot = false;
+	}
+}
+
+private void Timers()
+{
+	if (multiShot == true)
+	{
+
+		if (bulletTimer < multiTarget)
+		{
+			bulletTimer += Time.deltaTime;
+		}
+	}
+	else
+	{
+
+		if (bulletTimer < bulletTarget)
+		{
+			bulletTimer += Time.deltaTime;
+		}
+	}
+
+	if (attackTimer < attackTarget)
+	{
+		attackTimer += Time.deltaTime;
+	}
+
+	//Health Re-gen Timer
+	if (hpRegenTimer < hpRegenTarget)
+	{
+		hpRegenTimer += Time.deltaTime;
+	}
+
+	if (hpRegenTimer >= hpRegenTarget)
+	{
+		if (addHpTimer < addHpTimerTarget)
+		{
+			addHpTimer += Time.deltaTime;
+		}
+
+		if (addHpTimer >= addHpTimerTarget)
+		{
+			if (hp < 200)
+			{
+				hp += hpToAdd;
+				addHpTimer = 0;
+				Instantiate(hpRegenText);
+			}
+		}
+	}
+}
+
+private void Movement()
+{
+	// Movement code
+	horizontal = Input.GetAxis("Horizontal");
+	vertical = Input.GetAxis("Vertical");
+
+	movement = new Vector3(horizontal * moveSpeed, vertical * moveSpeed, 0f);
+
+	// Apply the movement to the rigidbody
+	playerRB.linearVelocity = movement;
+}
+
+private void Attacking()
+{
+	// Attack code
+	if (attackTimer >= attackTarget)
+	{
+		if (Input.GetButton("Fire2"))
+		{
+			GameObject go = Instantiate(tongue, attackPoint.position, Quaternion.identity);
+			Destroy(go, attackDura);
+			attackTimer = 0;
+			bulletTimer = 0;
+		}
+	}
+
+	if (multiShot == true)
+	{
+		if (bulletTimer >= multiTarget)
+		{
+			if (Input.GetButton("Fire1"))
+			{
+				for (int i = 0; i < bulletsToShoot; i++)
+				{
+					float rotatonAmmount = bulletSpread / bulletsToShoot;
+					Quaternion target = Quaternion.Euler(-bulletSpread / 2 + (rotatonAmmount * i), 90, 0);
+					GameObject go = Instantiate(bullet, attackPoint.position, target);
+					Destroy(go, bulletDura);
+					bulletTimer = 0;
+					attackTimer = attackTarget / 2;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (bulletTimer >= bulletTarget)
+		{
+			if (Input.GetButton("Fire1"))
+			{
+				Quaternion target = Quaternion.Euler(0, 90, 0);
+				GameObject go = Instantiate(bullet, attackPoint.position, target);
+				Destroy(go, bulletDura);
+				bulletTimer = 0;
+				attackTimer = attackTarget / 2;
+			}
+		}
+	}
+}
+
+private void HP()
+{
+	// HP code
+	hpText.SetText("HP: " + hp.ToString());
+
+	if (hp <= 0)
+	{
+		KillPlayer();
+	}
+}
+
+private void KillPlayer()
+{
+	//********************CHANGE LATER**********************\\
+	SceneManager.LoadScene("Game Over");
+}
+
+private void DamagePlayer(float damage)
+{
+	hp -= damage;
+	hpRegenTimer = 0f;
+}
+
+private void OnTriggerEnter(Collider other)
+{
+	//Damage code
+	if (other.gameObject.tag == "Enemy Bullet")
+	{
+		attackScript = other.gameObject.GetComponent<EnemyAttacks>();
+
+		DamagePlayer(attackScript.damageAmount);
+
+		Destroy(other.gameObject);
+	}
+}
+
+public void AddEnemyCount()
+{
+	enemiesKilled += 1;
+	attackTarget = attackTarget / 100 * attackSpeedPerKill;
+	bulletTarget = bulletTarget / 100 * attackSpeedPerKill;
+	multiTarget = multiTarget / 100 * attackSpeedPerKill;
+}
+	`
+},
+
+{
+	name: "GameManager.cs: Cheat Menu",
+	language: "C#",
+	description: "These are the functions for the cheat menu. It has a text input field that you can activate by pressing submit when paused. You can type in 'maxwell' to enable maxwell mode, which makes the player maxwell. You can also type in 'jeremy' to spawn jeremys.",
+	code: `
+private void Update()
+{
+	if (Input.GetButtonDown("Submit"))
+	{
+		if (isPaused)
+		{
+			activateInputField = !activateInputField;
+
+			if (activateInputField)
+			{
+				inputField.SetActive(true);
+			}
+			else
+			{
+				inputField.SetActive(false);
+			}
+		}
+	}
+{
+	
+public void CheckInput(string s)
+{
+	input = inputField.GetComponent<TMP_InputField>().text;
+	Debug.Log(input);
+
+	if (input == "maxwell" || input == "Maxwell" || input == "MAXWELL" || input == "mawbell" || input == "Mawbell" || input == "MAWBELL")
+	{
+		maxwellMode = true;
+	}
+
+	if (input == "jeremy" || input == "Jeremy" || input == "JEREMY")
+	{
+		for (int i = 0; i < totalJeremys; i++)
+		{
+			Instantiate(jeremy);
+		}
+	}
+}
+	`
+},
+
+{
+	name: "GameManager.cs: Level Progress Bar",
+	language: "C#",
+	description: "This is the function in charge of setting the right position for the player in the scrollbar. It's supposed to move closer to the boss until it spawns",
+	code: `
+private void ScrollbarLogics()
+{
+	float elapsedTime = Time.time - startTime;
+	float normalizedTime = Mathf.Clamp01(elapsedTime / bossSpawnTarget);
+
+	playerScrollbarVisual.transform.position = Vector3.Lerp(minDistancePlayerScrollbar.position, maxDistancePlayerScrollbar.position, normalizedTime);
+}
+	`
+},
+        ],
+    },
 
 
   // Asteroids 3D //
@@ -4539,92 +4827,54 @@ public class PlayerMovement : MonoBehaviour
       },
     ],
   },
+    
+    // Not Not Balatro (even more traumatic flashbacks) //
+    {
+      title: "Not Not Balatro",
+      slug: "not-not-balatro",
+      banner: "/images/not not balatro banner.webp",
+      icon: "/images/not not balatro icon.webp",
+  
+      date: "2025-01-27",
+      displayDate: formatDisplayDate("2025-01-27"),
+  
+      href: "https://linkerpink.itch.io/not-not-balatro",
+      github: "https://github.com/Linkerpink/Poker-Roguelike",
+  
+      imgSrc: "/images/not not balatro.webp",
+      platform: "itch.io",
+  
+      description:
+        "Not Not Balatro is a very good game 😱 \n\nwow i LOVE NOT NOT baltro but Not baltro is also very good game just like NOT NOT NOT baltro GL making NOT NOT baltro FR NOT NOT no cap/",
+  
+      technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+  
+      media: [{ type: "image", src: "/images/not not balatro.webp" }],
+  
+      featured: false,
+  
+      codeSnippets: [
+        {
+          name: "horror script",
+          language: "C#",
+          description: "ik was slechter.",
+          code: `horror code`,
+        },
+      ],
+    },
 
-  // Not Not Balatro (even more traumatic flashbacks) //
-  {
-    title: "Not Not Balatro",
-    slug: "not-not-balatro",
-    banner: "/images/not not balatro banner.webp",
-    icon: "/images/not not balatro icon.webp",
-
-    date: "2025-01-27",
-    displayDate: formatDisplayDate("2025-01-27"),
-
-    href: "https://linkerpink.itch.io/not-not-balatro",
-    github: "https://github.com/Linkerpink/Poker-Roguelike",
-
-    imgSrc: "/images/not not balatro.webp",
-    platform: "itch.io",
-
-    description:
-      "Not Not Balatro is a very good game 😱 \n\nwow i LOVE NOT NOT baltro but Not baltro is also very good game just like NOT NOT NOT baltro GL making NOT NOT baltro FR NOT NOT no cap/",
-
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-
-    media: [{ type: "image", src: "/images/not not balatro.webp" }],
-
-    featured: false,
-
-    codeSnippets: [
-      {
-        name: "horror script",
-        language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
-      },
-    ],
-  },
-
-  // Bug Exterminator (half a spider in 3 weeks!!! jeremy mode and maxwell mode make me not wanna cry) //
-  {
-    title: "Bug Exterminator",
-    slug: "bug-xterminator",
-    banner: "/images/shmup.webp",
-    icon: "/images/shmup.webp",
-
-    date: "2024-4-4",
-    displayDate: formatDisplayDate("2024-4-4"),
-
-    href: "https://rileytimmerman.itch.io/bug-exterminator",
-    github: "https://github.com/Linkerpink/Poker-Roguelike",
-
-    imgSrc: "/images/shmup.webp",
-    platform: "itch.io",
-
-    description:
-      "Bug Exterminator is an indie SHMUP where you shoot mutant insects and help clean up a destroyed world. As a robot frog you fly through the land and defeat all the insects that stand in your way, but there's a menacing monster at the end, can you defeat it? \n\nThis game was created by a team of first year students (4 Game Artists, 2 Creative Software Developers) in under 3 weeks.",
-
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-
-    media: [
-      { type: "image", src: "/images/shmup.webp" },
-      { type: "youtubeId", src: "VBLMkvfqAlw", title: "Launch Trailer" },
-    ],
-
-    featured: false,
-
-    codeSnippets: [
-      {
-        name: "horror script",
-        language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
-      },
-    ],
-  },
-
-  // Disco Dungeon (HELL) //
-  {
-    title: "Disco Dungeon",
-    slug: "disco-dungeon",
-    banner: "/images/disco dungeon temp.webp",
-    icon: "/images/disco dungeon temp.webp",
-
-    date: "2024-04-26",
-    displayDate: formatDisplayDate("2024-04-26"),
-
-    href: "https://linkerpink.itch.io/disco-dungeon",
-    github: "https://github.com/Linkerpink/Poker-Roguelike",
+    // Disco Dungeon (HELL) //
+    {
+        title: "Disco Dungeon",
+        slug: "disco-dungeon",
+        banner: "/images/disco dungeon temp.webp",
+        icon: "/images/disco dungeon temp.webp",
+        
+        date: "2024-04-26",
+        displayDate: formatDisplayDate("2024-04-26"),
+        
+        href: "https://linkerpink.itch.io/disco-dungeon",
+        github: "https://github.com/Linkerpink/Poker-Roguelike",
 
     imgSrc: "/images/disco dungeon temp.webp",
     platform: "itch.io",
