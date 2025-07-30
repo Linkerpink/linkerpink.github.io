@@ -18,18 +18,18 @@ type SidebarItem = {
 
 const homepageSidebarItems: SidebarItem[] = [
   { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
+  { href: '/projects', img: '/images/vandringjorne horror.jpg', alt: 'Projects Icon', label: 'Projects'},
   { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250 },
   { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', offset: 75 },
-  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings' },
-  { href: 'close', img: '/images/wii u close icon.png', alt: 'Close Icon', label: 'Close', last: true, external: true },
+  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings', last: true},
 ];
 
 const nonHomepageSidebarItems: SidebarItem[] = [
   { href: '/#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', anchor: 'home' },
+  { href: '/projects', img: '/images/vandringjorne horror.jpg', alt: 'Projects Icon', label: 'Projects'},
   { href: '/#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', anchor: 'about-me' },
   { href: '/#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', anchor: 'skills' },
-  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings' },
-  { href: 'back', img: '/images/wii u close icon.png', alt: 'Back Icon', label: 'Back', last: true },
+  { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings', last: true},
 ];
 
 export default function Sidebar() {
@@ -40,16 +40,13 @@ export default function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [circleScale, setCircleScale] = useState(1);
 
-  // Calculate scale for circle expanding from button top-left corner (4px padding + half button size)
   useEffect(() => {
     const updateScale = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      // Button center position approx (top-4 left-4 padding + 32px button width / 2)
       const buttonX = 4 + 32; 
       const buttonY = 4 + 32;
 
-      // Calculate max distance from button center to any corner
       const distances = [
         Math.hypot(buttonX, buttonY), // top-left corner (button itself)
         Math.hypot(vw - buttonX, buttonY), // top-right
@@ -58,7 +55,6 @@ export default function Sidebar() {
       ];
       const maxDistance = Math.max(...distances);
 
-      // Base circle radius = half button width (32), scale needed to fill maxDistance
       setCircleScale(maxDistance / 32);
     };
 

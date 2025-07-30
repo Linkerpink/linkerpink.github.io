@@ -171,14 +171,15 @@ export default function Home() {
           </h1>
         </div>
 
+
+        {/* About Me */}
         <div
-          className={`flex flex-col md:flex-row items-center gap-8 mx-auto px-4 pt-20 transition-all duration-300 max-w-6xl ${
-            isExpanded ? "blur-sm" : ""
-          }`}
+          className={`flex flex-col md:flex-row items-center md:items-start gap-8 px-4 pt-20 max-w-6xl mx-auto transition-all duration-300 ${isExpanded ? "blur-sm" : ""
+            }`}
         >
           <div
             ref={thumbRef}
-            className="group w-80 h-80 relative flex-shrink-0 cursor-pointer"
+            className="group w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 relative flex-shrink-0 cursor-pointer"
             onClick={openOverlay}
           >
             <Image
@@ -190,25 +191,26 @@ export default function Home() {
             />
           </div>
 
-          <div id="about-me" className="text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Hello there, my name is Noah van Uunen
+          <div id="about-me" className="text-center md:text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+              Hello there, my name is
+              <p></p>
+              <span className="text-[#F57C00]"> Noah van Uunen</span>
             </h1>
-            <p className="text-lg">
-              I am an 18-year-old game developer from the Netherlands. I&apos;ve
-              been making games for 2 years (primarily in Unity using C#). I
-              enjoy programming and bringing ideas to life. I&apos;m currently
-              studying game development at Grafisch Lyceum Utrecht. Outside of
-              game dev, I enjoy writing, editing videos, and playing games.
-            </p>
+            <h3 className="text-base sm:text-lg">
+              I am an 18-year-old game developer from the Netherlands. I&apos;ve been
+              making games for 2 years (primarily in Unity using C#). I enjoy
+              programming and bringing ideas to life. I&apos;m currently studying game
+              development at Grafisch Lyceum Utrecht. Outside of game dev, I enjoy
+              writing, editing videos, and playing games.
+            </h3>
           </div>
         </div>
 
         <div
           id="skills"
-          className={`pt-20 px-4 transition-all duration-300 ${
-            isExpanded ? "blur-sm" : ""
-          }`}
+          className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? "blur-sm" : ""
+            }`}
         >
           <h2 className="text-4xl font-bold mb-8 text-center">My Skills</h2>
           <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
@@ -220,9 +222,8 @@ export default function Home() {
 
         <div
           id="links"
-          className={`pt-20 px-4 transition-all duration-300 ${
-            isExpanded ? "blur-sm" : ""
-          }`}
+          className={`pt-20 px-4 transition-all duration-300 ${isExpanded ? "blur-sm" : ""
+            }`}
         >
           <h2 className="text-4xl font-bold mb-3 text-center">My links</h2>
           <div className="flex flex-wrap justify-center max-w-4xl mx-auto px-4">
