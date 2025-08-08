@@ -2625,9 +2625,11 @@ public void SetVolume(float _volume, string _name)
     platform: "GX Games",
     imgSrc: "/images/when time collides.webp",
     href: "https://gx.games/games/ef2jjg/when-time-collides/",
+    github: "https://github.com/Linkerpink/When-Time-Collides",
+
 
     description:
-      "When Time Collides is a small retro platformer made for the GameMaker Studio GameJam 2022 where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself. \n\nDeveloper: \nNoah (Linkerpink) \n\nArtists: \nLuca (SupercatLuigi Player) \nBelle \n\n What I made: \n- Player Movement \n- Player Interaction \n- Player Camera \n- Time Switching Mechanic \n- Textbox System \n- Tutorial Dummy with easter eggs \n- Boss Fight \n\nI lost the most up to date version of the source code. I used Google Drive, because I didn't know what Git was at the time. So the most up to date version of the source code may differ from the build that is playable online.",
+      "When Time Collides is a small retro platformer made for the GameMaker Studio GameJam 2022 where you have to parkour your way through multiple levels while being able to controll time. But what does switching the time do? Are there any enemies? Find out while playing yourself. \n\nDeveloper: \nNoah (Linkerpink) \n\nArtists: \nLuca (SupercatLuigi Player) \nBelle \n\n What I made: \n- Player Movement \n- Player Interaction \n- Player Camera \n- Time Switching Mechanic \n- Textbox System \n- Tutorial Dummy with easter eggs \n- Boss Fight",
 
     technologies: ["/images/gamemaker studio logo.svg"],
 
@@ -3136,6 +3138,10 @@ function scr_game_text(_text_id)
 		scr_text("You shouldnt have this power")
 		scr_text("It's mine, give me that staff!")
 		break;
+		
+		case "signboss":
+		scr_text("WARNING! Dangerous area ahead...");
+		break;
 	}
 }
 	`
@@ -3165,29 +3171,39 @@ move 1 = move right
 move 2 = move left
 move 3 = move down
 move 4 = move up
+move 5 = shield
 */
 instance_create_layer(PlayerObject.x,PlayerObject.y,layer,MusicObject)
 
 Step:
 if moving == 0
 {
+	sprite_index = BossSprite;
 	//alarm 1
 }
 if moving == 1
 {
+	sprite_index = BossSprite;
 	x ++;
 }
 if moving == 2
 {
+	sprite_index = BossSprite;
 	x --;
 }
 if moving == 3
 {
+	sprite_index = BossSprite;
 	y--;
 }
 if moving == 4
 {
+	sprite_index = BossSprite;
 	y++;
+}
+if moving == 5
+{
+	sprite_index = BossSpriteShield;
 }
 
 if bosshp <= 0
