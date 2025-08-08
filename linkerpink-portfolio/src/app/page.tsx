@@ -21,6 +21,8 @@ import Skills from "./skills";
 import LinkCard from "./link-card";
 import Links from "./links";
 import { useTheme } from "./theme-context";
+import { CalculateTime } from "./calculate-time";
+import { CalculateTimeYearOnly } from "./calculate-time";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -198,8 +200,8 @@ export default function Home() {
               <span className="text-[#F57C00]"> Noah van Uunen</span>
             </h1>
             <h3 className="text-base sm:text-lg">
-              I am an 18-year-old game developer from the Netherlands. I&apos;ve been
-              making games for 2 years (primarily in Unity using C#). I enjoy
+              I am an {CalculateTimeYearOnly("2007-04-20")}-year-old game developer from the Netherlands. I&apos;ve been
+              making games for {CalculateTime("2022-01-20")} (primarily in Unity using C#). I enjoy
               programming and bringing ideas to life. I&apos;m currently studying game
               development at Grafisch Lyceum Utrecht. Outside of game dev, I enjoy
               writing, editing videos, and playing games.
