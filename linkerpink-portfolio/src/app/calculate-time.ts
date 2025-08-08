@@ -24,7 +24,7 @@ export function CalculateTimeYearOnly(startDate: string) {
     const start = new Date(startDate);
     const now = new Date();
 
-    let years = now.getFullYear() - start.getFullYear();
+    const years = now.getFullYear() - start.getFullYear();
 
     if (years > 0) {
         return `${years}`;
