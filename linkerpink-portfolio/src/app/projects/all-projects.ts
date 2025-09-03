@@ -2044,12 +2044,35 @@ public void WinRace()
 }
 	`
 }
-
-
-
-
-
     ],
+  },
+
+  // Risk It For The Biscuit //
+  {
+    title: "Risk It For The Biscuit",
+    slug: "risk-it-for-the-biscuit",
+    banner: "/images/eng.png",
+    icon: "/images/eng.png",
+    date: "not released",
+    displayDate: formatDisplayDate("not released"),
+    platform: "Itch.io",
+    description:
+      "",
+
+    href: "",
+    github: "https://github.com/Linkerpink/Risk-It-For-The-Biscuit",
+
+    technologies: ["/images/godot logo.svg", "/images/gdscript logo.webp"],
+
+    media: [
+      { type: "image", src: "/images/eng.png" },
+    ],
+
+    featured: true,
+
+    codeSnippets: [
+      
+	]
   },
 
   // The Royal Spin //
@@ -3299,7 +3322,7 @@ alarm[1] = 60;
 
     media: [{ type: "image", src: "/images/SHYGame.jpg" }],
 
-    featured: true,
+    featured: false,
 
     codeSnippets: [
       {
@@ -3810,7 +3833,7 @@ private void ChasePlayer()
     banner: "/images/slimetastic punchout cover art.png",
     icon: "/images/slimetastic punchout cover art.png",
 
-    date: "2025-07-23",
+    date: "2024-12-5",
     displayDate: formatDisplayDate("2024-12-5"),
 
     href: "https://nielscraft12.itch.io/slimetastic-punchout",
@@ -4325,151 +4348,151 @@ private void Die()
 ],
 },
 
-// Not Grow A Garden //
-{
-  title: "Not Grow A Garden",
-  slug: "not-grow-a-garden",
-  banner: "/images/not grow a garden temp logo.png",
-  icon: "/images/not grow a garden temp logo.png",
+// // Not Grow A Garden //
+// {
+//   title: "Not Grow A Garden",
+//   slug: "not-grow-a-garden",
+//   banner: "/images/not grow a garden temp logo.png",
+//   icon: "/images/not grow a garden temp logo.png",
 
-  date: "not released",
-  displayDate: formatDisplayDate("not released"),
+//   date: "not released",
+//   displayDate: formatDisplayDate("not released"),
 
-  href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
-  github:
-    "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+//   href: "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
+//   github:
+//     "https://github.com/Linkerpink/Fnaf-Unity-Fortnite-Official-Game-Godot",
 
-  imgSrc: "/images/not grow a garden temp logo.png",
-  platform: "Itch.io",
+//   imgSrc: "/images/not grow a garden temp logo.png",
+//   platform: "Itch.io",
 
-  description: "anti horror \n\n Developers: \nLinkerpink\nMathijn Wismeijer",
+//   description: "anti horror \n\n Developers: \nLinkerpink\nMathijn Wismeijer",
 
-  technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
+//   technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-  media: [{ type: "image", src: "/images/not grow a garden temp logo.png" }],
+//   media: [{ type: "image", src: "/images/not grow a garden temp logo.png" }],
 
-  featured: false,
+//   featured: false,
 
-  codeSnippets: [
-    {
-      name: "PlayerMovement.cs",
-      language: "C#",
-      description:
-        "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
-      code: `using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+//   codeSnippets: [
+//     {
+//       name: "PlayerMovement.cs",
+//       language: "C#",
+//       description:
+//         "the player movement for the mobile game: not grow a garden (we haven't thought of a good name yet)",
+//       code: `using UnityEngine;
+// using UnityEngine.InputSystem;
+// using UnityEngine.Serialization;
+// using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
-{
-  #region Variabelen
+// public class PlayerMovement : MonoBehaviour
+// {
+//   #region Variabelen
 
-  public Transform cameraTransformatie;
+//   public Transform cameraTransformatie;
   
-  [Header("Snelheden")]
-  [SerializeField] private float bewegingsSnelheid;
+//   [Header("Snelheden")]
+//   [SerializeField] private float bewegingsSnelheid;
   
-  [Header("Hoeken")]
-  private float m_hoek;
-  private float m_doelHoek;
-  private float m_laatsteHoek;
+//   [Header("Hoeken")]
+//   private float m_hoek;
+//   private float m_doelHoek;
+//   private float m_laatsteHoek;
   
-  [Header("Directies")]
-  private Vector2 m_invoerDirectie;
-  private Vector3 m_bewegingsDirectie;
+//   [Header("Directies")]
+//   private Vector2 m_invoerDirectie;
+//   private Vector3 m_bewegingsDirectie;
   
-  [Header("Soepel Bewegen")]
-  [SerializeField] private float m_soepeleTijdDraaien = 0.1f;
-  private float m_draaiSoepeleSnelheid;
+//   [Header("Soepel Bewegen")]
+//   [SerializeField] private float m_soepeleTijdDraaien = 0.1f;
+//   private float m_draaiSoepeleSnelheid;
   
-  [Header("Componenten")]
-  private Rigidbody m_stijfLichaam;
-  private BlijheidStok m_blijheidStok;
+//   [Header("Componenten")]
+//   private Rigidbody m_stijfLichaam;
+//   private BlijheidStok m_blijheidStok;
 
-  public bool magBewegen = true;
+//   public bool magBewegen = true;
   
-  private float deltaTijd = 0.0f; // Nodig voor anti insect kader snelheid text
+//   private float deltaTijd = 0.0f; // Nodig voor anti insect kader snelheid text
 
-  #endregion
+//   #endregion
 
-  private void WakkerWorden()
-  {
-      m_stijfLichaam = GetComponent<Rigidbody>();
-      m_blijheidStok = FindAnyObjectByType<BlijheidStok>();
-  }
+//   private void WakkerWorden()
+//   {
+//       m_stijfLichaam = GetComponent<Rigidbody>();
+//       m_blijheidStok = FindAnyObjectByType<BlijheidStok>();
+//   }
   
-  private void Bijwerken()
-  {
-      // Krijg invoerdirectie van de blijheidStok
-      m_invoerDirectie = m_blijheidStok.KrijgInvoer();
+//   private void Bijwerken()
+//   {
+//       // Krijg invoerdirectie van de blijheidStok
+//       m_invoerDirectie = m_blijheidStok.KrijgInvoer();
       
-      deltaTijd += (Time.deltaTime - deltaTijd) * 0.1f;
-  }
+//       deltaTijd += (Time.deltaTime - deltaTijd) * 0.1f;
+//   }
 
-  private void VastBijwerken()
-  {
-      if (m_invoerDirectie.sqrMagnitude > 0.01f && magBewegen) 
-      {
-          m_bewegingsDirectie = new Vector3(m_invoerDirectie.x, 0, m_invoerDirectie.y);
-          m_doelHoek = Mathf.Atan2(m_bewegingsDirectie.x, m_bewegingsDirectie.z) * Mathf.Rad2Deg + cameraTransformatie.eulerAngles.y;
-          m_hoek = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_doelHoek, ref m_draaiSoepeleSnelheid, m_soepeleTijdDraaien);
-          m_laatsteHoek = m_hoek;
-      }
-      else
-      {
-          m_bewegingsDirectie = Vector3.zero;
-          m_hoek = m_laatsteHoek;
-      }
+//   private void VastBijwerken()
+//   {
+//       if (m_invoerDirectie.sqrMagnitude > 0.01f && magBewegen) 
+//       {
+//           m_bewegingsDirectie = new Vector3(m_invoerDirectie.x, 0, m_invoerDirectie.y);
+//           m_doelHoek = Mathf.Atan2(m_bewegingsDirectie.x, m_bewegingsDirectie.z) * Mathf.Rad2Deg + cameraTransformatie.eulerAngles.y;
+//           m_hoek = Mathf.SmoothDampAngle(transform.eulerAngles.y, m_doelHoek, ref m_draaiSoepeleSnelheid, m_soepeleTijdDraaien);
+//           m_laatsteHoek = m_hoek;
+//       }
+//       else
+//       {
+//           m_bewegingsDirectie = Vector3.zero;
+//           m_hoek = m_laatsteHoek;
+//       }
 
-      if (magBewegen)
-      {
-          m_stijfLichaam.linearVelocity = m_bewegingsDirectie * bewegingsSnelheid;
-      }
+//       if (magBewegen)
+//       {
+//           m_stijfLichaam.linearVelocity = m_bewegingsDirectie * bewegingsSnelheid;
+//       }
       
-      transform.rotation = Quaternion.Euler(0f, m_hoek, 0f);
-  }
+//       transform.rotation = Quaternion.Euler(0f, m_hoek, 0f);
+//   }
   
-  private void OnGUI()
-  {
-      if (SpelBeheerder.Instance.antiInsectInschakelen)
-      {
-          int w = Screen.width, h = Screen.height;
-          GUIStyle style = new GUIStyle();
+//   private void OnGUI()
+//   {
+//       if (SpelBeheerder.Instance.antiInsectInschakelen)
+//       {
+//           int w = Screen.width, h = Screen.height;
+//           GUIStyle style = new GUIStyle();
 
-          Rect rect = new Rect(10, 100, w, h * 2 / 100);
-          style.alignment = TextAnchor.UpperLeft;
-          style.fontSize = h * 2 / 50;
-          style.normal.textColor = Color.white;
+//           Rect rect = new Rect(10, 100, w, h * 2 / 100);
+//           style.alignment = TextAnchor.UpperLeft;
+//           style.fontSize = h * 2 / 50;
+//           style.normal.textColor = Color.white;
 
-          float fps = 1.0f / deltaTijd;
-          string text = string.Format("{0:0.} fps", fps);
-          GUI.Label(rect, text, style);    
-      }
-  }
+//           float fps = 1.0f / deltaTijd;
+//           string text = string.Format("{0:0.} fps", fps);
+//           GUI.Label(rect, text, style);    
+//       }
+//   }
   
-  #region Neppe Functies
+//   #region Neppe Functies
   
-  private void Awake()
-  {
-      WakkerWorden();
-  }
+//   private void Awake()
+//   {
+//       WakkerWorden();
+//   }
   
-  private void Update()
-  {
-      Bijwerken();
-  }
+//   private void Update()
+//   {
+//       Bijwerken();
+//   }
 
-  private void FixedUpdate()
-  {
-      VastBijwerken();
-  }
+//   private void FixedUpdate()
+//   {
+//       VastBijwerken();
+//   }
 
-  #endregion
-}`,
-    },
-  ],
-},
+//   #endregion
+// }`,
+//     },
+//   ],
+// },
 
   // Fnaf Unity Fortnite Official Game Godot //
   {
@@ -4826,7 +4849,7 @@ private void ScrollbarLogics()
     platform: "itch.io",
 
     description:
-      "Bug Exterminator is an indie SHMUP where you shoot mutant insects and help clean up a destroyed world. As a robot frog you fly through the land and defeat all the insects that stand in your way, but there's a menacing monster at the end, can you defeat it? \n\nThis game was created by a team of first year students (4 Game Artists, 2 Creative Software Developers) in under 3 weeks.",
+      "A 3D remake of Asteroids. \n\nWhat I made: \n- A tip system that shows a gameplay tip once in a while. \n- Screen wrapping system \n- Animated interactable main menu \n- GameManager / Round management \n- Player movement \n- Shooting \n- Asteroids",
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
@@ -4836,11 +4859,352 @@ private void ScrollbarLogics()
 
     codeSnippets: [
       {
-        name: "horror script",
+        name: "TipTextbox.cs",
         language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
+        description: "The script for the tips. It shows a random tip from an array and then after a few seconds it disappears.",
+        code: `
+[SerializeField] private TextMeshProUGUI text;
+
+private string[] tips = new string[]
+{
+    "Tip: Playing bloons td will f*ck up your life",
+    "Tip: Blade ball... Yeah that's it.. Just don't touch blade ball",
+    "Tip: Everything is legal, as long as they don't find out",
+    "Tip: Move to move",
+    "Tip: Shoot to shoot",
+    "Tip: IT'S ALL JEREMY'S FAULT!!!!!",
+    "Tip: If you want to keep your sanity, stop playing",
+    "Tip: In the beginning, God created the heaven and the earth. And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters. And God said, 'Let there be light,' and there was light. And God saw the light, that it was good; and God divided the light from the darkness. And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day.",
+    "Tip: Jeremy (the rubber duckie) has been tortured 37 times while writing this :)",
+};
+
+private float destroyTimer = 7f;
+private Animator animator;
+private RectTransform transform;
+
+
+private void Awake()
+{
+    animator = GetComponent<Animator>();
+    transform = GetComponent<RectTransform>();
+}
+
+void Start()
+{
+    int rnd = Random.Range(0, tips.Length);
+    text.SetText(tips[rnd]);
+    if (rnd == 7)
+    {
+        text.fontSize = 14;
+    }else
+    {
+        text.fontSize = 38;
+    }
+
+    animator.SetBool("TransitionOut", false);
+}
+
+void Update()
+{
+    destroyTimer -= 1 * Time.deltaTime;
+
+    
+    if (destroyTimer < 0.5f)
+    {
+        animator.SetBool("TransitionOut", true);
+    }
+
+    if (destroyTimer <= 0.0f)
+    {
+        
+    }
+}
+`,
       },
+
+      {
+          name: "Player.cs",
+          language: "C#",
+          description: "The script for the player.",
+          code: `
+private void Awake()
+{
+    transform = GetComponent<Transform>();
+    rb = GetComponent<Rigidbody>();
+    meshRenderer = GetComponentInChildren<MeshRenderer>();
+    collider = GetComponentInChildren<BoxCollider>();
+    mainCamera = Camera.main;
+}
+
+private void FixedUpdate()
+{
+    horizontal = Input.GetAxisRaw("Horizontal");
+    vertical = Input.GetAxisRaw("Vertical");
+    if (vertical <= 0)
+    {
+        vertical = 0;
+    }
+
+    if (horizontal < 0 || horizontal > 0 || vertical > 0)
+    {
+        invincible = false;
+    }
+
+    rb.AddTorque(transform.up * horizontal * torque);
+    rb.AddRelativeForce(new Vector3(0, 0, vertical * torque * 2));
+}
+
+private void Update()
+{
+    if (bulletCoolDown > 0)
+    {
+        bulletCoolDown -= 1 * Time.deltaTime;
+    }
+
+    if (Input.GetButton("Jump"))
+    {
+        if (bulletCoolDown <= 0)
+        {
+            Instantiate(bullet, transform.position, transform.rotation);
+            bulletCoolDown = maxBulletCoolDown;
+        }
+    }
+
+    if (invincible)
+    {
+        collider.enabled = false;
+
+        meshRendererTimer -= 1f * Time.deltaTime * 10;
+
+        if (meshRendererTimer <= 0)
+        {
+            enableMeshRenderer = !enableMeshRenderer;
+            meshRendererTimer = 1f;
+        }
+
+        if (enableMeshRenderer == true)
+        {
+            meshRenderer.enabled = true;
+        }
+        else
+        {
+            meshRenderer.enabled = false;
+        }
+    }
+    else
+    {
+        meshRenderer.enabled = true;
+        collider.enabled = true;
+    }
+
+    hpText.SetText("HP: " + hp.ToString());
+}
+
+private void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.tag == "Freddy" || collision.gameObject.tag == "Bonnie" || collision.gameObject.tag == "AmongUs")
+    {
+        if (!invincible)
+        {
+            if (hp > 0)
+            {
+                hp--;
+                invincible = true;
+                transform.position = Vector3.zero;
+                transform.rotation = Quaternion.identity;
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+
+            }
+            else
+            {
+                SceneManager.LoadScene("Game Over");
+                Debug.Log("slecht");
+            }
+        }
+    }
+}
+}
+`,
+        },
+
+        {
+          name: "ScreenWrap.cs",
+          language: "C#",
+          description: "The script for the screen wrapping. If the object the script is attached to goes out of the camera view, it will appear on the other side of the screen.",
+          code: `
+ private void Start()
+{
+    mainCamera = Camera.main;
+    transform = GetComponent<Transform>();
+}
+
+private void Update()
+{
+    Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position);
+
+    if (screenPos.x > Screen.width + extraSpace)
+    {
+        transform.position = mainCamera.ScreenToWorldPoint(new Vector3(0, screenPos.y, screenPos.z));
+    }
+    else if (screenPos.x < 0 - extraSpace)
+    {
+        transform.position = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, screenPos.y, screenPos.z));
+    }
+    if (screenPos.y > Screen.height + extraSpace)
+    {
+        transform.position = mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, 0, screenPos.z));
+    }
+    else if (screenPos.y < 0 - extraSpace)
+    {
+        transform.position = mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, Screen.height, screenPos.z));
+    }
+}
+
+`,
+        },
+
+        {
+          name: "GameManager.cs",
+          language: "C#",
+          description: "The script for the round management and game management.",
+          code: `
+void Start()
+{
+    StartNewRound();
+}
+
+void Update()
+{
+    textboxTimer -= 1 * Time.deltaTime;
+
+    if (textboxTimer <= 0)
+    {
+        Instantiate(textBox);
+        textboxTimer = 20;
+    }
+
+    scoreText.text = score.ToString();
+
+    roundTimer -= 1 * Time.deltaTime;
+
+    if (roundTimer <= 0)
+    {
+        asteroidsToSpawn = Random.Range(1, 5);
+        StartNewRound();
+        Debug.Log("New round started");
+        roundTimer = 15f;
+    }
+
+    
+    if (Input.GetKeyDown(KeyCode.RightShift))
+    {
+        roundTimer = 0;
+    }
+
+    if (Input.GetKeyDown(KeyCode.KeypadEnter))
+    {
+        Instantiate(textBox);
+    }
+    
+
+    //Debug.Log(activeAsteroids);
+}
+
+private void StartNewRound()
+{
+    // Reset the active asteroids count
+    activeAsteroids = (int)asteroidsToSpawn;
+
+    for (int i = 0; i < asteroidsToSpawn; i++)
+    {
+        int rnd = Random.Range(0, 3);
+        int x = Random.Range(-10, 10);
+        int y = Random.Range(-10, 10);
+        var pos = new Vector3(x, 0, y);
+        Instantiate(gameObjects[rnd], pos, Quaternion.identity);
+    }
+}
+public void ReportAsteroidDestroyed()
+{
+    activeAsteroids--;
+}
+`,
+        },
+
+        {
+          name: "SineWaveAnimation.cs",
+          language: "C#",
+          description: "The script for the interactable animated main menu.",
+          code: `
+private void Start()
+{
+    rectTransform = GetComponent<RectTransform>();
+    textMeshProComponent = GetComponentInChildren<TextMeshProUGUI>();
+
+    originalSize = rectTransform.sizeDelta;
+    originalPivot = rectTransform.pivot;
+    originalFontSize = textMeshProComponent.fontSize;
+
+    rectTransform.pivot = new Vector2(0.5f, 0.5f);
+}
+
+private void FixedUpdate()
+{
+    float deltaTime = Time.fixedDeltaTime;
+
+    float targetY = Mathf.Sin(Time.time * speed * frequency) * amplitude;
+    float y = Mathf.SmoothDamp(rectTransform.anchoredPosition.y, targetY, ref velocity.y, 0.1f);
+
+    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, y);
+
+    float rotationAngle = Mathf.Sin(Time.time * rotationSpeed) * rotationAmplitude;
+    rectTransform.rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+}
+
+public void OnPointerEnter(PointerEventData eventData)
+{
+    StartCoroutine(LerpSize(originalSize * 1.1f, sizeChangeDuration));
+    StartCoroutine(LerpFontSize(originalFontSize * 1.1f, fontSizeChangeDuration));
+}
+
+public void OnPointerExit(PointerEventData eventData)
+{
+    StartCoroutine(LerpSize(originalSize, sizeChangeDuration));
+    StartCoroutine(LerpFontSize(originalFontSize, fontSizeChangeDuration));
+}
+
+private IEnumerator LerpSize(Vector2 targetSize, float duration)
+{
+    float elapsedTime = 0f;
+    Vector2 startSize = rectTransform.sizeDelta;
+
+    while (elapsedTime < duration)
+    {
+        rectTransform.sizeDelta = Vector2.Lerp(startSize, targetSize, elapsedTime / duration);
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+
+    rectTransform.sizeDelta = targetSize;
+}
+
+private IEnumerator LerpFontSize(float targetFontSize, float duration)
+{
+    float elapsedTime = 0f;
+    float startFontSize = textMeshProComponent.fontSize;
+
+    while (elapsedTime < duration)
+    {
+        textMeshProComponent.fontSize = Mathf.Lerp(startFontSize, targetFontSize, elapsedTime / duration);
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+
+    textMeshProComponent.fontSize = targetFontSize;
+}
+`,
+        },
     ],
   },
     
@@ -4861,7 +5225,7 @@ private void ScrollbarLogics()
       platform: "itch.io",
   
       description:
-        "Not Not Balatro is a very good game 😱 \n\nwow i LOVE NOT NOT baltro but Not baltro is also very good game just like NOT NOT NOT baltro GL making NOT NOT baltro FR NOT NOT no cap/",
+        "Not Not Balatro is an attempt at recreating the core gameplay loop of balatro for a school project. \n\nWhat I made: \n- Deck system \n- Hand system \n- Round system \n- Card selection system \n- Hand checking system",
   
       technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
   
@@ -4871,10 +5235,468 @@ private void ScrollbarLogics()
   
       codeSnippets: [
         {
-          name: "horror script",
+          name: "Deck.cs",
           language: "C#",
-          description: "ik was slechter.",
-          code: `horror code`,
+          description: "The script for the deck, hand and round managing.",
+          code: `
+private void Start()
+{
+    deathScreen.SetActive(false);
+    StartRound();
+}
+
+private void Update()
+{
+    roundScoreQuotaText.SetText("Round score quota: " + m_gameManager.roundScoreQuota.ToString());
+}
+
+private void StartRound()
+{
+    InitializeCardPositions();
+    SetCards();
+    StartCoroutine(DrawCardsToHand(8));
+
+    m_gameManager.round += 1;
+    m_gameManager.roundScore = 0;
+    m_gameManager.roundScoreQuota *= 1.25f;
+}
+
+private void InitializeCardPositions()
+{
+    m_positionTaken = new bool[m_cardPositions.Length];
+}
+
+private PlayingCardSO ChooseRandomCard()
+{
+    if (m_remainingDeckCards.Count > 0)
+    {
+        PlayingCardSO _card = m_remainingDeckCards[Random.Range(0, m_remainingDeckCards.Count)];
+        handList.Add(_card);
+        m_remainingDeckCards.Remove(_card);
+
+        m_deckText.SetText(m_remainingDeckCards.Count.ToString() + " / " + m_playingCardSOList.Count.ToString());
+
+        return _card;
+    }
+    return null;
+}
+
+private void AddCardToHand()
+{
+    int positionIndex = FindAvailablePosition();
+    if (positionIndex == -1)
+    {
+        Debug.LogError("No available positions for new card!");
+        return;
+    }
+
+    PlayingCardSO _cardSO = ChooseRandomCard();
+    if (_cardSO == null) return;
+
+    GameObject _playingCard = Instantiate(m_playingCardPrefab, m_cardPositions[positionIndex].position, Quaternion.identity, m_cardPositions[positionIndex]);
+    _playingCard.GetComponent<PlayingCard>().SetCardValues(_cardSO, positionIndex);
+
+    m_positionTaken[positionIndex] = true;
+}
+
+private int FindAvailablePosition()
+{
+    for (int i = 0; i < m_positionTaken.Length; i++)
+    {
+        if (!m_positionTaken[i]) return i;
+    }
+    return -1;
+}
+
+public void SetCards()
+{
+    m_remainingDeckCards = new List<PlayingCardSO>(m_playingCardSOList);
+
+    
+    m_deckText.SetText(m_remainingDeckCards.Count.ToString() + " / " + m_playingCardSOList.Count.ToString());
+}
+
+public void SelectCard(PlayingCardSO _card)
+{
+    selectedCards.Add(_card);
+}
+
+public void DeselectCard(PlayingCardSO _card)
+{
+    selectedCards.Remove(_card);
+}
+
+private IEnumerator DrawCardsToHand(int _cardAmount)
+{
+    for (int i = 0; i < _cardAmount; i++)
+    {
+        AddCardToHand();
+        yield return new WaitForSeconds(cardDrawTime);
+    }
+}
+
+public void RemoveCardFromPosition(int positionIndex)
+{
+    if (positionIndex >= 0 && positionIndex < m_positionTaken.Length)
+    {
+        m_positionTaken[positionIndex] = false;
+    }
+}
+
+public void ResetDeck()
+{
+    // Clear all cards from the positions
+    foreach (Transform cardPosition in m_cardPositions)
+    {
+        foreach (Transform child in cardPosition)
+        {
+            Destroy(child.gameObject); // Destroy child card objects
+        }
+    }
+
+    // Clear card lists
+    selectedCards.Clear();
+    handList.Clear();
+
+    // Reset all position states
+    InitializeCardPositions();
+
+    // Reset the deck
+    SetCards();
+
+    // Draw a new set of cards
+    StartCoroutine(DrawCardsToHand(8));
+}
+
+public void StartHandCheck()
+{
+    if (m_gameManager.gameState == GameManager.GameStates.Game)
+    {
+        StartCoroutine(HandCheck());
+    }
+}
+
+public IEnumerator HandCheck()
+{
+    foreach (PlayingCardSO _card in selectedCards)
+    {
+        m_gameManager.roundScore += _card.cardValue;
+        yield return new WaitForSeconds(0.25f);
+    }
+    yield return new WaitForSeconds(1);
+    
+    if (m_gameManager.roundScore < m_gameManager.roundScoreQuota)
+    {
+        deathScreen.SetActive(true);
+    }
+
+    m_gameManager.gameState = GameManager.GameStates.Shop;
+}`,
+        },
+
+         {
+          name: "Card.cs",
+          language: "C#",
+          description: "The script for the card object.",
+          code: `
+private void Awake()
+{
+    m_gameManager = FindObjectOfType<GameManager>();
+
+    m_initialPosition = transform.position;
+
+    m_deck = FindObjectOfType<Deck>();
+
+    m_hand = GameObject.Find("Hand");
+
+    if (m_hand != null)
+    {
+        foreach (Transform _child in m_hand.transform)
+        {
+            int m_handCount = m_deck.handList.Count;
+
+            switch (m_handCount)
+            {
+                case 0:
+                break;
+
+                case 1:
+                transform.SetParent(m_hand.transform);
+                break;
+                
+            }
+        }
+    }
+}
+
+private void Update()
+{
+    Vector3 _p = transform.position;
+
+    if (m_selected)
+    {
+        _p.y = Mathf.Lerp(_p.y, m_initialPosition.y + 1, m_smoothTime);
+    }
+    else
+    {
+        _p.y = Mathf.Lerp(_p.y, m_initialPosition.y, m_smoothTime);
+    }
+
+    transform.position = new Vector3(transform.position.x, _p.y, 0);
+
+    if (Input.GetMouseButtonDown(0) && m_mouseOver && !m_gameManager.isDragging)
+    {
+        m_initialMousePos = Input.mousePosition; // Mouse position
+    }
+
+    if (Input.GetMouseButton(0) && m_mouseOver && !m_gameManager.isDragging && m_dragable)
+    {
+        if (m_initialMousePos != Input.mousePosition)
+        {
+            m_dragging = true;
+            m_gameManager.ChangeDragging(true);
+        }
+    }
+
+    if (Input.GetMouseButtonUp(0))
+    {
+        m_dragging = false;
+        m_gameManager.ChangeDragging(false);
+        
+        if (m_selectable && m_mouseOver)
+        {
+            if (!m_selected && m_deck.selectedCards.Count < 5)
+            {
+                m_selected = true;
+
+                PlayingCardSO _card;
+                _card = GetComponent<PlayingCard>().playingCardSO;
+
+                if (_card != null)
+                {
+                    m_deck.SelectCard(_card);
+                }
+            }
+            else
+            {
+                m_selected = false;
+
+                PlayingCardSO _card;
+                _card = GetComponent<PlayingCard>().playingCardSO;
+
+                if (_card != null)
+                {
+                    m_deck.DeselectCard(_card);
+                }
+            }
+        }
+    }
+
+    if (m_dragging)
+    {
+        Vector3 _mousePos;
+        Camera _cam = Camera.main;
+
+        _mousePos.x = Input.mousePosition.x;
+        _mousePos.y = Input.mousePosition.y;
+
+        Vector3 _point;
+
+        _point = _cam.ScreenToWorldPoint(new Vector3(_mousePos.x, _mousePos.y, 0));
+
+        transform.position = Vector3.Lerp(transform.position, _point, m_smoothTime);
+    }
+    else
+    {
+        transform.position = Vector3.Lerp(transform.position, m_initialPosition, m_smoothTime);
+    }
+}
+
+public void OnPointerEnter(PointerEventData _eventData)
+{
+    m_mouseOver = true;
+}
+
+public void OnPointerExit(PointerEventData _eventData)
+{
+    m_mouseOver = false;
+}
+`,
+        },
+
+        {
+          name: "PlayingCard.cs",
+          language: "C#",
+          description: "The script for the visual of the card. it sets the suit sprites and text and color.",
+          code: `
+public void SetCardValues(PlayingCardSO _playingCardSO, int positionIndex)
+{
+    playingCardSO = _playingCardSO;
+    CardPositionIndex = positionIndex; // Assign the position index
+
+    foreach (TextMeshProUGUI _text in m_cardTexts)
+    {
+        _text.SetText(playingCardSO.cardText);
+        _text.color = playingCardSO.cardColor;
+    }
+
+    foreach (Image _icon in m_cardIcons)
+    {
+        _icon.sprite = playingCardSO.cardIcon;
+        _icon.color = playingCardSO.cardColor;
+    }
+
+    GameObject _cardDesign = Instantiate(playingCardSO.cardDesign, m_cardDesignParent.transform);
+
+    foreach (Transform _child in _cardDesign.transform)
+    {
+        if (_child.gameObject.name == "Card Design Canvas")
+        {
+            Transform _cardDesignCanvas = _child.GetComponent<Transform>();
+
+            foreach (Transform _c in _cardDesignCanvas.transform)
+            {
+                Image _icon = _c.gameObject.GetComponent<Image>();
+
+                _icon.sprite = playingCardSO.cardIcon;
+                _icon.color = playingCardSO.cardColor;
+            }
+        }
+    }
+}
+}
+`,
+        },
+
+        {
+          name: "GameManager.cs",
+          language: "C#",
+          description: "The GameManager script.",
+          code: `
+public static GameManager Instance
+{
+    get
+    {
+        if (instance == null)
+        {
+            instance = FindObjectOfType<GameManager>();
+
+            if (instance == null)
+            {
+                GameObject gameManagerObj = new GameObject("GameManager");
+                instance = gameManagerObj.AddComponent<GameManager>();
+            }
+        }
+        return instance;
+    }
+}
+
+private void Awake()
+{
+    if (instance != null && instance != this)
+    {
+        Destroy(gameObject);
+    }
+    else
+    {
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+}
+
+private void OnEnable()
+{
+    SceneManager.sceneLoaded += OnSceneLoaded;
+}
+
+private void OnDisable()
+{
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+}
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    if (scene.name == "Main")
+    {
+        gameState = GameStates.Game;
+        m_shop = GameObject.Find("Shop");
+        m_deck = FindObjectOfType<Deck>();
+        m_roundScoreText = GameObject.Find("Round Score Text")?.GetComponent<TextMeshProUGUI>();
+
+        if (m_shop == null || m_roundScoreText == null)
+        {
+            Debug.LogWarning("Shop or Round Score Text not found in the Main scene.");
+        }
+    }
+}
+
+private void Update()
+{
+    if (m_roundScoreText != null)
+    {
+        m_roundScoreText.SetText(roundScore.ToString("F2"));
+    }
+
+    switch (gameState)
+    {
+        case GameStates.MainMenu:
+            break;
+
+        case GameStates.Game:
+            if (m_shop != null)
+            {
+                m_shop.SetActive(false);
+            }
+            break;
+
+        case GameStates.Shop:
+            if (m_shop != null)
+            {
+                m_shop.SetActive(true);
+            }
+            break;
+
+        case GameStates.Paused:
+            break;
+
+        default:
+            break;
+    }
+}
+
+public void ChangeDragging(bool _dragging)
+{
+    isDragging = _dragging;
+}
+
+public void ChangeScene(string _scene)
+{
+    SceneManager.LoadScene(_scene);
+}
+
+public void ChangeGameState(string _state)
+{
+    //used chatgpt for the type switching
+    if (Enum.TryParse(_state, true, out GameStates newState))
+    {
+        gameState = newState;
+        if (newState == GameStates.Game)
+        {
+            //Reset cards and stuff
+            roundScore = 0;
+            roundScoreQuota += 10;
+            m_deck.ResetDeck();
+        }
+
+        Debug.Log("Game state changed to: " + gameState);
+    }
+    else
+    {
+        Debug.LogError("Invalid game state: " + _state);
+    }
+}
+}
+`,
         },
       ],
     },

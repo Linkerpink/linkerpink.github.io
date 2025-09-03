@@ -20,7 +20,7 @@ const homepageSidebarItems: SidebarItem[] = [
   { href: '#home', img: '/images/eshop logo.png', alt: 'Home Icon', label: 'Home', offset: -80 },
   { href: '/projects', img: '/images/vandringjorne horror.jpg', alt: 'Projects Icon', label: 'Projects'},
   { href: '#about-me', img: '/images/eng.png', alt: 'My Menu Icon', label: 'Profile', offset: -250 },
-  { href: '#skills', img: '/images/itch.io logo.png', alt: 'Projects Icon', label: 'Skills', offset: 75 },
+  { href: '#skills', img: '/images/c sharp logo.svg', alt: 'Projects Icon', label: 'Skills', offset: 75 },
   { href: '/settings', img: '/images/settings icon.svg', alt: 'Settings Icon', label: 'Settings', last: true},
 ];
 
@@ -162,8 +162,8 @@ export default function Sidebar() {
             ? 'rounded-br-[35%] bg-gradient-to-r from-[#545454] to-[#323232] text-[#fafafa]'
             : '';
           const hover = item.last
-            ? 'hover:from-[#325c63] hover:to-[#323232]'
-            : 'hover:bg-[#CBF8FE]';
+            ? 'hover:from-[#FFB86F] hover:to-[#FFB86F]'
+            : 'hover:bg-[#FFB86F]';
           const className = [base, selected, first, last, hover].join(' ');
 
           const content = (
