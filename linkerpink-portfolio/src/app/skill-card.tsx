@@ -20,9 +20,9 @@ export default function SkillCard({ name, description, logo }: SkillCardProps) {
   }
   return (
     <div className="w-full md:w-1/2 p-3"> 
-      <div className="group interactable-object">
+      <div className="group">
         <div
-          className={`flex items-center p-4 shadow-lg cursor-pointer ${gradientClass}`}
+          className={`flex items-center p-4 shadow-lg ${gradientClass}`}
           style={isSecretTheme ? {
             borderRadius: '75%',
             fontFamily: 'Smooch, cursive, Arial, sans-serif',

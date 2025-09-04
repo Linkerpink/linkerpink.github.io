@@ -2068,7 +2068,7 @@ public void WinRace()
       { type: "image", src: "/images/eng.png" },
     ],
 
-    featured: true,
+    featured: false,
 
     codeSnippets: [
       
@@ -2661,6 +2661,7 @@ public void SetVolume(float _volume, string _name)
       { type: "image", src: "/images/wtc 1.webp" },
       { type: "image", src: "/images/wtc 2.webp" },
       { type: "image", src: "/images/wtc 3.webp" },
+      { type: "image", src: "/images/eng.png" },
       { type: "youtubeId", src: "qTu8QpEhT8A", title: "Gameplay Video" },
       {
         type: "youtubeId",
@@ -3322,7 +3323,7 @@ alarm[1] = 60;
 
     media: [{ type: "image", src: "/images/SHYGame.jpg" }],
 
-    featured: false,
+    featured: true,
 
     codeSnippets: [
       {
@@ -5700,40 +5701,6 @@ public void ChangeGameState(string _state)
         },
       ],
     },
-
-    // Disco Dungeon (HELL) //
-    {
-        title: "Disco Dungeon",
-        slug: "disco-dungeon",
-        banner: "/images/disco dungeon temp.webp",
-        icon: "/images/disco dungeon temp.webp",
-        
-        date: "2024-04-26",
-        displayDate: formatDisplayDate("2024-04-26"),
-        
-        href: "https://linkerpink.itch.io/disco-dungeon",
-        github: "https://github.com/Linkerpink/Poker-Roguelike",
-
-    imgSrc: "/images/disco dungeon temp.webp",
-    platform: "itch.io",
-
-    description: "fortnite.",
-
-    technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
-
-    media: [{ type: "image", src: "/images/disco dungeon temp.webp" }],
-
-    featured: false,
-
-    codeSnippets: [
-      {
-        name: "horror script",
-        language: "C#",
-        description: "ik was slechter.",
-        code: `horror code`,
-      },
-    ],
-  },
 ].map((project) => ({
   ...project,
   slug: generateSlug(project.title),
