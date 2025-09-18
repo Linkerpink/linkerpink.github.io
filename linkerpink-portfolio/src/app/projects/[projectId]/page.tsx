@@ -32,8 +32,8 @@
             <Image
               src={project.banner}
               alt={`${project.title} Banner`}
-              width={2400}
-              height={800}
+              width={2560}
+              height={2560}
               className="w-full h-full object-cover banner-animate"
               priority
               draggable={false}

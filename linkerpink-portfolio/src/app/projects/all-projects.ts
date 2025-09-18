@@ -2068,7 +2068,7 @@ public void WinRace()
       { type: "image", src: "/images/eng.png" },
     ],
 
-    featured: false,
+    featured: true,
 
     codeSnippets: [
       
@@ -2661,7 +2661,6 @@ public void SetVolume(float _volume, string _name)
       { type: "image", src: "/images/wtc 1.webp" },
       { type: "image", src: "/images/wtc 2.webp" },
       { type: "image", src: "/images/wtc 3.webp" },
-      { type: "image", src: "/images/eng.png" },
       { type: "youtubeId", src: "qTu8QpEhT8A", title: "Gameplay Video" },
       {
         type: "youtubeId",
@@ -3308,22 +3307,28 @@ alarm[1] = 60;
   {
     title: "Shy",
     slug: "shy",
-    banner: "/images/SHYGame.jpg",
-    icon: "/images/SHYGame.jpg",
+    banner: "/images/Shy Render No Bullshit Ai _Art_ Banner.webp",
+    icon: "/images/Shy Render No Bullshit Ai _Art_.webp",
     date: "2024-05-26",
     displayDate: formatDisplayDate("2024-05-26"),
     href: "https://linkerpink.itch.io/shy/",
     github: "https://github.com/GLU-CSD/shy-Linkerpink",
-    imgSrc: "/images/SHYGame.jpg",
+    imgSrc: "/images/Shy Render No Bullshit Ai _Art_.webp",
     platform: "Itch.io",
 
-    description: "Shy is a stealth game where you need to get keys and try to escape while not getting cought by the guards. Press B to emote. \n\nWhat I made: \n- Emote wheel. \n- GameManager \n- Audio System \n- Player \n- Guards \n- Keys & Doors",
+    description: "Shy is a stealth game where you need to get keys and try to escape while not getting cought by the guards. Press B to emote. \n\nWhat I made: \n- Emote wheel. \n- Freelook Camera \n- GameManager \n- Audio System \n- Player \n- Guards \n- Keys & Doors",
 
     technologies: ["/images/unity logo.png", "/images/c sharp logo.svg"],
 
-    media: [{ type: "image", src: "/images/SHYGame.jpg" }],
+    media: [
+        { type: "image", src: "/images/Shy Render No Bullshit Ai _Art_.webp" },
+        { type: "image", src: "/images/shy 1.jpeg" },
+        { type: "image", src: "/images/shy 2.jpeg" },
+        { type: "image", src: "/images/shy 3.jpeg" },
+        { type: "youtubeId", src: "CIiFTZ8dqag", title: "Gameplay Video" },
+    ],
 
-    featured: true,
+    featured: false,
 
     codeSnippets: [
       {
@@ -4122,7 +4127,16 @@ private Vector3 GetCenterPoint()
     "/images/scratch logo.png",
   ],
 
-  media: [{ type: "image", src: "/images/shmup 2.webp" }],
+  media: [
+        { type: "image", src: "/images/shmup 2.webp" },
+        { type: "image", src: "/images/shmup 2 1.jpeg" },
+        { type: "image", src: "/images/shmup 2 5.jpeg" },
+        { type: "image", src: "/images/shmup 2 3.jpeg" },
+        { type: "image", src: "/images/shmup 2 4.jpeg" },
+        { type: "image", src: "/images/shmup 2 7.jpeg" },
+        { type: "youtubeId", src: "4wd0sW7k4PU", title: "Gameplay Video" },
+        { type: "youtubeId", src: "NJa-z-04Vqc", title: "Scratch Edition Gameplay Video" },
+    ],
 
   featured: false,
 
